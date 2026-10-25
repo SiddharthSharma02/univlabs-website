@@ -16,6 +16,7 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 ## Where things live
 
 - `app/` — routes. Home is `app/page.tsx`. Products are data-driven from `content/products.ts` via `app/products/[slug]/page.tsx`.
+- `proxy.ts` — returns a real 404 for unknown `/products/<slug>` URLs, using the slugs in `content/products.ts`. The product page reads its slug inside `<Suspense>`, where `notFound()` alone can only send status 200.
 - `content/site.ts` — nav, specialties, leadership, and **every public number with its source** (`facts`). Change figures here only.
 - `content/products.ts` — product catalogue, status per product, pipeline.
 - `components/ui.tsx` — Container, SectionHeader, ButtonLink, StatusTag, PageHero, SectionMarker, CtaBand, Todo.

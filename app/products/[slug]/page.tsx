@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { CSSProperties } from "react";
+import { Suspense, type CSSProperties } from "react";
 import { CompareSlider } from "@/components/compare-slider";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
@@ -36,7 +36,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductPage({ params }: Props) {
+/**
+ * The page reads the URL inside <Suspense> so navigation can show the
+ * shell at once (Cache Components). Every listed product is prerendered,
+ * so visitors never see the fallback for those. Unknown slugs are turned
+ * into a real 404 by proxy.ts before this renders; notFound() below is the
+ * backstop.
+ */
+export default function ProductPage({ params }: Props) {
+  return (
+    <Suspense fallback={<ProductHeroFallback />}>
+      <ProductContent params={params} />
+    </Suspense>
+  );
+}
+
+function ProductHeroFallback() {
+  return (
+    <section aria-busy className="relative overflow-hidden bg-navy text-clinical">
+      <HeroGlow />
+      <Container className="relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <SectionMarker />
+          <p className="label mt-8 text-fog">Products</p>
+          <span aria-hidden className="mt-4 block h-14 w-2/3 rounded-2xl bg-navy-700" />
+          <span aria-hidden className="mt-8 block h-5 w-full rounded-full bg-navy-700" />
+          <span aria-hidden className="mt-3 block h-5 w-4/5 rounded-full bg-navy-700" />
+        </div>
+        <div aria-hidden className="mx-auto aspect-square w-full max-w-[560px] rounded-3xl bg-navy-700" />
+      </Container>
+    </section>
+  );
+}
+
+async function ProductContent({ params }: Props) {
   const { slug } = await params;
   const product = productBySlug(slug);
   if (!product) notFound();
