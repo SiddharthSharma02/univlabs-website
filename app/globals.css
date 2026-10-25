@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  UnivLabs brand tokens. Source of truth: brand/brand-book.md (section 05).
+  Navy and Blue are measured from the logo file; ICG Green is sampled from
+  UnivLabs' own fluorescence footage. Green is a signal colour only:
+  never buttons, backgrounds or text on white.
+*/
+@theme {
+  --color-navy: #001a49;
+  --color-navy-700: #0b2558;
+  --color-navy-600: #22396a;
+  --color-blue: #0866f4;
+  --color-blue-600: #0657d1;
+  --color-blue-300: #6fa3ff;
+  --color-blue-100: #dce8fe;
+  --color-icg: #4be779;
+  --color-clinical: #f4f6f9;
+  --color-paper: #fcfdfe;
+  --color-mist: #e7ecf3;
+  --color-line: #d9dee7;
+  --color-steel: #5b6782;
+  --color-ink: #4a5773;
+  --color-fog: #b7c3da;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-jakarta), Arial, sans-serif;
+  --font-sans: var(--font-inter), Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-clinical);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-blue-100);
+  color: var(--color-navy);
+}
+
+/* Mono label: the brand's eyebrow and spec style. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
