@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import {
+  Arrow,
   Container,
   CtaBand,
   PageHero,
+  ProductImage,
   SectionHeader,
   StatusTag,
 } from "@/components/ui";
@@ -20,27 +21,26 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-paper transition-shadow hover:shadow-[0_12px_40px_rgba(0,26,73,0.08)]"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-paper transition-[transform,box-shadow,border-color] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-[0_24px_60px_-20px_rgba(0,26,73,0.25)]"
     >
-      <div className="relative aspect-[4/3] bg-mist">
-        {product.image ? (
-          <Image
-            src={product.image.src}
-            alt={product.image.alt}
-            fill
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover"
-          />
-        ) : (
+      {product.image ? (
+        <ProductImage
+          image={product.image}
+          sizes="(min-width: 768px) 33vw, 100vw"
+          className="aspect-[4/3]"
+        />
+      ) : (
+        <div className="relative aspect-[4/3] bg-mist">
           <div className="absolute inset-3 flex items-center justify-center rounded-xl border-2 border-dashed border-steel/40">
             <p className="label text-steel">Product photo to commission</p>
           </div>
-        )}
-      </div>
-      <div className="flex flex-1 flex-col p-6">
+        </div>
+      )}
+      <div className="flex flex-1 flex-col border-t border-line p-6">
         <p className="label text-steel">{product.descriptor}</p>
-        <h3 className="mt-2 font-display text-xl font-bold text-navy group-hover:text-blue">
+        <h3 className="mt-2 flex items-center justify-between font-display text-xl font-bold text-navy transition-colors group-hover:text-blue">
           {product.name}
+          <Arrow className="size-5 text-blue" />
         </h3>
         <div className="mt-4">
           <StatusTag status={product.status} />
@@ -74,17 +74,18 @@ export default function ProductsPage() {
                 intro={family.summary}
               />
               {items.length > 0 ? (
-                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div data-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {items.map((p) => (
                     <ProductCard key={p.slug} product={p} />
                   ))}
                 </div>
               ) : (
                 <Link
+                  data-reveal
                   href={family.href}
-                  className="mt-8 inline-block text-[15px] font-semibold text-blue hover:underline"
+                  className="group mt-8 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue"
                 >
-                  Explore {family.name}
+                  Explore {family.name} <Arrow />
                 </Link>
               )}
             </Container>

@@ -49,11 +49,11 @@ export default function InnovationPage() {
             title="Capture, store and teach, then assist"
             intro="Solid bars are live today. Dashed bars are not yet available."
           />
-          <ol className="mt-10 space-y-6">
+          <ol data-stagger className="mt-10 space-y-6">
             {pipeline.map((step) => {
               const live = step.status === "available";
               return (
-                <li key={step.name} className="flex flex-col gap-4 rounded-2xl border border-line bg-paper p-6 sm:flex-row sm:items-center sm:gap-8">
+                <li key={step.name} className="flex flex-col gap-4 rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 sm:flex-row sm:items-center sm:gap-8">
                   <span
                     aria-hidden
                     className={`h-3 w-40 shrink-0 rounded-full ${
@@ -74,7 +74,7 @@ export default function InnovationPage() {
       <section className="bg-paper">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="Programmes" title="In development and research" />
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div data-stagger className="mt-10 grid gap-6 md:grid-cols-2">
             {programmes.map((p) => (
               <div
                 key={p.name}

@@ -19,13 +19,13 @@ export default function ServicePage() {
       <section className="bg-clinical">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="What we cover" title="From installation to maintenance" />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div data-stagger className="mt-10 grid gap-6 md:grid-cols-3">
             {[
               ["Installation and training", "Commissioning and hands-on training for surgeons, nurses and biomedical engineers."],
               ["One-button service request", "Raise a service call quickly and track it to resolution."],
               ["Maintenance", "Preventive maintenance to keep every system in service."],
             ].map(([t, b]) => (
-              <div key={t} className="rounded-2xl border border-line bg-paper p-8">
+              <div key={t} className="rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-8">
                 <h3 className="font-display text-lg font-bold text-navy">{t}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
               </div>

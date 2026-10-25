@@ -23,7 +23,14 @@ export type Product = {
   highlights: { title: string; body: string }[];
   /** Spec rows. Leave empty until confirmed specs arrive. */
   specs: { label: string; value: string }[];
-  image?: { src: string; alt: string };
+  /**
+   * Main product image. `render` marks a 3D render rather than a photograph;
+   * it is always labelled on the page. `fit: "contain"` is for studio shots
+   * on white.
+   */
+  image?: { src: string; alt: string; render?: boolean; fit?: "contain" | "cover" };
+  /** Extra studio shots, shown as a gallery on the product page. */
+  gallery?: { src: string; alt: string; caption: string }[];
   todo?: string;
 };
 
@@ -86,9 +93,27 @@ export const products: Product[] = [
       { label: "Imaging modes", value: "White light · ICG overlay · NIR" },
     ],
     image: {
-      src: "/images/footage/icg-overlay.jpg",
-      alt: "Laparoscopic view of the gallbladder with ICG fluorescence shown in green",
+      src: "/images/products/spectra-tower.jpg",
+      alt: "UnivLabs 4K ICG tower with camera control unit, light source, insufflator and pump stacked on a cart, monitor showing ICG fluorescence",
+      fit: "contain",
     },
+    gallery: [
+      {
+        src: "/images/products/spectra-tower-studio.jpg",
+        alt: "UnivLabs 4K ICG tower on a grey studio background",
+        caption: "Complete tower",
+      },
+      {
+        src: "/images/products/icg-camera.jpg",
+        alt: "UnivLabs 4K ICG camera control unit with camera head, on top of the NIR light source",
+        caption: "4K ICG 4 CMOS camera system",
+      },
+      {
+        src: "/images/products/nir-light-source.jpg",
+        alt: "UnivLabs NIR UL9700 light source with fibre-optic cable",
+        caption: "NIR UL9700 light source",
+      },
+    ],
     todo: "Add the full spec sheet and intended-use statement from the product team.",
   },
   {
@@ -98,6 +123,12 @@ export const products: Product[] = [
     status: "available",
     descriptor: "Surgical vision suite",
     headline: "[Lumina headline to confirm]",
+    image: {
+      src: "/images/products/lumina-render.jpg",
+      alt: "Render of the UnivLabs Lumina 4K surgical suite cart with monitor",
+      render: true,
+      fit: "contain",
+    },
     summary:
       "[Lumina positioning to confirm: who it is for and how it differs from Spectra and SurgiStart.]",
     highlights: [],
@@ -126,6 +157,38 @@ export const products: Product[] = [
     headline: "Build the operating room one system at a time.",
     summary:
       "Every part of the UnivLabs tower is also available on its own. Our team confirms compatibility, configuration and regulatory availability before supply.",
+    image: {
+      src: "/images/products/icg-camera.jpg",
+      alt: "UnivLabs 4K ICG camera control unit with camera head, on top of the NIR light source",
+      fit: "contain",
+    },
+    gallery: [
+      {
+        src: "/images/products/icg-camera.jpg",
+        alt: "UnivLabs 4K ICG camera control unit with camera head",
+        caption: "4K ICG 4 CMOS camera system",
+      },
+      {
+        src: "/images/products/nir-light-source.jpg",
+        alt: "UnivLabs NIR UL9700 light source with fibre-optic cable",
+        caption: "NIR UL9700 light source",
+      },
+      {
+        src: "/images/products/insufflator.jpg",
+        alt: "UnivLabs Uniflator UL45-S CO₂ insufflator",
+        caption: "Uniflator UL45-S insufflator",
+      },
+      {
+        src: "/images/products/universal-pump.jpg",
+        alt: "UnivLabs Universal Medical Pump with touchscreen",
+        caption: "Universal Medical Pump UMP-1000",
+      },
+      {
+        src: "/images/products/telescope.jpg",
+        alt: "UnivLabs laparoscope telescope",
+        caption: "Telescope",
+      },
+    ],
     highlights: [
       { title: "Imaging", body: "4K camera, 4K ICG camera, medical recorder." },
       {
@@ -150,6 +213,11 @@ export const products: Product[] = [
     status: "available",
     descriptor: "Laparoscopic hand instruments",
     headline: "[Hand instruments headline to confirm]",
+    image: {
+      src: "/images/products/grasper.jpg",
+      alt: "UnivLabs laparoscopic traumatic grasping forceps, jaw and shaft",
+      fit: "contain",
+    },
     summary:
       "[Range overview to confirm: graspers, scissors, needle holders, trocars and so on, with sizes.]",
     highlights: [],
@@ -163,6 +231,11 @@ export const products: Product[] = [
     status: "available",
     descriptor: "Patented catheter",
     headline: "A catheter that began as a urologist’s problem.",
+    image: {
+      src: "/images/products/catheter.jpg",
+      alt: "UnivLabs catheter with balloon tip and coloured valve",
+      fit: "contain",
+    },
     summary:
       "Am-SafeX is a patented catheter developed at UnivLabs with practising urologists. [Intended use, in approved wording.]",
     highlights: [
@@ -180,7 +253,7 @@ export const products: Product[] = [
       },
     ],
     specs: [],
-    todo: "Need approved intended use, sizes, patent number and regulatory status by market.",
+    todo: "Need approved intended use, sizes, patent number and regulatory status by market. Confirm the product photo shows Am-SafeX.",
   },
 ];
 

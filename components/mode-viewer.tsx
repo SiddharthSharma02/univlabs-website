@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 
 /**
  * The hero of the brand: one surgical scene in the three Spectra imaging
- * modes. Auto-advances unless the visitor interacts or prefers reduced motion.
- * The active mode is the solid bar (brand book, graphic device).
+ * modes. Each new mode wipes in from the left, like a light being switched.
+ * The active mode is the solid bar (brand book, graphic device), and it
+ * fills as a timer while the viewer auto-advances. Interaction pauses it;
+ * reduced motion stops it.
  */
 const modes = [
   {
@@ -29,12 +31,16 @@ const modes = [
   },
 ] as const;
 
-export function ModeViewer({ interval = 3500 }: { interval?: number }) {
+export function ModeViewer({ interval = 4200 }: { interval?: number }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [still, setStill] = useState(true);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Reading a browser preference after mount is the point of this effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setStill(reduce);
     if (paused || reduce) return;
     const id = window.setInterval(
       () => setActive((i) => (i + 1) % modes.length),
@@ -43,25 +49,47 @@ export function ModeViewer({ interval = 3500 }: { interval?: number }) {
     return () => window.clearInterval(id);
   }, [paused, interval]);
 
+  const running = !paused && !still;
+
   return (
     <figure className="w-full">
-      <div className="relative aspect-square overflow-hidden rounded-3xl bg-navy-700">
-        {modes.map((mode, i) => (
-          <Image
-            key={mode.id}
-            src={mode.src}
-            alt={mode.alt}
-            fill
-            sizes="(min-width: 1024px) 560px, 100vw"
-            priority={i === 0}
-            aria-hidden={i !== active}
-            className={`object-cover transition-opacity duration-700 ${
-              i === active ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-        <p className="label absolute left-4 top-4 rounded-full bg-navy/70 px-3 py-1.5 text-clinical backdrop-blur">
-          Real footage · {modes[active].label}
+      <div className="relative aspect-square overflow-hidden rounded-3xl bg-navy-700 shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600">
+        {modes.map((mode, i) => {
+          const isActive = i === active;
+          return (
+            <div
+              key={mode.id}
+              aria-hidden={!isActive}
+              className="absolute inset-0"
+              style={{
+                zIndex: isActive ? 2 : 1,
+                clipPath: isActive ? "inset(0 0 0 0)" : "inset(0 100% 0 0)",
+                // Entering: wipe in. Leaving: stay put until covered, then hide.
+                transition: isActive
+                  ? "clip-path 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)"
+                  : "clip-path 0s linear 0.9s",
+              }}
+            >
+              <Image
+                src={mode.src}
+                alt={mode.alt}
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                priority={i === 0}
+                className="object-cover motion-safe:animate-[drift_14s_ease-in-out_infinite_alternate]"
+              />
+            </div>
+          );
+        })}
+        {/* The light edge that travels with each wipe. */}
+        <span
+          key={active}
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 z-[3] w-px bg-clinical/80 shadow-[0_0_24px_4px_rgba(244,246,249,0.5)] motion-safe:animate-[travel_0.9s_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:hidden"
+        />
+        <p className="label absolute left-4 top-4 z-[4] rounded-full bg-navy/70 px-3 py-1.5 text-clinical backdrop-blur">
+          Real footage ·{" "}
+          <span className={active === 0 ? "" : "text-icg"}>{modes[active].label}</span>
         </p>
       </div>
       <figcaption className="mt-4">
@@ -69,6 +97,7 @@ export function ModeViewer({ interval = 3500 }: { interval?: number }) {
         <div role="group" aria-label="Imaging mode" className="grid grid-cols-3 gap-2">
           {modes.map((mode, i) => {
             const isActive = i === active;
+            const fill = mode.id === "white" ? "bg-clinical" : "bg-icg";
             return (
               <button
                 key={mode.id}
@@ -82,16 +111,22 @@ export function ModeViewer({ interval = 3500 }: { interval?: number }) {
               >
                 <span
                   aria-hidden
-                  className={`h-2 rounded-full transition-colors ${
-                    isActive
-                      ? mode.id === "white"
-                        ? "bg-clinical"
-                        : "bg-icg"
-                      : "bg-navy-600 group-hover:bg-navy-700"
-                  }`}
-                />
+                  className="relative h-2 overflow-hidden rounded-full bg-navy-600 transition-colors group-hover:bg-navy-700"
+                >
+                  {isActive && (
+                    <span
+                      key={`${active}-${running}`}
+                      className={`absolute inset-0 origin-left rounded-full ${fill}`}
+                      style={
+                        running
+                          ? { animation: `fill-bar ${interval}ms linear both` }
+                          : undefined
+                      }
+                    />
+                  )}
+                </span>
                 <span
-                  className={`label ${isActive ? "text-clinical" : "text-fog"}`}
+                  className={`label transition-colors ${isActive ? "text-clinical" : "text-fog group-hover:text-clinical"}`}
                 >
                   {mode.label}
                 </span>

@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { CSSProperties } from "react";
+import { CompareSlider } from "@/components/compare-slider";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
   ButtonLink,
   Container,
   CtaBand,
   Eyebrow,
+  HeroGlow,
+  ProductImage,
+  SectionHeader,
   SectionMarker,
   StatusTag,
   Todo,
@@ -15,6 +19,8 @@ import {
 import { families, productBySlug, products } from "@/content/products";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -40,36 +46,50 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-navy text-clinical">
-        <Container className="grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16">
+      <section className="relative overflow-hidden bg-navy text-clinical">
+        <HeroGlow />
+        <Container className="relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16">
           <div>
-            <SectionMarker />
-            <nav aria-label="Breadcrumb" className="label mt-8 text-fog">
-              <Link href="/products" className="hover:text-clinical">
+            <div className="rise" style={i(0)}>
+              <SectionMarker />
+            </div>
+            <nav aria-label="Breadcrumb" className="rise label mt-8 text-fog" style={i(1)}>
+              <Link href="/products" className="transition-colors hover:text-clinical">
                 Products
               </Link>
               <span aria-hidden> / </span>
               {family && (
-                <Link href={family.href} className="hover:text-clinical">
+                <Link href={family.href} className="transition-colors hover:text-clinical">
                   {family.name}
                 </Link>
               )}
             </nav>
-            <h1 className="mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl">
+            <h1
+              className="rise mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
+              style={i(2)}
+            >
               {product.name}
             </h1>
-            <p className="label mt-3 text-blue-300">{product.descriptor}</p>
-            <p className="mt-8 font-display text-2xl font-semibold text-clinical text-balance">
+            <p className="rise label mt-3 text-blue-300" style={i(2)}>
+              {product.descriptor}
+            </p>
+            <p
+              className="rise mt-8 font-display text-2xl font-semibold text-clinical text-balance"
+              style={i(3)}
+            >
               {product.headline}
             </p>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-fog text-pretty">
+            <p
+              className="rise mt-4 max-w-xl text-lg leading-relaxed text-fog text-pretty"
+              style={i(4)}
+            >
               {product.summary}
             </p>
-            <div className="mt-6">
+            <div className="rise mt-6" style={i(4)}>
               <StatusTag status={product.status} dark />
             </div>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <ButtonLink href={`/contact?topic=demo&product=${product.slug}`}>
+            <div className="rise mt-10 flex flex-wrap gap-3" style={i(5)}>
+              <ButtonLink href={`/contact?topic=demo&product=${product.slug}`} arrow>
                 Request a demo
               </ButtonLink>
               <ButtonLink
@@ -80,20 +100,16 @@ export default async function ProductPage({ params }: Props) {
               </ButtonLink>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[560px]">
+          <div className="rise mx-auto w-full max-w-[560px]" style={i(3)}>
             {isSpectra ? (
               <ModeViewer />
             ) : product.image ? (
-              <div className="relative aspect-square overflow-hidden rounded-3xl">
-                <Image
-                  src={product.image.src}
-                  alt={product.image.alt}
-                  fill
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  className="object-cover"
-                  priority
-                />
-              </div>
+              <ProductImage
+                image={product.image}
+                sizes="(min-width: 1024px) 560px, 100vw"
+                priority
+                className="aspect-square rounded-3xl shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600"
+              />
             ) : (
               <div className="flex aspect-square items-center justify-center rounded-3xl border-2 border-dashed border-navy-600 bg-navy-700">
                 <p className="label text-fog">Product photo to commission</p>
@@ -111,15 +127,22 @@ export default async function ProductPage({ params }: Props) {
 
       {product.highlights.length > 0 && (
         <section className="bg-clinical">
-          <Container className="py-16 sm:py-20">
-            <Eyebrow>Highlights</Eyebrow>
-            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {product.highlights.map((h) => (
+          <Container className="py-16 sm:py-24">
+            <div data-reveal>
+              <Eyebrow>Highlights</Eyebrow>
+            </div>
+            <div data-stagger className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {product.highlights.map((h, n) => (
                 <div
                   key={h.title}
-                  className="rounded-2xl border border-line border-t-4 border-t-blue bg-paper p-8"
+                  className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
-                  <h2 className="font-display text-lg font-bold text-navy">
+                  <p className="label text-steel">0{n + 1}</p>
+                  <span
+                    aria-hidden
+                    className="draw-bar mt-4 block h-1.5 w-10 rounded-full bg-blue"
+                  />
+                  <h2 className="mt-5 font-display text-xl font-bold text-navy">
                     {h.title}
                   </h2>
                   <p className="mt-3 text-[15px] leading-relaxed">{h.body}</p>
@@ -130,12 +153,58 @@ export default async function ProductPage({ params }: Props) {
         </section>
       )}
 
-      <section className="bg-paper">
-        <Container className="py-16 sm:py-20">
+      {isSpectra && (
+        <section className="relative overflow-hidden bg-navy text-clinical">
+          <HeroGlow />
+          <Container className="relative grid items-center gap-12 py-20 sm:py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+            <SectionHeader
+              dark
+              eyebrow="Try it"
+              title="Drag across the frame"
+              intro="The same field, under white light and with the ICG overlay. Real footage from a UnivLabs camera."
+            />
+            <div data-reveal="scale">
+              <CompareSlider dark />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {product.gallery && product.gallery.length > 0 && (
+        <section className="bg-paper">
+          <Container className="py-16 sm:py-24">
+            <SectionHeader
+              eyebrow={isSpectra ? "The tower" : "The range"}
+              title={isSpectra ? "Every part, designed to work together" : "Studio photographs"}
+            />
+            <ul
+              data-stagger
+              className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {product.gallery.map((g) => (
+                <li
+                  key={g.src}
+                  className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
+                >
+                  <ProductImage
+                    image={{ src: g.src, alt: g.alt, fit: "contain" }}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="aspect-square"
+                  />
+                  <p className="label border-t border-line px-6 py-4 text-navy">{g.caption}</p>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      )}
+
+      <section className="bg-clinical">
+        <Container className="py-16 sm:py-24">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
-            <div>
+            <div data-reveal>
               <Eyebrow>Specifications</Eyebrow>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-navy">
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-navy sm:text-4xl">
                 Technical summary
               </h2>
               <p className="mt-4 leading-relaxed">
@@ -144,16 +213,25 @@ export default async function ProductPage({ params }: Props) {
               </p>
             </div>
             {product.specs.length > 0 ? (
-              <dl className="divide-y divide-line rounded-2xl border border-line">
+              <dl
+                data-stagger
+                className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-paper"
+              >
                 {product.specs.map((row) => (
-                  <div key={row.label} className="grid grid-cols-[1fr_1.4fr] gap-4 px-6 py-4">
+                  <div
+                    key={row.label}
+                    className="grid grid-cols-[1fr_1.4fr] gap-4 px-6 py-5 transition-colors hover:bg-white"
+                  >
                     <dt className="label self-center text-steel">{row.label}</dt>
                     <dd className="font-mono text-[15px] text-navy">{row.value}</dd>
                   </div>
                 ))}
               </dl>
             ) : (
-              <div className="flex items-center rounded-2xl border border-dashed border-steel/50 bg-clinical p-8">
+              <div
+                data-reveal
+                className="flex items-center rounded-3xl border border-dashed border-steel/50 bg-paper p-8"
+              >
                 <p className="text-[15px] text-steel">
                   Full specifications are available on request.
                 </p>

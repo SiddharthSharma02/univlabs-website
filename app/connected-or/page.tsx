@@ -56,13 +56,13 @@ export default function ConnectedOrPage() {
             eyebrow="What it does today"
             title="Three jobs, all live"
           />
-          <ol className="mt-10 grid gap-6 md:grid-cols-3">
+          <ol data-stagger className="mt-10 grid gap-6 md:grid-cols-3">
             {[
               ["01", "Record and organise", "Capture surgical cases and keep them organised."],
               ["02", "Stream live", "Share live video with authorised colleagues outside the OR."],
               ["03", "Teach and review", "Review procedures with your team and trainees."],
             ].map(([n, t, b]) => (
-              <li key={n} className="rounded-2xl border border-line bg-paper p-8">
+              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-8">
                 <p className="label text-blue">{n}</p>
                 <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
@@ -74,7 +74,7 @@ export default function ConnectedOrPage() {
       <section className="bg-paper">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="The platform" title="How the parts fit together" />
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div data-stagger className="mt-10 grid gap-6 md:grid-cols-2">
             {parts.map((p) => (
               <div
                 key={p.id}

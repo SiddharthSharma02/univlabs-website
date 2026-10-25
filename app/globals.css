@@ -53,6 +53,215 @@ body {
   text-transform: uppercase;
 }
 
+/* ------------------------------------------------------------------
+   Motion. One easing, one rhythm. Everything here is decoration on top
+   of content that is already readable: with JavaScript off or with
+   prefers-reduced-motion, the page renders fully and stays still.
+------------------------------------------------------------------- */
+
+@theme {
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --animate-rise: rise 0.9s var(--ease-out-soft) both;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-march: march 1.2s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Dashed bars "march": the bar is not finished yet. */
+@keyframes march {
+  to {
+    background-position: 24px 0;
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -6;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Travelling signal along a connector. */
+@keyframes travel {
+  from {
+    left: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes travel-down {
+  from {
+    top: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1.04) translate(0, 0);
+  }
+  to {
+    transform: scale(1.1) translate(-1.5%, -1%);
+  }
+}
+
+@keyframes float-bar {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(var(--float, 12px));
+  }
+}
+
+@keyframes fill-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Staggered entrance for above-the-fold content: pure CSS, no JS wait. */
+.rise {
+  animation: var(--animate-rise);
+  animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+}
+
+/*
+  Scroll reveal. `html.motion` is set by an inline script before paint,
+  so without JavaScript nothing is ever hidden.
+*/
+html.motion [data-reveal]:not(.is-revealed),
+html.motion [data-stagger]:not(.is-revealed) > * {
+  opacity: 0;
+  transform: translateY(28px);
+}
+html.motion [data-reveal="fade"]:not(.is-revealed) {
+  transform: none;
+}
+html.motion [data-reveal="scale"]:not(.is-revealed) {
+  transform: scale(0.96);
+}
+html.motion [data-reveal="left"]:not(.is-revealed) {
+  transform: translateX(-32px);
+}
+html.motion [data-reveal],
+html.motion [data-stagger] > * {
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.motion [data-stagger] > :nth-child(2) { --i: 1; }
+html.motion [data-stagger] > :nth-child(3) { --i: 2; }
+html.motion [data-stagger] > :nth-child(4) { --i: 3; }
+html.motion [data-stagger] > :nth-child(5) { --i: 4; }
+html.motion [data-stagger] > :nth-child(6) { --i: 5; }
+html.motion [data-stagger] > :nth-child(7) { --i: 6; }
+html.motion [data-stagger] > :nth-child(n + 8) { --i: 7; }
+
+/* Bars that draw themselves in when revealed. */
+html.motion [data-reveal]:not(.is-revealed) .draw-bar,
+html.motion [data-stagger]:not(.is-revealed) .draw-bar {
+  transform: scaleX(0);
+}
+.draw-bar {
+  transform-origin: left center;
+  transition: transform 1.1s var(--ease-out-soft) 0.25s;
+}
+
+.march {
+  background-image: repeating-linear-gradient(
+    90deg,
+    currentColor 0 12px,
+    transparent 12px 24px
+  );
+  animation: var(--animate-march);
+}
+
+/* Cursor spotlight on dark cards; position comes from the pointer. */
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(111 163 255 / 0.16),
+    transparent 60%
+  );
+}
+[data-spotlight]:hover::before {
+  opacity: 1;
+}
+
+/* Arrow that nudges on hover of its group. */
+.nudge {
+  transition: transform 0.3s var(--ease-out-soft);
+}
+.group:hover .nudge,
+.group:focus-visible .nudge {
+  transform: translate(3px, -3px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -61,6 +270,11 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  .march {
+    animation: none;
   }
 }

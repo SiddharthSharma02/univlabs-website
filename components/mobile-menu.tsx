@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { nav } from "@/content/site";
 
 export function MobileMenu() {
@@ -49,10 +49,14 @@ export function MobileMenu() {
         <nav
           id="mobile-nav"
           aria-label="Main"
-          className="fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper px-4 pb-10 pt-4"
+          className="fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper px-4 pb-10 pt-4 animate-[rise_0.5s_var(--ease-out-soft)_both]"
         >
-          {nav.map((group) => (
-            <div key={group.label} className="border-b border-line py-4">
+          {nav.map((group, i) => (
+            <div
+              key={group.label}
+              className="rise border-b border-line py-4"
+              style={{ "--i": i } as CSSProperties}
+            >
               <Link
                 href={group.href}
                 className="font-display text-lg font-bold text-navy"

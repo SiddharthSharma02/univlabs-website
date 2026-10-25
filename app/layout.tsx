@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { MotionRoot, motionBootScript } from "@/components/motion";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -49,7 +50,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en-IN"
       className={`${jakarta.variable} ${inter.variable} ${plexMono.variable} h-full antialiased`}
+      // The boot script adds a `motion` class before hydration.
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: motionBootScript }} />
+      </head>
       <body className="flex min-h-full flex-col bg-clinical font-sans text-ink">
         <a
           href="#main"
@@ -62,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <MotionRoot />
       </body>
     </html>
   );

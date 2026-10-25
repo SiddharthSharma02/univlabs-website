@@ -35,7 +35,7 @@ export default function AboutPage() {
             title={site.purpose}
             intro="Surgery is one of medicine’s most consequential interventions, and access to it is limited by cost and geography. We build equipment that more hospitals can afford, without compromising what surgeons can see."
           />
-          <ol className="space-y-6 border-l-2 border-line pl-8">
+          <ol data-stagger className="space-y-6 border-l-2 border-line pl-8">
             {[
               ["2015", "Founded in Gurugram by Sunil Kumar Singh, with urologist Prof. Dr Anil Mandhani as co-founder."],
               ["2021", "Launched India’s first indigenously designed and manufactured full 4K endoscope tower."],
@@ -57,9 +57,9 @@ export default function AboutPage() {
             title="Clinicians, engineers and operators"
             intro={`${facts.team.value} people across surgical vision, devices, connected data and regulatory.`}
           />
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {leadership.map((person) => (
-              <li key={person.name} className="flex gap-5 rounded-2xl border border-line bg-paper p-6">
+              <li key={person.name} className="flex gap-5 rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
                 <span
                   aria-hidden
                   className="flex size-14 shrink-0 items-center justify-center rounded-full bg-navy font-display font-bold text-clinical"
@@ -82,7 +82,7 @@ export default function AboutPage() {
             eyebrow="Facts and sources"
             title="Every number, with where it comes from"
           />
-          <div className="mt-10 overflow-x-auto rounded-2xl border border-line bg-paper">
+          <div data-reveal className="mt-10 overflow-x-auto rounded-2xl border border-line bg-paper">
             <table className="w-full min-w-[560px] text-left text-[15px]">
               <thead className="bg-mist">
                 <tr>

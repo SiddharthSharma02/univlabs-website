@@ -18,13 +18,13 @@ export default function PartnersPage() {
       <section className="bg-clinical">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="What partners get" title="Everything you need to sell and support" />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div data-stagger className="mt-10 grid gap-6 md:grid-cols-3">
             {[
               ["Training", "Product and clinical applications training for your sales and service teams."],
               ["Documentation", "Certificates, IFUs, datasheets and brand templates."],
               ["Support", "Direct access to UnivLabs service and regulatory teams."],
             ].map(([t, b]) => (
-              <div key={t} className="rounded-2xl border border-line bg-paper p-8">
+              <div key={t} className="rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-8">
                 <h3 className="font-display text-lg font-bold text-navy">{t}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
               </div>

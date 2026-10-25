@@ -28,7 +28,7 @@ export default function QualityPage() {
             title="Approvals by market"
             intro="Tender committees and distributors can download every certificate here."
           />
-          <div className="mt-10 overflow-x-auto rounded-2xl border border-line bg-paper">
+          <div data-reveal className="mt-10 overflow-x-auto rounded-2xl border border-line bg-paper">
             <table className="w-full min-w-[640px] text-left text-[15px]">
               <thead className="bg-mist">
                 <tr>

@@ -21,6 +21,9 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 - `components/ui.tsx` — Container, SectionHeader, ButtonLink, StatusTag, PageHero, SectionMarker, CtaBand, Todo.
 - `components/brand.tsx` — `Mark` (SVG rebuilt from the logo) and `Logo` lockup.
 - `components/mode-viewer.tsx` — the hero: one surgical scene in white light / ICG overlay / NIR.
+- `components/motion.tsx` — the motion system: `MotionRoot` (scroll reveal + card spotlight), `ScrollProgress`, `CountUp`. Add `data-reveal` (or `="fade" | "scale" | "left"`) to fade an element in on scroll, `data-stagger` to a list or grid to reveal its children one by one, `data-spotlight` to a dark card. Above-the-fold text uses the CSS `rise` class with `--i` for order. Nothing is hidden without JavaScript or with reduced motion.
+- `components/compare-slider.tsx` — drag to compare white light and the ICG overlay.
+- `public/images/products/` — studio shots from the client's product library. Renders are flagged `render: true` and always labelled on the page.
 - `app/globals.css` — brand tokens as Tailwind theme colours and fonts, plus the `label` utility.
 - `brand/` — brand book and source assets (logo variants, original footage). `public/` holds web copies.
 

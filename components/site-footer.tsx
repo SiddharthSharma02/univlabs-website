@@ -5,12 +5,12 @@ import { Container } from "./ui";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-navy text-fog">
+    <footer className="relative overflow-hidden bg-navy text-fog">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
-          <div>
+          <div data-reveal>
             <Logo reversed />
-            <p className="mt-6 font-display text-2xl font-bold tracking-tight text-clinical">
+            <p className="mt-6 font-display text-3xl font-bold tracking-tight text-clinical sm:text-4xl">
               {site.brandLine}
             </p>
             <p className="mt-2 max-w-sm">{site.descriptor}</p>
@@ -18,7 +18,7 @@ export function SiteFooter() {
               R&amp;D · {site.rdSites.join(" · ")}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+          <div data-stagger className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
             {nav.map((group) => (
               <div key={group.label}>
                 <p className="label text-blue-300">{group.label}</p>
@@ -27,7 +27,7 @@ export function SiteFooter() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="text-[15px] text-fog transition-colors hover:text-clinical"
+                        className="inline-block text-[15px] text-fog transition-[color,transform] duration-300 hover:translate-x-1 hover:text-clinical"
                       >
                         {item.label}
                       </Link>
