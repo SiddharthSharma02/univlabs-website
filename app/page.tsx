@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { IcgReveal } from "@/components/icg-reveal";
+import { NirLens } from "@/components/nir-lens";
 import { Mark } from "@/components/brand";
 import { ModeViewer } from "@/components/mode-viewer";
 import { CountUp } from "@/components/motion";
@@ -240,7 +240,7 @@ export default function Home() {
             </ul>
           </div>
           <div data-reveal="scale">
-            <IcgReveal dark />
+            <NirLens dark />
           </div>
         </Container>
       </section>

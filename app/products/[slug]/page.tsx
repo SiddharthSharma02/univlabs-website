@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, type CSSProperties } from "react";
-import { IcgReveal } from "@/components/icg-reveal";
+import { NirLens } from "@/components/nir-lens";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
   ButtonLink,
@@ -193,11 +193,11 @@ async function ProductContent({ params }: Props) {
             <SectionHeader
               dark
               eyebrow="Try it"
-              title="Hover to see the fluorescence"
-              intro="The same field, under white light and with the ICG overlay. Real footage from a UnivLabs camera."
+              title="Hover to see in near-infrared"
+              intro="The field under white light, with a near-infrared lens wherever you point. Real footage from a UnivLabs camera."
             />
             <div data-reveal="scale">
-              <IcgReveal dark />
+              <NirLens dark />
             </div>
           </Container>
         </section>
