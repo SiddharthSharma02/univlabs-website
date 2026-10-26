@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, type CSSProperties } from "react";
-import { CompareSlider } from "@/components/compare-slider";
+import { IcgReveal } from "@/components/icg-reveal";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
   ButtonLink,
@@ -193,11 +193,11 @@ async function ProductContent({ params }: Props) {
             <SectionHeader
               dark
               eyebrow="Try it"
-              title="Drag across the frame"
+              title="Hover to see the fluorescence"
               intro="The same field, under white light and with the ICG overlay. Real footage from a UnivLabs camera."
             />
             <div data-reveal="scale">
-              <CompareSlider dark />
+              <IcgReveal dark />
             </div>
           </Container>
         </section>

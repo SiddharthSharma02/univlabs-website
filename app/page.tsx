@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { CompareSlider } from "@/components/compare-slider";
+import { IcgReveal } from "@/components/icg-reveal";
 import { Mark } from "@/components/brand";
 import { ModeViewer } from "@/components/mode-viewer";
 import { CountUp } from "@/components/motion";
@@ -222,7 +222,7 @@ export default function Home() {
             <SectionHeader
               dark
               eyebrow="One camera, three views"
-              title="Drag across the frame. The anatomy is the same."
+              title="Hover over the frame. The anatomy is the same."
               intro="Spectra’s 4-chip camera adds a dedicated near-infrared sensor to red, green and blue, so ICG fluorescence can be laid over the 4K white-light image of the same field."
             />
             <ul data-stagger className="mt-10 space-y-4">
@@ -240,7 +240,7 @@ export default function Home() {
             </ul>
           </div>
           <div data-reveal="scale">
-            <CompareSlider dark />
+            <IcgReveal dark />
           </div>
         </Container>
       </section>
