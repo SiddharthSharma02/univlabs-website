@@ -30,7 +30,41 @@ export function Eyebrow({
       : tone === "light"
         ? "text-blue-300"
         : "text-steel";
-  return <p className={`label ${color}`}>{children}</p>;
+  return (
+    <p data-scramble className={`label ${color}`}>
+      {children}
+    </p>
+  );
+}
+
+/**
+ * Splits a headline into words that rise out of a soft focus one by one.
+ * `delay` is the index of the first word, for lines that follow others.
+ */
+export function Words({
+  text,
+  start = 0,
+  delay = 120,
+}: {
+  text: string;
+  start?: number;
+  delay?: number;
+}) {
+  return (
+    <>
+      {text.split(" ").map((w, n) => (
+        <span key={n}>
+          <span
+            className="word"
+            style={{ "--w": start + n, "--d": `${delay}ms` } as CSSProperties}
+          >
+            {w}
+          </span>
+          {n < text.split(" ").length - 1 && " "}
+        </span>
+      ))}
+    </>
+  );
 }
 
 export function SectionHeader({
@@ -94,7 +128,8 @@ export function ButtonLink({
   return (
     <Link
       href={href}
-      className={`group inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-[background-color,border-color,color,transform,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 ${styles} ${className}`}
+      data-magnetic={variant === "primary" ? "" : undefined}
+      className={`group inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-[background-color,border-color,color,translate,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 ${styles} ${className}`}
     >
       {children}
       {arrow && <Arrow />}
@@ -163,11 +198,8 @@ export function PageHero({
           <div className="rise" style={{ "--i": 1 } as CSSProperties}>
             <Eyebrow tone="light">{eyebrow}</Eyebrow>
           </div>
-          <h1
-            className="rise mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl"
-            style={{ "--i": 2 } as CSSProperties}
-          >
-            {title}
+          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            <Words text={title} delay={200} />
           </h1>
           {intro && (
             <p

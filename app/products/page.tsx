@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import {
   Arrow,
   Container,
@@ -21,14 +22,16 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-paper transition-[transform,box-shadow,border-color] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-[0_24px_60px_-20px_rgba(0,26,73,0.25)]"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow,border-color] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-[0_24px_60px_-20px_rgba(0,26,73,0.25)]"
     >
       {product.image ? (
-        <ProductImage
-          image={product.image}
-          sizes="(min-width: 768px) 33vw, 100vw"
-          className="aspect-[4/3]"
-        />
+        <ViewTransition name={`product-${product.slug}`} share="morph" default="none">
+          <ProductImage
+            image={product.image}
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="aspect-[4/3]"
+          />
+        </ViewTransition>
       ) : (
         <div className="relative aspect-[4/3] bg-mist">
           <div className="absolute inset-3 flex items-center justify-center rounded-xl border-2 border-dashed border-steel/40">

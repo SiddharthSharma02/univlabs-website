@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense, type CSSProperties } from "react";
+import { Suspense, ViewTransition, type CSSProperties } from "react";
 import { NirLens } from "@/components/nir-lens";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
@@ -15,6 +15,7 @@ import {
   SectionMarker,
   StatusTag,
   Todo,
+  Words,
 } from "@/components/ui";
 import { families, productBySlug, products } from "@/content/products";
 
@@ -97,13 +98,10 @@ async function ProductContent({ params }: Props) {
                 </Link>
               )}
             </nav>
-            <h1
-              className="rise mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
-              style={i(2)}
-            >
-              {product.name}
+            <h1 className="mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+              <Words text={product.name} delay={180} />
             </h1>
-            <p className="rise label mt-3 text-blue-300" style={i(2)}>
+            <p data-scramble className="rise label mt-3 text-blue-300" style={i(2)}>
               {product.descriptor}
             </p>
             <p
@@ -137,12 +135,14 @@ async function ProductContent({ params }: Props) {
             {isSpectra ? (
               <ModeViewer />
             ) : product.image ? (
-              <ProductImage
-                image={product.image}
-                sizes="(min-width: 1024px) 560px, 100vw"
-                priority
-                className="aspect-square rounded-3xl shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600"
-              />
+              <ViewTransition name={`product-${product.slug}`} share="morph" default="none">
+                <ProductImage
+                  image={product.image}
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  priority
+                  className="aspect-square rounded-3xl shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600"
+                />
+              </ViewTransition>
             ) : (
               <div className="flex aspect-square items-center justify-center rounded-3xl border-2 border-dashed border-navy-600 bg-navy-700">
                 <p className="label text-fog">Product photo to commission</p>
@@ -168,7 +168,7 @@ async function ProductContent({ params }: Props) {
               {product.highlights.map((h, n) => (
                 <div
                   key={h.title}
-                  className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
+                  className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
                   <p className="label text-steel">0{n + 1}</p>
                   <span
@@ -193,8 +193,8 @@ async function ProductContent({ params }: Props) {
             <SectionHeader
               dark
               eyebrow="Try it"
-              title="Hover to see in near-infrared"
-              intro="The field under white light, with a near-infrared lens wherever you point. Real footage from a UnivLabs camera."
+              title="One field, seen in near-infrared"
+              intro="The field under white light, with a near-infrared lens wherever you point or touch. Real footage from a UnivLabs camera."
             />
             <div data-reveal="scale">
               <NirLens dark />
@@ -217,7 +217,7 @@ async function ProductContent({ params }: Props) {
               {product.gallery.map((g) => (
                 <li
                   key={g.src}
-                  className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
+                  className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
                   <ProductImage
                     image={{ src: g.src, alt: g.alt, fit: "contain" }}

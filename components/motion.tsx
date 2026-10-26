@@ -9,12 +9,50 @@ import { useEffect, useRef, useState } from "react";
  */
 export const motionBootScript = `try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion')}catch(e){}`;
 
-const REVEAL = "[data-reveal],[data-stagger]";
+const REVEAL = "[data-reveal],[data-stagger],[data-scramble]";
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·/";
+
+/**
+ * Mono labels resolve like a readout settling: each character cycles
+ * briefly, left to right, then locks. Screen readers get the real text.
+ */
+function scramble(el: HTMLElement) {
+  if (el.dataset.scrambled || el.childNodes.length !== 1) return;
+  const node = el.firstChild;
+  if (!node || node.nodeType !== Node.TEXT_NODE) return;
+  el.dataset.scrambled = "1";
+  const final = node.textContent ?? "";
+  el.setAttribute("aria-label", final);
+  const start = performance.now();
+  const span = 520;
+  const tick = (now: number) => {
+    const t = (now - start) / span;
+    const locked = Math.floor(t * final.length);
+    let out = "";
+    for (let k = 0; k < final.length; k++) {
+      const c = final[k];
+      out +=
+        k < locked || c === " "
+          ? c
+          : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+    }
+    node.textContent = out;
+    if (t < 1) requestAnimationFrame(tick);
+    else {
+      node.textContent = final;
+      el.removeAttribute("aria-label");
+    }
+  };
+  requestAnimationFrame(tick);
+}
 
 /**
  * Site-wide motion behaviour, mounted once in the layout:
  * - reveals [data-reveal] and [data-stagger] elements as they scroll in
+ * - resolves [data-scramble] labels as they scroll in
  * - feeds the pointer position to [data-spotlight] cards
+ * - tilts [data-tilt] cards and pulls [data-magnetic] buttons toward the
+ *   pointer (mouse and pen only)
  */
 export function MotionRoot() {
   useEffect(() => {
@@ -25,8 +63,11 @@ export function MotionRoot() {
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.classList.add("is-revealed");
-            io.unobserve(e.target);
+            const el = e.target as HTMLElement;
+            el.classList.add("is-revealed");
+            io.unobserve(el);
+            if (el.matches("[data-scramble]")) scramble(el);
+            el.querySelectorAll<HTMLElement>("[data-scramble]").forEach(scramble);
           }
         }
       },
@@ -54,21 +95,65 @@ export function MotionRoot() {
     });
     mo.observe(document.body, { childList: true, subtree: true });
 
+    let tilted: HTMLElement | null = null;
+    let pulled: HTMLElement | null = null;
+    const release = (el: HTMLElement | null) => {
+      if (!el) return;
+      el.style.removeProperty("--rx");
+      el.style.removeProperty("--ry");
+      el.style.removeProperty("--px");
+      el.style.removeProperty("--py");
+    };
+
     const onMove = (e: PointerEvent) => {
-      const card = (e.target as Element | null)?.closest?.<HTMLElement>(
-        "[data-spotlight]",
-      );
-      if (!card) return;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      card.style.setProperty("--my", `${e.clientY - r.top}px`);
+      const target = e.target as Element | null;
+      const card = target?.closest?.<HTMLElement>("[data-spotlight]");
+      if (card) {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        card.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }
+      if (e.pointerType === "touch") return;
+
+      const tilt = target?.closest?.<HTMLElement>("[data-tilt]") ?? null;
+      if (tilt !== tilted) {
+        release(tilted);
+        tilted = tilt;
+      }
+      if (tilt) {
+        const r = tilt.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        tilt.style.setProperty("--rx", `${(-y * 5).toFixed(2)}deg`);
+        tilt.style.setProperty("--ry", `${(x * 6).toFixed(2)}deg`);
+      }
+
+      const mag = target?.closest?.<HTMLElement>("[data-magnetic]") ?? null;
+      if (mag !== pulled) {
+        release(pulled);
+        pulled = mag;
+      }
+      if (mag) {
+        const r = mag.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width / 2);
+        const y = e.clientY - (r.top + r.height / 2);
+        mag.style.setProperty("--px", `${(x * 0.22).toFixed(1)}px`);
+        mag.style.setProperty("--py", `${(y * 0.3).toFixed(1)}px`);
+      }
+    };
+    const onLeave = () => {
+      release(tilted);
+      release(pulled);
+      tilted = pulled = null;
     };
     document.addEventListener("pointermove", onMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onLeave);
 
     return () => {
       io.disconnect();
       mo.disconnect();
       document.removeEventListener("pointermove", onMove);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 

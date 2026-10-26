@@ -5,7 +5,7 @@ import { facts, leadership, site } from "@/content/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "UnivLabs was founded in Gurugram in 2015 to build world-class surgical technology in India.",
+    "UnivLabs was founded in Gurugram in 2015 to design and build surgical technology in India.",
 };
 
 function initials(name: string) {
@@ -25,7 +25,7 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About UnivLabs"
-        title="World-class surgical technology, built in India"
+        title="Surgical technology, designed and built in India"
         intro="In 2015, Sunil Kumar Singh asked whether India could design and build surgical technology that competes globally. UnivLabs is the answer he set out to build."
       />
       <section className="bg-clinical">
@@ -59,7 +59,7 @@ export default function AboutPage() {
           />
           <ul data-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {leadership.map((person) => (
-              <li key={person.name} className="flex gap-5 rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
+              <li key={person.name} className="flex gap-5 rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
                 <span
                   aria-hidden
                   className="flex size-14 shrink-0 items-center justify-center rounded-full bg-navy font-display font-bold text-clinical"

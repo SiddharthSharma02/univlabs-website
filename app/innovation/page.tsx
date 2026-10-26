@@ -47,13 +47,13 @@ export default function InnovationPage() {
           <SectionHeader
             eyebrow="The roadmap"
             title="Capture, store and teach, then assist"
-            intro="Solid bars are live today. Dashed bars are not yet available."
+            intro="Solid bars are live today. Dashed bars are not yet available. We always say which is which."
           />
           <ol data-stagger className="mt-10 space-y-6">
             {pipeline.map((step) => {
               const live = step.status === "available";
               return (
-                <li key={step.name} className="flex flex-col gap-4 rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 sm:flex-row sm:items-center sm:gap-8">
+                <li key={step.name} className="flex flex-col gap-4 rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 sm:flex-row sm:items-center sm:gap-8">
                   <span
                     aria-hidden
                     className={`h-3 w-40 shrink-0 rounded-full ${

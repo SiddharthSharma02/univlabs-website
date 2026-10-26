@@ -70,7 +70,7 @@ export const products: Product[] = [
     family: "surgical-vision",
     status: "available",
     descriptor: "4K ICG surgical vision suite",
-    headline: "See what white light can’t.",
+    headline: "White light, ICG overlay and NIR from one camera.",
     summary:
       "Spectra pairs a 4K 4-chip camera with ICG fluorescence imaging, so surgeons can switch between white light, a fluorescence overlay and near-infrared views of the same field.",
     highlights: [

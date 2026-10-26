@@ -50,7 +50,7 @@ export default function SpecialtiesPage() {
                   <li key={slug}>
                     <Link
                       href={`/products/${p.slug}`}
-                      className="group flex h-full flex-col rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 hover:border-navy"
+                      className="group flex h-full flex-col rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 hover:border-navy"
                     >
                       <p className="label text-steel">{p.descriptor}</p>
                       <p className="mt-2 font-display text-lg font-bold text-navy group-hover:text-blue">

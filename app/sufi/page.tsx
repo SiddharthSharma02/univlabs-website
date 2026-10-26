@@ -19,7 +19,7 @@ export default function SufiPage() {
     <>
       <PageHero
         eyebrow="SUFI · For surgeons"
-        title="Bring us the problem. We will build the device."
+        title="Bring us the problem, and we will build the device with you"
         intro="SUFI is our co-innovation programme for surgeons. You bring an idea from the operating room, and UnivLabs engineers develop it into a product with you."
       />
       <Container className="pt-8">
@@ -35,7 +35,7 @@ export default function SufiPage() {
               ["03", "Prototype", "We design, build and test with you."],
               ["04", "Bring to market", "Regulatory, manufacturing and launch by UnivLabs."],
             ].map(([n, t, b]) => (
-              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
+              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
                 <p className="label text-blue">{n}</p>
                 <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
@@ -49,7 +49,7 @@ export default function SufiPage() {
           <SectionHeader
             eyebrow="Proof"
             title="Am-SafeX started as a urologist’s problem"
-            intro="Our patented Am-SafeX catheter was developed with practising urologists to help prevent urethral injury. It is the model for every SUFI project."
+            intro="Our patented Am-SafeX catheter was developed with practising urologists, starting from a problem they raised in the operating room. It is the model for every SUFI project."
           />
           <div data-reveal="scale" className="rounded-3xl border border-line bg-clinical p-8">
             <p className="font-display text-xl font-semibold leading-snug text-navy">

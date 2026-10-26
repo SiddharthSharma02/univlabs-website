@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { MotionRoot, motionBootScript } from "@/components/motion";
 import { site } from "@/content/site";
+import { ViewTransition } from "react";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -64,9 +65,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
+        {/* Route changes crossfade; the header is pinned (see globals.css). */}
+        <ViewTransition default="page">
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+        </ViewTransition>
         <SiteFooter />
         <MotionRoot />
       </body>

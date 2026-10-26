@@ -23,6 +23,9 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 - `components/brand.tsx` — `Mark` (SVG rebuilt from the logo) and `Logo` lockup.
 - `components/mode-viewer.tsx` — the hero: one surgical scene in white light / ICG overlay / NIR.
 - `components/motion.tsx` — the motion system: `MotionRoot` (scroll reveal + card spotlight), `ScrollProgress`, `CountUp`. Add `data-reveal` (or `="fade" | "scale" | "left"`) to fade an element in on scroll, `data-stagger` to a list or grid to reveal its children one by one, `data-spotlight` to a dark card. Above-the-fold text uses the CSS `rise` class with `--i` for order. Nothing is hidden without JavaScript or with reduced motion.
+- `components/desktop-nav.tsx` — desktop nav with a sliding hover pill and the Products mega menu. `components/specialty-explorer.tsx` — the home page specialty hover list.
+- Also in `components/motion.tsx`: `data-scramble` (mono labels resolve on reveal), `data-tilt` (cards lean toward the pointer), `data-magnetic` (primary buttons). `Words` in `ui.tsx` splits a headline into rising words. Page changes use React `<ViewTransition>` (layout), and product images morph between card and hero via `name="product-<slug>"`; a name must appear once per page.
+- `brand/web-direction.md` — how the brand plays out on screen: motion tokens and rules, layout patterns, what was not adopted.
 - `components/nir-lens.tsx` — white light, with a 40 px NIR lens that follows the cursor (touch: tap or drag; keyboard: Enter, then arrow keys).
 - `public/images/products/` — studio shots from the client's product library. Renders are flagged `render: true` and always labelled on the page.
 - `app/globals.css` — brand tokens as Tailwind theme colours and fonts, plus the `label` utility.
