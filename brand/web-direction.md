@@ -18,7 +18,7 @@ From transitions.dev, motion-primitives and 60fps.
 | Effect | Where | Source idea |
 |---|---|---|
 | Headline words rise out of soft focus (`Words`) | Hero and page titles | Motion Primitives "Text Effect" |
-| Mono labels resolve like a readout (`data-scramble`) | Eyebrows, mode labels | Motion Primitives "Text Scramble" |
+| Mono labels type in like a readout (`data-scramble`, CSS only) | Eyebrows, mode labels | Motion Primitives "Text Scramble" |
 | Blur-and-rise scroll reveal | Section content | Motion Primitives "In View" |
 | Cards lean a few degrees toward the pointer (`data-tilt`) | Product bento | transitions.dev "3D tilt" |
 | Primary buttons pulled toward the pointer (`data-magnetic`) | Blue buttons | Common magnetic-button pattern |

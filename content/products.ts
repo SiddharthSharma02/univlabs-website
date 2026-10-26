@@ -162,33 +162,6 @@ export const products: Product[] = [
       alt: "UnivLabs 4K ICG camera control unit with camera head, on top of the NIR light source",
       fit: "contain",
     },
-    gallery: [
-      {
-        src: "/images/products/icg-camera.jpg",
-        alt: "UnivLabs 4K ICG camera control unit with camera head",
-        caption: "4K ICG 4 CMOS camera system",
-      },
-      {
-        src: "/images/products/nir-light-source.jpg",
-        alt: "UnivLabs NIR UL9700 light source with fibre-optic cable",
-        caption: "NIR UL9700 light source",
-      },
-      {
-        src: "/images/products/insufflator.jpg",
-        alt: "UnivLabs Uniflator UL45-S CO₂ insufflator",
-        caption: "Uniflator UL45-S insufflator",
-      },
-      {
-        src: "/images/products/universal-pump.jpg",
-        alt: "UnivLabs Universal Medical Pump with touchscreen",
-        caption: "Universal Medical Pump UMP-1000",
-      },
-      {
-        src: "/images/products/telescope.jpg",
-        alt: "UnivLabs laparoscope telescope",
-        caption: "Telescope",
-      },
-    ],
     highlights: [
       { title: "Imaging", body: "4K camera, 4K ICG camera, medical recorder." },
       {
@@ -212,17 +185,17 @@ export const products: Product[] = [
     family: "instruments",
     status: "available",
     descriptor: "Laparoscopic hand instruments",
-    headline: "[Hand instruments headline to confirm]",
+    headline: "Laparoscopic hand instruments, made in India.",
     image: {
       src: "/images/products/grasper.jpg",
       alt: "UnivLabs laparoscopic traumatic grasping forceps, jaw and shaft",
       fit: "contain",
     },
     summary:
-      "[Range overview to confirm: graspers, scissors, needle holders, trocars and so on, with sizes.]",
+      "Fifteen instrument types for laparoscopic surgery: access, graspers and dissectors, bipolar and monopolar energy, scissors, clips and clamps, retraction and retrieval, and suction and irrigation.",
     highlights: [],
     specs: [],
-    todo: "Need the hand instrument catalogue.",
+    todo: "Confirm intended-use wording for each instrument type, and what the size on each forceps variant measures.",
   },
   {
     slug: "am-safex",

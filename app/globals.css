@@ -264,6 +264,31 @@ html.motion [data-stagger]:not(.is-revealed) .draw-bar {
   opacity: 1;
 }
 
+/* Mono labels type in left to right, like a readout. CSS only, so the
+   text in the DOM never changes. */
+@keyframes readout {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+html.motion [data-scramble]:not(.is-revealed):not(.rise) {
+  clip-path: inset(0 100% 0 0);
+}
+html.motion [data-scramble].is-revealed:not(.rise) {
+  animation: readout 0.6s steps(16, end) both;
+}
+html.motion .rise[data-scramble] {
+  animation:
+    var(--animate-rise),
+    readout 0.6s steps(16, end) both;
+  animation-delay:
+    calc(var(--i, 0) * 90ms + 60ms),
+    calc(var(--i, 0) * 90ms + 200ms);
+}
+
 /* Cards lean a few degrees toward the pointer. */
 html.motion [data-tilt] {
   transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));

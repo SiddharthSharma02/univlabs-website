@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, ViewTransition, type CSSProperties } from "react";
+import { CatalogueRange } from "@/components/catalogue";
 import { NirLens } from "@/components/nir-lens";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
@@ -17,6 +18,7 @@ import {
   Todo,
   Words,
 } from "@/components/ui";
+import { catalogueFor } from "@/content/catalogue";
 import { families, productBySlug, products } from "@/content/products";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -77,6 +79,10 @@ async function ProductContent({ params }: Props) {
 
   const family = families.find((f) => f.id === product.family);
   const isSpectra = product.slug === "spectra";
+  const range =
+    product.slug === "hand-instruments" || product.slug === "components"
+      ? catalogueFor(product.slug)
+      : [];
 
   return (
     <>
@@ -198,6 +204,21 @@ async function ProductContent({ params }: Props) {
             />
             <div data-reveal="scale">
               <NirLens dark />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {range.length > 0 && (
+        <section id="range" className="scroll-mt-20 bg-clinical">
+          <Container className="py-16 sm:py-24">
+            <SectionHeader
+              eyebrow="The range"
+              title={`${range.length} ${product.slug === "hand-instruments" ? "instrument types" : "devices and accessories"}`}
+              intro="Each has its own page with variants, sizes and photographs."
+            />
+            <div className="mt-12">
+              <CatalogueRange parent={product.slug as "hand-instruments" | "components"} />
             </div>
           </Container>
         </section>

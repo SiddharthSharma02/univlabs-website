@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { catalogueItem } from "@/content/catalogue";
 import { products } from "@/content/products";
 import { site } from "@/content/site";
 
@@ -34,6 +35,9 @@ export function ContactForm() {
   const initialProduct = products.some((p) => p.slug === params.get("product"))
     ? (params.get("product") as string)
     : "";
+  // Coming from an instrument or device page: name it in the message.
+  const item = catalogueItem(initialProduct, params.get("item") ?? "");
+  const initialMessage = item ? `I would like details and a quotation for: ${item.name}.` : "";
   const [sent, setSent] = useState(false);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -114,6 +118,7 @@ export function ContactForm() {
         <textarea
           name="message"
           rows={5}
+          defaultValue={initialMessage}
           placeholder="Your specialty, case volume and what you would like to see."
           className={field}
         />

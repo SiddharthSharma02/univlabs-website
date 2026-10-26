@@ -10,46 +10,25 @@ import { useEffect, useRef, useState } from "react";
 export const motionBootScript = `try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion')}catch(e){}`;
 
 const REVEAL = "[data-reveal],[data-stagger],[data-scramble]";
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·/";
-
 /**
- * Mono labels resolve like a readout settling: each character cycles
- * briefly, left to right, then locks. Screen readers get the real text.
+ * Runs `fn` once React has hydrated `el`. Content streamed in through
+ * <Suspense> can be on screen before React owns it; changing its classes
+ * then causes a hydration mismatch. React tags hydrated nodes with a
+ * `__reactFiber` key, so wait for that (giving up after a few seconds).
  */
-function scramble(el: HTMLElement) {
-  if (el.dataset.scrambled || el.childNodes.length !== 1) return;
-  const node = el.firstChild;
-  if (!node || node.nodeType !== Node.TEXT_NODE) return;
-  el.dataset.scrambled = "1";
-  const final = node.textContent ?? "";
-  el.setAttribute("aria-label", final);
-  const start = performance.now();
-  const span = 520;
-  const tick = (now: number) => {
-    const t = (now - start) / span;
-    const locked = Math.floor(t * final.length);
-    let out = "";
-    for (let k = 0; k < final.length; k++) {
-      const c = final[k];
-      out +=
-        k < locked || c === " "
-          ? c
-          : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-    }
-    node.textContent = out;
-    if (t < 1) requestAnimationFrame(tick);
-    else {
-      node.textContent = final;
-      el.removeAttribute("aria-label");
-    }
-  };
-  requestAnimationFrame(tick);
+function whenHydrated(el: Element, fn: () => void, tries = 0) {
+  if (tries > 100 || Object.keys(el).some((k) => k.startsWith("__reactFiber"))) {
+    fn();
+    return;
+  }
+  window.setTimeout(() => whenHydrated(el, fn, tries + 1), 50);
 }
 
 /**
  * Site-wide motion behaviour, mounted once in the layout:
  * - reveals [data-reveal] and [data-stagger] elements as they scroll in
- * - resolves [data-scramble] labels as they scroll in
+ * - marks [data-scramble] labels revealed, so CSS types them in. The text
+ *   itself is never changed: content may still be waiting to hydrate.
  * - feeds the pointer position to [data-spotlight] cards
  * - tilts [data-tilt] cards and pulls [data-magnetic] buttons toward the
  *   pointer (mouse and pen only)
@@ -64,10 +43,8 @@ export function MotionRoot() {
         for (const e of entries) {
           if (e.isIntersecting) {
             const el = e.target as HTMLElement;
-            el.classList.add("is-revealed");
             io.unobserve(el);
-            if (el.matches("[data-scramble]")) scramble(el);
-            el.querySelectorAll<HTMLElement>("[data-scramble]").forEach(scramble);
+            whenHydrated(el, () => el.classList.add("is-revealed"));
           }
         }
       },

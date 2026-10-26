@@ -16,15 +16,16 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 ## Where things live
 
 - `app/` — routes. Home is `app/page.tsx`. Products are data-driven from `content/products.ts` via `app/products/[slug]/page.tsx`.
-- `proxy.ts` — returns a real 404 for unknown `/products/<slug>` URLs, using the slugs in `content/products.ts`. The product page reads its slug inside `<Suspense>`, where `notFound()` alone can only send status 200.
+- `proxy.ts` — returns a real 404 for unknown `/products/<slug>` and `/products/<slug>/<item>` URLs, using the slugs in `content/products.ts`. The product page reads its slug inside `<Suspense>`, where `notFound()` alone can only send status 200.
 - `content/site.ts` — nav, specialties, leadership, and **every public number with its source** (`facts`). Change figures here only.
 - `content/products.ts` — product catalogue, status per product, pipeline.
+- `content/catalogue.ts` — individual hand instruments and devices, each with its own page at `/products/<family>/<item>` (`app/products/[slug]/[item]/page.tsx`), listed on the Hand instruments and Components pages. Device wording comes from univlabs.in/accessories; variant names and sizes from the client's product image library, written as supplied. `content/telescopes.ts` is generated from the client's endoscope spreadsheet: re-export, don't hand-edit. Photos are in `public/images/catalogue/`.
 - `components/ui.tsx` — Container, SectionHeader, ButtonLink, StatusTag, PageHero, SectionMarker, CtaBand, Todo.
 - `components/brand.tsx` — `Mark` (SVG rebuilt from the logo) and `Logo` lockup.
 - `components/mode-viewer.tsx` — the hero: one surgical scene in white light / ICG overlay / NIR.
 - `components/motion.tsx` — the motion system: `MotionRoot` (scroll reveal + card spotlight), `ScrollProgress`, `CountUp`. Add `data-reveal` (or `="fade" | "scale" | "left"`) to fade an element in on scroll, `data-stagger` to a list or grid to reveal its children one by one, `data-spotlight` to a dark card. Above-the-fold text uses the CSS `rise` class with `--i` for order. Nothing is hidden without JavaScript or with reduced motion.
 - `components/desktop-nav.tsx` — desktop nav with a sliding hover pill and the Products mega menu. `components/specialty-explorer.tsx` — the home page specialty hover list.
-- Also in `components/motion.tsx`: `data-scramble` (mono labels resolve on reveal), `data-tilt` (cards lean toward the pointer), `data-magnetic` (primary buttons). `Words` in `ui.tsx` splits a headline into rising words. Page changes use React `<ViewTransition>` (layout), and product images morph between card and hero via `name="product-<slug>"`; a name must appear once per page.
+- Also in `components/motion.tsx`: `data-scramble` (mono labels type in on reveal, CSS only; never change text in the DOM, streamed content may not be hydrated yet), `data-tilt` (cards lean toward the pointer), `data-magnetic` (primary buttons). `Words` in `ui.tsx` splits a headline into rising words. Page changes use React `<ViewTransition>` (layout), and product images morph between card and hero via `name="product-<slug>"`; a name must appear once per page.
 - `brand/web-direction.md` — how the brand plays out on screen: motion tokens and rules, layout patterns, what was not adopted.
 - `components/nir-lens.tsx` — white light, with a 160 px-radius NIR lens that follows the cursor (touch: tap or drag; keyboard: Enter, then arrow keys).
 - `public/images/products/` — studio shots from the client's product library. Renders are flagged `render: true` and always labelled on the page.

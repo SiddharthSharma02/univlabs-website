@@ -2,21 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import { products } from "@/content/products";
 import type { NavGroup } from "@/content/site";
 
 /**
  * Desktop navigation.
- * - A soft pill slides to whichever item is hovered or focused.
- * - Products opens a mega menu with product photos and status.
- * - Other groups open a compact list.
- * Menus open on hover and on keyboard focus (focus-within), so they work
- * without JavaScript; the script only moves the pill.
+ * - One menu is open at a time. Pointing at an item opens its menu and
+ *   closes any other; leaving the nav, pressing Escape or choosing a link
+ *   closes it.
+ * - Keyboard: focusing an item opens its menu; Tab moves through it.
+ * - A soft pill slides to whichever item is active.
+ * - Products opens a mega menu with product photos; other groups open a
+ *   compact list.
  */
 export function DesktopNav({ nav }: { nav: NavGroup[] }) {
-  const track = useRef<HTMLUListElement>(null);
   const pill = useRef<HTMLSpanElement>(null);
+  const [open, setOpen] = useState<number | null>(null);
 
   const moveTo = (el: HTMLElement | null) => {
     const p = pill.current;
@@ -30,36 +32,63 @@ export function DesktopNav({ nav }: { nav: NavGroup[] }) {
     p.style.transform = `translateX(${el.offsetLeft}px)`;
   };
 
+  const close = () => {
+    setOpen(null);
+    moveTo(null);
+  };
+
+  // A link was chosen: close the menu and drop focus so it can't reopen it.
+  const onChoose = (e: MouseEvent<HTMLElement>) => {
+    if ((e.target as Element).closest("a")) {
+      close();
+      (document.activeElement as HTMLElement | null)?.blur();
+    }
+  };
+
   return (
-    <nav aria-label="Main" className="hidden lg:block">
-      <ul
-        ref={track}
-        className="relative flex items-center gap-1"
-        onPointerLeave={() => moveTo(null)}
-      >
+    <nav
+      aria-label="Main"
+      className="hidden lg:block"
+      onKeyDown={(e) => {
+        if (e.key === "Escape") close();
+      }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) close();
+      }}
+    >
+      <ul className="relative flex items-center gap-1" onPointerLeave={close}>
         <span
           ref={pill}
           aria-hidden
           className="pointer-events-none absolute left-0 top-1/2 h-9 -translate-y-1/2 rounded-full bg-clinical opacity-0 ring-1 ring-line transition-[transform,width,opacity] duration-300 ease-[var(--ease-out-soft)]"
         />
-        {nav.map((group) => {
+        {nav.map((group, n) => {
           const mega = group.href === "/products";
+          const isOpen = open === n;
           return (
             <li
               key={group.label}
-              className={`group/nav ${mega ? "" : "relative"}`}
-              onPointerEnter={(e) => moveTo(e.currentTarget)}
-              onFocus={(e) => moveTo(e.currentTarget)}
+              className={mega ? "" : "relative"}
+              onPointerEnter={(e) => {
+                setOpen(n);
+                moveTo(e.currentTarget);
+              }}
+              onFocus={(e) => {
+                setOpen(n);
+                moveTo(e.currentTarget);
+              }}
+              onClick={onChoose}
             >
               <Link
                 href={group.href}
-                className="relative inline-flex h-16 items-center gap-1 whitespace-nowrap px-2.5 text-[15px] xl:px-3.5 font-medium text-navy transition-colors hover:text-blue"
+                aria-expanded={isOpen}
+                className="relative inline-flex h-16 items-center gap-1 whitespace-nowrap px-2.5 text-[15px] font-medium text-navy transition-colors hover:text-blue xl:px-3.5"
               >
                 {group.label}
                 <svg
                   aria-hidden
                   viewBox="0 0 12 12"
-                  className="size-3 text-steel transition-transform duration-300 group-hover/nav:rotate-180 group-focus-within/nav:rotate-180"
+                  className={`size-3 text-steel transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
@@ -69,9 +98,11 @@ export function DesktopNav({ nav }: { nav: NavGroup[] }) {
                 </svg>
               </Link>
               <div
-                className={`invisible absolute top-full pt-1 opacity-0 transition-[opacity,translate,visibility] duration-300 ease-[var(--ease-out-soft)] -translate-y-1 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:opacity-100 ${
-                  mega ? "left-1/2 w-[840px] -translate-x-1/2" : "left-0 w-64"
-                }`}
+                className={`absolute top-full pt-1 transition-[opacity,translate,visibility] duration-300 ease-[var(--ease-out-soft)] ${
+                  isOpen
+                    ? "visible translate-y-0 opacity-100"
+                    : "invisible -translate-y-1 opacity-0"
+                } ${mega ? "left-1/2 w-[840px] -translate-x-1/2" : "left-0 w-64"}`}
               >
                 {mega ? <ProductsMenu /> : <ListMenu group={group} />}
               </div>
