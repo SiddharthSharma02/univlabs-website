@@ -26,7 +26,7 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 - `components/desktop-nav.tsx` — desktop nav with a sliding hover pill and the Products mega menu. `components/specialty-explorer.tsx` — the home page specialty hover list.
 - Also in `components/motion.tsx`: `data-scramble` (mono labels resolve on reveal), `data-tilt` (cards lean toward the pointer), `data-magnetic` (primary buttons). `Words` in `ui.tsx` splits a headline into rising words. Page changes use React `<ViewTransition>` (layout), and product images morph between card and hero via `name="product-<slug>"`; a name must appear once per page.
 - `brand/web-direction.md` — how the brand plays out on screen: motion tokens and rules, layout patterns, what was not adopted.
-- `components/nir-lens.tsx` — white light, with a 40 px NIR lens that follows the cursor (touch: tap or drag; keyboard: Enter, then arrow keys).
+- `components/nir-lens.tsx` — white light, with a 160 px-radius NIR lens that follows the cursor (touch: tap or drag; keyboard: Enter, then arrow keys).
 - `public/images/products/` — studio shots from the client's product library. Renders are flagged `render: true` and always labelled on the page.
 - `app/globals.css` — brand tokens as Tailwind theme colours and fonts, plus the `label` utility.
 - `brand/` — brand book and source assets (logo variants, original footage). `public/` holds web copies.

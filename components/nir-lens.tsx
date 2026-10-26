@@ -10,7 +10,7 @@ import {
 } from "react";
 
 /** Lens radius in CSS pixels. */
-const RADIUS = 40;
+const RADIUS = 160;
 const STEP = 24;
 
 /**
@@ -51,7 +51,11 @@ export function NirLens({
   };
 
   const show = (on: boolean) => {
-    frame.current?.style.setProperty("--r", on ? `${RADIUS}px` : "0px");
+    const el = frame.current;
+    if (!el) return;
+    // Never more than 30% of the frame width, so small screens keep context.
+    const r = Math.min(RADIUS, el.clientWidth * 0.3);
+    el.style.setProperty("--r", on ? `${r}px` : "0px");
     setActive(on);
   };
 
