@@ -261,7 +261,13 @@ export const products: Product[] = [
       CHOOSE_FAQ,
     ],
     source: LIVE_SV,
-    todo: "Need a product photograph of SurgiStart. Confirm whether “Gynostart Portable Suite” in the image library is the same product.",
+    image: {
+      src: "/images/products/surgistart.png",
+      alt: "Render of the UnivLabs SurgiStart portable suite: an all-in-one monitor with control buttons and a camera head on a cable",
+      render: true,
+      fit: "contain",
+    },
+    todo: "The image is from univlabs.in and appears to be a render; replace it with a studio photograph. The unit is labelled “GynoStart suite”: confirm which name goes on the hardware and the website.",
   },
   {
     slug: "components",

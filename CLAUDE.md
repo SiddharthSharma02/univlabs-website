@@ -67,7 +67,7 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 
 Search the code for `TODO` and `[` placeholders. Main gaps:
 - Logo vector masters (current mark is rebuilt as SVG; the wordmark is a PNG extracted from the supplied file).
-- Suite specs now mirror univlabs.in/surgical-vision (brochure PDFs linked there). Still needed: intended-use statements, a Lumina studio photo (current image is a render), a SurgiStart photo, and whether "Gynostart Portable Suite" is SurgiStart.
+- Suite specs now mirror univlabs.in/surgical-vision (brochure PDFs linked there). Still needed: intended-use statements, a Lumina studio photo (current image is a render), studio photos of SurgiStart (current image is a render from univlabs.in; the unit is labelled "GynoStart suite", so confirm the product name).
 - Am-SafeX intended use, sizes, patent number and regulatory status.
 - What SUFI stands for, and how the programme works.
 - Certificates by market (ISO 13485, CDSCO, CE?) with scope and expiry.
