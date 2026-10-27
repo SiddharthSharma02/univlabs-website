@@ -117,6 +117,7 @@ export const nav: NavGroup[] = [
       { label: "Hand instruments", href: "/products/hand-instruments" },
       { label: "Am-SafeX", href: "/products/am-safex", note: "Catheter" },
       { label: "Components", href: "/products/components" },
+      { label: "Technology explained", href: "/technology" },
     ],
   },
   {
