@@ -62,7 +62,11 @@ export function CatalogueRange({ parent }: { parent: CatalogueParent }) {
           </div>
           <ul data-stagger className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {g.items.map((item) => (
-              <li key={item.slug}>
+              <li
+                key={item.slug}
+                id={`item-${item.slug}`}
+                className="scroll-mt-24 rounded-3xl [&:target>a]:border-blue [&:target>a]:shadow-[0_0_0_3px_rgba(8,102,244,0.25)]"
+              >
                 <Link
                   href={`/products/${item.parent}/${item.slug}`}
                   data-tilt

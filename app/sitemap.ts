@@ -5,6 +5,7 @@ import { site } from "@/content/site";
 const routes = [
   "",
   "/products",
+  "/technology",
   "/specialties",
   "/connected-or",
   "/pay-per-minute",

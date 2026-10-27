@@ -15,7 +15,7 @@
 
 import type { Status } from "./products";
 
-export type CatalogueParent = "hand-instruments" | "components";
+export type CatalogueParent = "hand-instruments" | "surgicore";
 
 export type CatalogueImage = {
   src: string;
@@ -330,11 +330,11 @@ export const catalogue: CatalogueItem[] = [
   },
 
   // ------------------------------------------------------------------
-  // Devices (Components)
+  // Devices (SurgiCore)
   // ------------------------------------------------------------------
   {
     slug: "icg-camera",
-    parent: "components",
+    parent: "surgicore",
     group: "Imaging",
     name: "4K ICG camera system",
     descriptor: "4 CMOS camera",
@@ -355,7 +355,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "4k-camera",
-    parent: "components",
+    parent: "surgicore",
     group: "Imaging",
     name: "4K camera system",
     descriptor: "3 CMOS camera",
@@ -375,7 +375,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "nir-light-source",
-    parent: "components",
+    parent: "surgicore",
     group: "Illumination",
     name: "NIR UL9700 light source",
     descriptor: "ICG light source",
@@ -390,7 +390,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "led-light-source",
-    parent: "components",
+    parent: "surgicore",
     group: "Illumination",
     name: "UL-9000S LED light source",
     descriptor: "White-light source",
@@ -406,7 +406,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "endoscopes",
-    parent: "components",
+    parent: "surgicore",
     group: "Optics",
     name: "Endoscopes",
     descriptor: "Rigid telescopes",
@@ -430,7 +430,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "insufflator",
-    parent: "components",
+    parent: "surgicore",
     group: "Insufflation and air",
     name: "Uniflator UL45-S",
     descriptor: "CO₂ insufflator",
@@ -445,7 +445,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "smoke-evacuator",
-    parent: "components",
+    parent: "surgicore",
     group: "Insufflation and air",
     name: "UL-SE16 smoke evacuator",
     descriptor: "Surgical smoke management",
@@ -460,7 +460,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "universal-medical-pump",
-    parent: "components",
+    parent: "surgicore",
     group: "Fluid management",
     name: "Universal Medical Pump",
     descriptor: "UMP-1000",
@@ -475,7 +475,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "hysteroscopy-pump",
-    parent: "components",
+    parent: "surgicore",
     group: "Fluid management",
     name: "Hysteroscopy pump",
     descriptor: "Gynaecology",
@@ -490,7 +490,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "arthroscopy-pump",
-    parent: "components",
+    parent: "surgicore",
     group: "Fluid management",
     name: "Arthroscopy pump",
     descriptor: "Orthopaedics",
@@ -505,7 +505,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "uro-pump",
-    parent: "components",
+    parent: "surgicore",
     group: "Fluid management",
     name: "Uro Pump",
     descriptor: "Urology",
@@ -521,7 +521,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "medical-recorder",
-    parent: "components",
+    parent: "surgicore",
     group: "Documentation",
     name: "Medical recorder",
     descriptor: "4K recording",
@@ -533,7 +533,7 @@ export const catalogue: CatalogueItem[] = [
   },
   {
     slug: "cables-and-tubing",
-    parent: "components",
+    parent: "surgicore",
     group: "Accessories",
     name: "Light cables and tubing",
     descriptor: "Accessories",

@@ -207,13 +207,14 @@ function ProductsMenu() {
           See it in action →
         </span>
       </Link>
-      <Link
-        href="/products"
-        className="col-span-2 flex items-center justify-between border-t border-line bg-clinical px-6 py-3 text-[14px] font-semibold text-navy transition-colors hover:text-blue"
-      >
-        All products, by family
-        <span aria-hidden>→</span>
-      </Link>
+      <div className="col-span-2 flex items-center justify-between gap-6 border-t border-line bg-clinical px-6 py-3 text-[14px] font-semibold text-navy">
+        <Link href="/products" className="transition-colors hover:text-blue">
+          All products, by family <span aria-hidden>→</span>
+        </Link>
+        <Link href="/technology" className="transition-colors hover:text-blue">
+          How the technology works <span aria-hidden>→</span>
+        </Link>
+      </div>
     </div>
   );
 }

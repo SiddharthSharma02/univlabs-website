@@ -5,7 +5,6 @@ import { Suspense, ViewTransition, type CSSProperties } from "react";
 import { CatalogueRange } from "@/components/catalogue";
 import { NirLens } from "@/components/nir-lens";
 import { BeforeYouBuy, isSuite, SuiteCompare } from "@/components/suite-sections";
-import { ModeViewer } from "@/components/mode-viewer";
 import {
   ButtonLink,
   Container,
@@ -81,7 +80,7 @@ async function ProductContent({ params }: Props) {
   const family = families.find((f) => f.id === product.family);
   const isSpectra = product.slug === "spectra";
   const range =
-    product.slug === "hand-instruments" || product.slug === "components"
+    product.slug === "hand-instruments" || product.slug === "surgicore"
       ? catalogueFor(product.slug)
       : [];
 
@@ -145,9 +144,7 @@ async function ProductContent({ params }: Props) {
             </div>
           </div>
           <div className="rise mx-auto w-full max-w-[560px]" style={i(3)}>
-            {isSpectra ? (
-              <ModeViewer />
-            ) : product.image ? (
+            {product.image ? (
               <ViewTransition name={`product-${product.slug}`} share="morph" default="none">
                 <ProductImage
                   image={product.image}
@@ -181,7 +178,12 @@ async function ProductContent({ params }: Props) {
                 <Eyebrow>Highlights</Eyebrow>
               </div>
             )}
-            <div data-stagger className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div
+              data-stagger
+              className={`mt-10 grid gap-6 md:grid-cols-2 ${
+                product.highlights.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+              }`}
+            >
               {product.highlights.map((h, n) => (
                 <div
                   key={h.title}
@@ -195,7 +197,34 @@ async function ProductContent({ params }: Props) {
                   <h3 className="mt-5 font-display text-xl font-bold text-navy">
                     {h.title}
                   </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed">{h.body}</p>
+                  {h.links ? (
+                    <ul className="mt-4 space-y-1">
+                      {h.links.map((l) => (
+                        <li key={l.label}>
+                          <a
+                            href={`#item-${l.slug}`}
+                            className="group/jump -mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 text-[15px] text-navy transition-colors hover:bg-clinical hover:text-blue"
+                          >
+                            {l.label}
+                            <svg
+                              aria-hidden
+                              viewBox="0 0 16 16"
+                              className="size-4 shrink-0 text-steel transition-[translate,color] duration-300 group-hover/jump:translate-y-0.5 group-hover/jump:text-blue"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.75"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M8 3v10M4 9l4 4 4-4" />
+                            </svg>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-3 text-[15px] leading-relaxed">{h.body}</p>
+                  )}
                 </div>
               ))}
             </div>
@@ -230,7 +259,7 @@ async function ProductContent({ params }: Props) {
               intro="Each has its own page with variants, sizes and photographs."
             />
             <div className="mt-12">
-              <CatalogueRange parent={product.slug as "hand-instruments" | "components"} />
+              <CatalogueRange parent={product.slug as "hand-instruments" | "surgicore"} />
             </div>
           </Container>
         </section>
@@ -253,7 +282,7 @@ async function ProductContent({ params }: Props) {
                   className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
                   <ProductImage
-                    image={{ src: g.src, alt: g.alt, fit: "contain" }}
+                    image={{ src: g.src, alt: g.alt, fit: "contain", render: g.render }}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="aspect-square"
                   />
