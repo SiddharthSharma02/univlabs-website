@@ -39,7 +39,7 @@ export default function AboutPage() {
             {[
               ["2015", "Founded in Gurugram by Sunil Kumar Singh, with urologist Prof. Dr Anil Mandhani as co-founder."],
               ["2021", "Launched India’s first indigenously designed and manufactured full 4K endoscope tower."],
-              ["Today", `${facts.suites.value} laparoscopy suites installed, ${facts.devices.value} devices supplied, and R&D in ${site.rdSites.join(", ")}.`],
+              ["Today", `${facts.suites.value} reported installations at ${facts.hospitals.value} hospitals in ${facts.countries.value} countries, ${facts.devices.value} devices supplied, and R&D in ${site.rdSites.join(", ")}.`],
             ].map(([year, text]) => (
               <li key={year} className="relative">
                 <span aria-hidden className="absolute -left-[41px] top-2 h-1.5 w-4 rounded-full bg-blue" />

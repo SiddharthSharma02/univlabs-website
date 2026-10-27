@@ -67,12 +67,12 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 
 Search the code for `TODO` and `[` placeholders. Main gaps:
 - Logo vector masters (current mark is rebuilt as SVG; the wordmark is a PNG extracted from the supplied file).
-- Lumina, SurgiStart and hand instrument details and specs; full Spectra spec sheet.
+- Suite specs now mirror univlabs.in/surgical-vision (brochure PDFs linked there). Still needed: intended-use statements, a Lumina studio photo (current image is a render), a SurgiStart photo, and whether "Gynostart Portable Suite" is SurgiStart.
 - Am-SafeX intended use, sizes, patent number and regulatory status.
 - What SUFI stands for, and how the programme works.
 - Certificates by market (ISO 13485, CDSCO, CE?) with scope and expiry.
 - Pay Per Minute terms and reopening date; the operating-economics calculator.
-- Sales/demo email (currently falls back to customersupport@univlabs.in), full address.
+- Sales/demo email (currently info@univlabs.in, the general inbox published on univlabs.in), full address.
 - Contact form backend (currently opens a pre-filled email).
 - Product and people photography (three shoot days planned).
 - Refresh the patent count (16 filed / 4 granted, from a 2025 article).

@@ -9,6 +9,10 @@ import {
   type PointerEvent,
 } from "react";
 
+/** univlabs.in wording for imaging demonstrations. */
+export const NOTE =
+  "For educational presentation only. Clinical use depends on applicable regulatory indications, approved labelling and professional judgement.";
+
 /** Lens radius in CSS pixels. */
 const RADIUS = 160;
 const STEP = 24;
@@ -168,8 +172,13 @@ export function NirLens({
           className="absolute inset-0 h-full w-full cursor-crosshair touch-pan-y outline-none"
         />
       </div>
-      <figcaption className={`label mt-3 ${dark ? "text-fog" : "text-steel"}`}>
-        White light, with a near-infrared view under the cursor
+      <figcaption className="mt-3">
+        <span className={`label block ${dark ? "text-fog" : "text-steel"}`}>
+          White light, with a near-infrared view under the cursor
+        </span>
+        <span className={`mt-2 block text-[13px] leading-relaxed ${dark ? "text-fog" : "text-steel"}`}>
+          {NOTE}
+        </span>
       </figcaption>
     </figure>
   );

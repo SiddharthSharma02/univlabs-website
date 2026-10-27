@@ -32,6 +32,28 @@ export type Product = {
   /** Extra studio shots, shown as a gallery on the product page. */
   gallery?: { src: string; alt: string; caption: string }[];
   todo?: string;
+  /** Who the product suits, in the live site's words. */
+  bestFor?: string;
+  /** Brochure PDF published on univlabs.in. */
+  brochure?: string;
+  /** Shown under the spec table. */
+  specNote?: string;
+  faqs?: { q: string; a: string }[];
+  /** Where the specs and copy come from. */
+  source?: string;
+};
+
+const LIVE_SV = "univlabs.in/surgical-vision, 2026";
+const QUOTE_NOTE =
+  "Specifications describe the listed product configurations. The signed quotation determines included equipment, options, warranty coverage and final specifications.";
+const BROCHURES = "https://www.univlabs.in/uploads/media/surgical-vision/documents";
+const ACCESSORIES_FAQ = {
+  q: "Are all accessories and software included?",
+  a: "Only items identified in your quotation are included. Confirm scope models, display size, recording, connectivity, software licences and any recurring charges.",
+};
+const CHOOSE_FAQ = {
+  q: "How do I choose between the three suites?",
+  a: "Spectra adds NIR/ICG imaging; Lumina focuses on native 4K white light; SurgiStart offers a compact mobile format with HD and 4K configurations. Match the configuration to your procedures and infrastructure.",
 };
 
 export const families: {
@@ -70,28 +92,49 @@ export const products: Product[] = [
     family: "surgical-vision",
     status: "available",
     descriptor: "4K ICG surgical vision suite",
-    headline: "White light, ICG overlay and NIR from one camera.",
+    headline: "4K clarity. Fluorescence when it matters.",
     summary:
-      "Spectra pairs a 4K 4-chip camera with ICG fluorescence imaging, so surgeons can switch between white light, a fluorescence overlay and near-infrared views of the same field.",
+      "A surgical vision suite combining native 4K white-light imaging with NIR/ICG fluorescence and operating-room equipment.",
+    bestFor:
+      "Hospitals seeking both white-light and ICG imaging within one configured surgical suite.",
     highlights: [
       {
-        title: "Three views, one camera",
-        body: "White light, ICG overlay and NIR monochrome from a single 4-chip camera head.",
+        title: "Two imaging perspectives",
+        body: "Review the anatomical white-light view alongside supported fluorescence modes.",
       },
       {
-        title: "Complete tower",
-        body: "Camera, ICG light source, insufflator, pumps and recorder, designed to work together.",
+        title: "One coordinated suite",
+        body: "Configure the camera, light source, scope, recording and supporting equipment together.",
       },
       {
-        title: "Connected",
-        body: "Ready for CogniAxis streaming, recording and case review.",
+        title: "Connected case records",
+        body: "Discuss recording and authorised sharing through CogniAxis as part of the proposed configuration.",
       },
     ],
     specs: [
-      { label: "Resolution", value: "4K" },
-      { label: "Sensor", value: "4-chip" },
-      { label: "Imaging modes", value: "White light · ICG overlay · NIR" },
+      { label: "Camera", value: "4-chip CMOS · native 4K · NIR/ICG imaging" },
+      { label: "ICG display modes", value: "Overlay · Monochromatic · Intensity map" },
+      { label: "Telescope", value: "UHD 10 mm · 0° or 30° options" },
+      { label: "Light source", value: "LED + NIR illumination" },
+      { label: "Recording", value: "4K digital recording" },
+      { label: "Zoom coupler", value: "14–32 mm" },
+      { label: "NIR fibre-optic cable", value: "4.8 mm × 3 m" },
+      { label: "Insufflator", value: "UL 45-S with integrated smoke evacuation" },
+      { label: "Monitor", value: "4K medical display · 32–55 inch configurations" },
+      { label: "Irrigation / suction", value: "UMP-1000 pressure-controlled pump" },
+      { label: "Warranty", value: "5-year programme; scope and terms in the quotation" },
     ],
+    specNote: QUOTE_NOTE,
+    brochure: `${BROCHURES}/spectra-brochure.pdf`,
+    faqs: [
+      {
+        q: "What should I confirm about compatibility?",
+        a: "ICG capability does not establish compatibility with blue-light agents or CYTALUX. Confirm the exact agent, optical chain, intended use and local authorisation.",
+      },
+      ACCESSORIES_FAQ,
+      CHOOSE_FAQ,
+    ],
+    source: LIVE_SV,
     image: {
       src: "/images/products/spectra-tower.jpg",
       alt: "UnivLabs 4K ICG tower with camera control unit, light source, insufflator and pump stacked on a cart, monitor showing ICG fluorescence",
@@ -114,39 +157,111 @@ export const products: Product[] = [
         caption: "NIR UL9700 light source",
       },
     ],
-    todo: "Add the full spec sheet and intended-use statement from the product team.",
+    todo: "Add the approved intended-use statement from the product team.",
   },
   {
     slug: "lumina",
     name: "Lumina",
     family: "surgical-vision",
     status: "available",
-    descriptor: "Surgical vision suite",
-    headline: "[Lumina headline to confirm]",
+    descriptor: "Native 4K surgical vision suite",
+    headline: "A complete view. A coordinated workflow.",
+    summary:
+      "A native 4K white-light surgical suite bringing imaging, recording and supporting operating-room equipment together.",
+    bestFor:
+      "Hospitals prioritising a configured 4K white-light platform for compatible endoscopic workflows.",
     image: {
       src: "/images/products/lumina-render.jpg",
       alt: "Render of the UnivLabs Lumina 4K surgical suite cart with monitor",
       render: true,
       fit: "contain",
     },
-    summary:
-      "[Lumina positioning to confirm: who it is for and how it differs from Spectra and SurgiStart.]",
-    highlights: [],
-    specs: [],
-    todo: "Need Lumina positioning, configuration and specs.",
+    highlights: [
+      {
+        title: "Focus on white-light imaging",
+        body: "Choose a platform around anatomical colour imaging without assuming fluorescence capability.",
+      },
+      {
+        title: "Build the whole workflow",
+        body: "Review recording, insufflation, smoke evacuation and fluid management as one proposed package.",
+      },
+      {
+        title: "Choose the right configuration",
+        body: "Select the monitor, scope and accessories around the hospital’s procedures and working space.",
+      },
+    ],
+    specs: [
+      { label: "Camera", value: "4-chip CMOS · native 4K white-light imaging" },
+      { label: "Telescope", value: "UHD 10 mm · 0° or 30° options" },
+      { label: "Light source", value: "LED illumination" },
+      { label: "Recording", value: "4K digital recording" },
+      { label: "Zoom coupler", value: "14–32 mm" },
+      { label: "Fibre-optic cable", value: "4.8 mm × 3 m" },
+      { label: "Insufflator", value: "UL 45-S with integrated smoke evacuation" },
+      { label: "Monitor", value: "4K medical display · 32–55 inch configurations" },
+      { label: "Irrigation / suction", value: "UMP-1000 pressure-controlled pump" },
+      { label: "Warranty", value: "5-year programme; scope and terms in the quotation" },
+    ],
+    specNote: QUOTE_NOTE,
+    brochure: `${BROCHURES}/lumina-brochure.pdf`,
+    faqs: [
+      {
+        q: "What should I confirm about compatibility?",
+        a: "Lumina is presented here as a white-light platform. Do not assume NIR/ICG capability or compatibility with fluorescence agents.",
+      },
+      ACCESSORIES_FAQ,
+      CHOOSE_FAQ,
+    ],
+    source: LIVE_SV,
+    todo: "Replace the render with a studio photograph of Lumina, and add the approved intended-use statement.",
   },
   {
     slug: "surgistart",
     name: "SurgiStart",
     family: "surgical-vision",
     status: "available",
-    descriptor: "Surgical vision suite",
-    headline: "[SurgiStart headline to confirm]",
+    descriptor: "Portable all-in-one surgical visualisation",
+    headline: "A compact suite. Room to move.",
     summary:
-      "[SurgiStart positioning to confirm: the intended hospital profile and configuration.]",
-    highlights: [],
-    specs: [],
-    todo: "Need SurgiStart positioning, configuration and specs.",
+      "A compact, mobile visualisation platform with an integrated monitor, illumination and recording for compatible diagnostic and surgical workflows.",
+    bestFor:
+      "Teams seeking a compact configuration where available space and movement between suitable clinical locations matter.",
+    highlights: [
+      {
+        title: "Compact format",
+        body: "Bring the monitor and core visualisation functions into one mobile platform.",
+      },
+      {
+        title: "A choice of camera configuration",
+        body: "Review the available HD and 4K options against your actual imaging requirement.",
+      },
+      {
+        title: "Record the case",
+        body: "Use onboard recording and discuss any additional display or connectivity requirements before ordering.",
+      },
+    ],
+    specs: [
+      { label: "Platform", value: "Compact mobile system" },
+      { label: "Integrated monitor", value: "21 inch" },
+      { label: "Camera", value: "HD and 4K configurations" },
+      { label: "Light source", value: "Integrated surgical illumination" },
+      { label: "Recording", value: "Onboard digital recording" },
+      { label: "Secondary display", value: "Output for an additional display up to 32 inch" },
+      { label: "Fibre-optic cable", value: "Included in the configured system" },
+      { label: "Connectivity", value: "Confirm selected interfaces and CogniAxis compatibility in the quotation" },
+    ],
+    specNote: QUOTE_NOTE,
+    brochure: `${BROCHURES}/surgistart-brochure.pdf`,
+    faqs: [
+      {
+        q: "What should I confirm about compatibility?",
+        a: "Confirm the exact camera resolution, supported procedures, included components and site requirements. A compact format does not remove the need for appropriate theatre equipment and clinical training.",
+      },
+      ACCESSORIES_FAQ,
+      CHOOSE_FAQ,
+    ],
+    source: LIVE_SV,
+    todo: "Need a product photograph of SurgiStart. Confirm whether “Gynostart Portable Suite” in the image library is the same product.",
   },
   {
     slug: "components",

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { NOTE } from "./nir-lens";
 
 /**
  * The hero of the brand: one surgical scene in the three Spectra imaging
@@ -134,6 +135,7 @@ export function ModeViewer({ interval = 4200 }: { interval?: number }) {
             );
           })}
         </div>
+        <p className="mt-3 text-[13px] leading-relaxed text-fog">{NOTE}</p>
       </figcaption>
     </figure>
   );

@@ -10,6 +10,7 @@ import {
   SectionHeader,
   StatusTag,
 } from "@/components/ui";
+import { buyersGuide, FaqList } from "@/components/suite-sections";
 import { families, productsInFamily, type Product } from "@/content/products";
 
 export const metadata: Metadata = {
@@ -95,6 +96,30 @@ export default function ProductsPage() {
           </section>
         );
       })}
+      <section className="bg-paper">
+        <Container className="grid gap-12 py-16 sm:py-24 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+          <SectionHeader
+            eyebrow="Buyer’s guide"
+            title="Choose for the clinical workflow"
+            intro="Compare imaging, configuration, service, training and regulatory status."
+          />
+          <FaqList faqs={buyersGuide} />
+        </Container>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: buyersGuide.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
+      </section>
       <CtaBand
         title="Not sure which configuration fits?"
         body="Tell us your specialty and case volume. We will recommend a configuration and arrange a demonstration."

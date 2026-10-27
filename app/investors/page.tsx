@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default function InvestorsPage() {
-  const highlights = [facts.suites, facts.devices, facts.patents, facts.cogniaxis];
+  const highlights = [facts.suites, facts.hospitals, facts.countries, facts.cogniaxis];
   return (
     <>
       <PageHero

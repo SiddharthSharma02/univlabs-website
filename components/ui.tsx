@@ -108,6 +108,8 @@ type ButtonProps = {
   className?: string;
   /** Show a ↗ arrow that nudges on hover. */
   arrow?: boolean;
+  /** Opens in a new tab (documents and other sites). */
+  external?: boolean;
 };
 
 export function ButtonLink({
@@ -116,6 +118,7 @@ export function ButtonLink({
   variant = "primary",
   className = "",
   arrow = false,
+  external = false,
 }: ButtonProps) {
   const styles = {
     primary:
@@ -125,12 +128,19 @@ export function ButtonLink({
     "ghost-light":
       "border border-navy-600 text-clinical hover:border-blue-300 focus-visible:outline-blue-300",
   }[variant];
+  const cls = `group inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-[background-color,border-color,color,translate,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 ${styles} ${className}`;
+  const magnetic = variant === "primary" ? "" : undefined;
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" data-magnetic={magnetic} className={cls}>
+        {children}
+        {arrow && <Arrow />}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    );
+  }
   return (
-    <Link
-      href={href}
-      data-magnetic={variant === "primary" ? "" : undefined}
-      className={`group inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-[background-color,border-color,color,translate,box-shadow] duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 ${styles} ${className}`}
-    >
+    <Link href={href} data-magnetic={magnetic} className={cls}>
       {children}
       {arrow && <Arrow />}
     </Link>

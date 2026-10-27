@@ -17,8 +17,9 @@ export const site = {
   contact: {
     // Published on univlabs.in for service calls.
     serviceEmail: "customersupport@univlabs.in",
-    // TODO: confirm a sales / demo inbox. Falls back to the service address.
-    salesEmail: "customersupport@univlabs.in",
+    // General enquiries inbox published on univlabs.in (structured data).
+    // TODO: confirm whether sales and demo requests should go elsewhere.
+    salesEmail: "info@univlabs.in",
   },
 } as const;
 
@@ -33,7 +34,22 @@ export type Fact = {
 export const facts = {
   suites: {
     value: "250+",
-    label: "Laparoscopy suites installed",
+    label: "Reported installations",
+    source: "univlabs.in, 2026",
+  },
+  hospitals: {
+    value: "200+",
+    label: "Hospitals served",
+    source: "univlabs.in, 2026",
+  },
+  countries: {
+    value: "9+",
+    label: "Countries reached",
+    source: "univlabs.in, 2026",
+  },
+  warranty: {
+    value: "5 years",
+    label: "Warranty programme on surgical vision suites",
     source: "univlabs.in, 2026",
   },
   devices: {
@@ -77,8 +93,8 @@ export const facts = {
 
 export const proofBar: Fact[] = [
   facts.suites,
-  facts.devices,
-  facts.patents,
+  facts.hospitals,
+  facts.countries,
   facts.iso,
 ];
 

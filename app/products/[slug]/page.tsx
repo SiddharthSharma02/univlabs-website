@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense, ViewTransition, type CSSProperties } from "react";
 import { CatalogueRange } from "@/components/catalogue";
 import { NirLens } from "@/components/nir-lens";
+import { BeforeYouBuy, isSuite, SuiteCompare } from "@/components/suite-sections";
 import { ModeViewer } from "@/components/mode-viewer";
 import {
   ButtonLink,
@@ -129,12 +130,18 @@ async function ProductContent({ params }: Props) {
               <ButtonLink href={`/contact?topic=demo&product=${product.slug}`} arrow>
                 Request a demo
               </ButtonLink>
-              <ButtonLink
-                href={`/contact?topic=brochure&product=${product.slug}`}
-                variant="ghost-light"
-              >
-                Request a brochure
-              </ButtonLink>
+              {product.brochure ? (
+                <ButtonLink href={product.brochure} variant="ghost-light" external>
+                  Product brochure (PDF)
+                </ButtonLink>
+              ) : (
+                <ButtonLink
+                  href={`/contact?topic=brochure&product=${product.slug}`}
+                  variant="ghost-light"
+                >
+                  Request a brochure
+                </ButtonLink>
+              )}
             </div>
           </div>
           <div className="rise mx-auto w-full max-w-[560px]" style={i(3)}>
@@ -167,10 +174,14 @@ async function ProductContent({ params }: Props) {
       {product.highlights.length > 0 && (
         <section className="bg-clinical">
           <Container className="py-16 sm:py-24">
-            <div data-reveal>
-              <Eyebrow>Highlights</Eyebrow>
-            </div>
-            <div data-stagger className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {product.bestFor ? (
+              <SectionHeader eyebrow="Is it right for your hospital?" title={product.bestFor} />
+            ) : (
+              <div data-reveal>
+                <Eyebrow>Highlights</Eyebrow>
+              </div>
+            )}
+            <div data-stagger className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {product.highlights.map((h, n) => (
                 <div
                   key={h.title}
@@ -181,9 +192,9 @@ async function ProductContent({ params }: Props) {
                     aria-hidden
                     className="draw-bar mt-4 block h-1.5 w-10 rounded-full bg-blue"
                   />
-                  <h2 className="mt-5 font-display text-xl font-bold text-navy">
+                  <h3 className="mt-5 font-display text-xl font-bold text-navy">
                     {h.title}
-                  </h2>
+                  </h3>
                   <p className="mt-3 text-[15px] leading-relaxed">{h.body}</p>
                 </div>
               ))}
@@ -202,6 +213,7 @@ async function ProductContent({ params }: Props) {
               title="One field, seen in near-infrared"
               intro="The field under white light, with a near-infrared lens wherever you point or touch. Real footage from a UnivLabs camera."
             />
+
             <div data-reveal="scale">
               <NirLens dark />
             </div>
@@ -262,9 +274,19 @@ async function ProductContent({ params }: Props) {
                 Technical summary
               </h2>
               <p className="mt-4 leading-relaxed">
-                Final configuration is confirmed against compatibility, intended
-                use and regulatory availability in your market.
+                {product.specNote ??
+                  "Final configuration is confirmed against compatibility, intended use and regulatory availability in your market."}
               </p>
+              {product.brochure && (
+                <div className="mt-6">
+                  <ButtonLink href={product.brochure} variant="secondary" external arrow>
+                    Product brochure (PDF)
+                  </ButtonLink>
+                </div>
+              )}
+              {product.source && (
+                <p className="label mt-6 text-steel">Source · {product.source}</p>
+              )}
             </div>
             {product.specs.length > 0 ? (
               <dl
@@ -294,6 +316,9 @@ async function ProductContent({ params }: Props) {
           </div>
         </Container>
       </section>
+
+      {isSuite(product.slug) && <SuiteCompare current={product.slug} />}
+      {product.faqs && <BeforeYouBuy product={product} />}
 
       <CtaBand
         title={`See ${product.name} in your operating room`}
