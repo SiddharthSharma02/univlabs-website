@@ -116,7 +116,7 @@ export const nav: NavGroup[] = [
       { label: "Instruments & Devices", href: "/products#instruments" },
       { label: "Hand instruments", href: "/products/hand-instruments" },
       { label: "Am-SafeX", href: "/products/am-safex", note: "Catheter" },
-      { label: "Components", href: "/products/components" },
+      { label: "SurgiCore", href: "/products/surgicore", note: "Equipment" },
       { label: "Technology explained", href: "/technology" },
     ],
   },
@@ -169,28 +169,28 @@ export const specialties = [
     name: "General surgery",
     summary:
       "Laparoscopic general surgery with 4K white light and ICG fluorescence imaging, and the full tower of insufflation, pumps and recording.",
-    products: ["spectra", "components", "hand-instruments"],
+    products: ["spectra", "surgicore", "hand-instruments"],
   },
   {
     id: "urology",
     name: "Urology",
     summary:
       "Endourology and laparoscopic urology, from vision systems to Am-SafeX, a catheter developed with urologists.",
-    products: ["spectra", "am-safex", "components"],
+    products: ["spectra", "am-safex", "surgicore"],
   },
   {
     id: "gynaecology",
     name: "Gynaecology",
     summary:
       "Laparoscopic gynaecology and hysteroscopy, with a dedicated hysteroscopy pump for fluid management.",
-    products: ["spectra", "components"],
+    products: ["spectra", "surgicore"],
   },
   {
     id: "orthopaedics",
     name: "Orthopaedics",
     summary:
       "Arthroscopy workflows with a dedicated arthroscopy pump for joint distension and fluid management.",
-    products: ["components"],
+    products: ["surgicore"],
   },
 ] as const;
 

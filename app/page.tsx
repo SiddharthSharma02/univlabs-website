@@ -164,16 +164,12 @@ export default function Home() {
                 </div>
                 <div className="relative min-h-72 overflow-hidden">
                   <Image
-                    src="/images/footage/icg-overlay.jpg"
-                    alt="ICG fluorescence overlay on a laparoscopic view, from a UnivLabs camera"
+                    src="/images/products/spectra-tower.jpg"
+                    alt="UnivLabs Spectra 4K ICG tower with camera control unit, light source, insufflator and pump on a cart, monitor showing ICG fluorescence"
                     fill
                     sizes="(min-width: 1024px) 400px, 100vw"
-                    className="object-cover transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
+                    className="bg-white object-contain p-6 transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
                   />
-                  <span aria-hidden className="absolute inset-0 bg-linear-to-r from-navy via-navy/10 to-transparent max-sm:bg-linear-to-b" />
-                  <span className="label absolute bottom-4 right-4 rounded-full bg-navy/75 px-3 py-1.5 text-clinical backdrop-blur">
-                    Real footage
-                  </span>
                 </div>
               </Link>
             </div>
@@ -183,7 +179,7 @@ export default function Home() {
                 <ProductTile slug={slug} />
               </div>
             ))}
-            {(["components", "hand-instruments", "am-safex"] as const).map((slug) => (
+            {(["surgicore", "hand-instruments", "am-safex"] as const).map((slug) => (
               <div key={slug} className="md:col-span-2">
                 <ProductTile slug={slug} />
               </div>
@@ -286,7 +282,7 @@ export default function Home() {
           />
           <div data-stagger className="grid gap-4 sm:grid-cols-2">
             <Link
-              href="/products/components"
+              href="/products/surgicore"
               className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.25)]"
             >
               <p className="label text-blue">Purchase</p>

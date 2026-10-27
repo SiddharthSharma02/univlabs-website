@@ -93,9 +93,9 @@ const topics: Topic[] = [
     ],
     caption: simplified,
     related: [
-      item("components", "endoscopes"),
-      item("components", "led-light-source"),
-      item("components", "cables-and-tubing"),
+      item("surgicore", "endoscopes"),
+      item("surgicore", "led-light-source"),
+      item("surgicore", "cables-and-tubing"),
     ],
   },
   {
@@ -113,8 +113,8 @@ const topics: Topic[] = [
     caption: "Simplified signal chain. Sensor arrangement depends on the camera design.",
     related: [
       product("spectra"),
-      item("components", "icg-camera"),
-      item("components", "4k-camera"),
+      item("surgicore", "icg-camera"),
+      item("surgicore", "4k-camera"),
     ],
   },
   {
@@ -131,7 +131,7 @@ const topics: Topic[] = [
     diagram: <ModesDiagram />,
     legend: [{ swatch: "green", label: "Detected fluorescence signal" }],
     caption: "Illustration, not a surgical image.",
-    related: [product("spectra"), item("components", "icg-camera")],
+    related: [product("spectra"), item("surgicore", "icg-camera")],
   },
   {
     id: "icg-light-source",
@@ -163,9 +163,9 @@ const topics: Topic[] = [
       "*805 nm and 830 nm are protein-bound ICG reference peaks. These are not LED output specifications.",
     ],
     related: [
-      item("components", "nir-light-source"),
-      item("components", "led-light-source"),
-      item("components", "cables-and-tubing"),
+      item("surgicore", "nir-light-source"),
+      item("surgicore", "led-light-source"),
+      item("surgicore", "cables-and-tubing"),
     ],
   },
   {
@@ -215,8 +215,8 @@ const topics: Topic[] = [
     caption: sensing,
     notes: ["Tubing, filters and ports affect delivery."],
     related: [
-      item("components", "insufflator"),
-      item("components", "smoke-evacuator"),
+      item("surgicore", "insufflator"),
+      item("surgicore", "smoke-evacuator"),
     ],
   },
   {
@@ -245,10 +245,10 @@ const topics: Topic[] = [
     caption: sensing,
     notes: ["Outflow and suction also affect site conditions."],
     related: [
-      item("components", "universal-medical-pump"),
-      item("components", "hysteroscopy-pump"),
-      item("components", "arthroscopy-pump"),
-      item("components", "uro-pump"),
+      item("surgicore", "universal-medical-pump"),
+      item("surgicore", "hysteroscopy-pump"),
+      item("surgicore", "arthroscopy-pump"),
+      item("surgicore", "uro-pump"),
     ],
   },
   {

@@ -20,7 +20,11 @@ export type Product = {
   descriptor: string;
   headline: string;
   summary: string;
-  highlights: { title: string; body: string }[];
+  /**
+   * `links` jump to items in the range section on the same page
+   * (slugs from content/catalogue.ts).
+   */
+  highlights: { title: string; body: string; links?: { label: string; slug: string }[] }[];
   /** Spec rows. Leave empty until confirmed specs arrive. */
   specs: { label: string; value: string }[];
   /**
@@ -264,11 +268,11 @@ export const products: Product[] = [
     todo: "Need a product photograph of SurgiStart. Confirm whether “Gynostart Portable Suite” in the image library is the same product.",
   },
   {
-    slug: "components",
-    name: "Components",
+    slug: "surgicore",
+    name: "SurgiCore",
     family: "surgical-vision",
     status: "available",
-    descriptor: "Standalone equipment and accessories",
+    descriptor: "Modular surgical equipment and device components",
     headline: "Build the operating room one system at a time.",
     summary:
       "Every part of the UnivLabs tower is also available on its own. Our team confirms compatibility, configuration and regulatory availability before supply.",
@@ -278,18 +282,43 @@ export const products: Product[] = [
       fit: "contain",
     },
     highlights: [
-      { title: "Imaging", body: "4K camera, 4K ICG camera, medical recorder." },
+      {
+        title: "Imaging",
+        body: "4K camera, 4K ICG camera, medical recorder.",
+        links: [
+          { label: "4K camera", slug: "4k-camera" },
+          { label: "4K ICG camera", slug: "icg-camera" },
+          { label: "Medical recorder", slug: "medical-recorder" },
+        ],
+      },
       {
         title: "Illumination and optics",
-        body: "ICG light source, fibre-optic cable, endoscopes in 2.9, 4, 5 and 10 mm.",
+        body: "ICG light source, LED light source, fibre-optic cable, endoscopes in 2.9, 4, 5 and 10 mm.",
+        links: [
+          { label: "ICG light source", slug: "nir-light-source" },
+          { label: "LED light source", slug: "led-light-source" },
+          { label: "Fibre-optic cable", slug: "cables-and-tubing" },
+          { label: "Endoscopes, 2.9 to 10 mm", slug: "endoscopes" },
+        ],
       },
       {
         title: "Insufflation and air",
         body: "CO₂ insufflator and smoke evacuator.",
+        links: [
+          { label: "CO₂ insufflator", slug: "insufflator" },
+          { label: "Smoke evacuator", slug: "smoke-evacuator" },
+        ],
       },
       {
         title: "Fluid management",
-        body: "Medical pump, Universal Medical Pump, hysteroscopy pump, arthroscopy pump, irrigation and suction tubing.",
+        body: "Universal Medical Pump, hysteroscopy pump, arthroscopy pump, Uro Pump, irrigation and suction tubing.",
+        links: [
+          { label: "Universal Medical Pump", slug: "universal-medical-pump" },
+          { label: "Hysteroscopy pump", slug: "hysteroscopy-pump" },
+          { label: "Arthroscopy pump", slug: "arthroscopy-pump" },
+          { label: "Uro Pump", slug: "uro-pump" },
+          { label: "Irrigation and suction tubing", slug: "cables-and-tubing" },
+        ],
       },
     ],
     specs: [],
