@@ -164,12 +164,15 @@ export default function Home() {
                 </div>
                 <div className="relative min-h-72 overflow-hidden">
                   <Image
-                    src="/images/products/spectra-tower.jpg"
-                    alt="UnivLabs Spectra 4K ICG tower with camera control unit, light source, insufflator and pump on a cart, monitor showing ICG fluorescence"
+                    src="/images/products/spectra-render.jpg"
+                    alt="Render of the UnivLabs Spectra ICG Suite cart, marked 4K Spectra ICG Suite on its side, with a monitor showing an ICG fluorescence overlay"
                     fill
                     sizes="(min-width: 1024px) 400px, 100vw"
-                    className="bg-white object-contain p-6 transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
+                    className="object-cover object-center transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
                   />
+                  <span className="label absolute bottom-4 right-4 rounded-full bg-navy/80 px-3 py-1.5 text-clinical">
+                    Render
+                  </span>
                 </div>
               </Link>
             </div>

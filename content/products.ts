@@ -34,7 +34,7 @@ export type Product = {
    */
   image?: { src: string; alt: string; render?: boolean; fit?: "contain" | "cover" };
   /** Extra studio shots, shown as a gallery on the product page. */
-  gallery?: { src: string; alt: string; caption: string }[];
+  gallery?: { src: string; alt: string; caption: string; render?: boolean }[];
   todo?: string;
   /** Who the product suits, in the live site's words. */
   bestFor?: string;
@@ -140,15 +140,17 @@ export const products: Product[] = [
     ],
     source: LIVE_SV,
     image: {
-      src: "/images/products/spectra-tower.jpg",
-      alt: "UnivLabs 4K ICG tower with camera control unit, light source, insufflator and pump stacked on a cart, monitor showing ICG fluorescence",
+      src: "/images/products/spectra-render.jpg",
+      alt: "Render of the UnivLabs Spectra ICG Suite cart, marked 4K Spectra ICG Suite on its side, with a monitor showing an ICG fluorescence overlay",
+      render: true,
       fit: "contain",
     },
     gallery: [
       {
-        src: "/images/products/spectra-tower-studio.jpg",
-        alt: "UnivLabs 4K ICG tower on a grey studio background",
-        caption: "Complete tower",
+        src: "/images/products/spectra-render-front.jpg",
+        alt: "Render of the UnivLabs Spectra ICG Suite from the front, showing the touchscreen and connector panel",
+        caption: "Spectra ICG Suite, front",
+        render: true,
       },
       {
         src: "/images/products/icg-camera.jpg",
@@ -161,7 +163,7 @@ export const products: Product[] = [
         caption: "NIR UL9700 light source",
       },
     ],
-    todo: "Add the approved intended-use statement from the product team.",
+    todo: "Replace the renders with studio photographs of the Spectra ICG Suite, and add the approved intended-use statement from the product team.",
   },
   {
     slug: "lumina",

@@ -282,7 +282,7 @@ async function ProductContent({ params }: Props) {
                   className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
                   <ProductImage
-                    image={{ src: g.src, alt: g.alt, fit: "contain" }}
+                    image={{ src: g.src, alt: g.alt, fit: "contain", render: g.render }}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="aspect-square"
                   />
