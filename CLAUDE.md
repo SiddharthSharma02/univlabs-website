@@ -19,7 +19,7 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 - `proxy.ts` — returns a real 404 for unknown `/products/<slug>` and `/products/<slug>/<item>` URLs, using the slugs in `content/products.ts`. The product page reads its slug inside `<Suspense>`, where `notFound()` alone can only send status 200.
 - `content/site.ts` — nav, specialties, leadership, and **every public number with its source** (`facts`). Change figures here only.
 - `content/products.ts` — product catalogue, status per product, pipeline.
-- `content/catalogue.ts` — individual hand instruments and devices, each with its own page at `/products/<family>/<item>` (`app/products/[slug]/[item]/page.tsx`), listed on the Hand instruments and Components pages. Device wording comes from univlabs.in/accessories; variant names and sizes from the client's product image library, written as supplied. `content/telescopes.ts` is generated from the client's endoscope spreadsheet: re-export, don't hand-edit. Photos are in `public/images/catalogue/`.
+- `content/catalogue.ts` — individual hand instruments and devices, each with its own page at `/products/<family>/<item>` (`app/products/[slug]/[item]/page.tsx`), listed on the Hand instruments and SurgiCore pages. Device wording comes from univlabs.in/accessories; variant names and sizes from the client's product image library, written as supplied. `content/telescopes.ts` is generated from the client's endoscope spreadsheet: re-export, don't hand-edit. Photos are in `public/images/catalogue/`.
 - `components/ui.tsx` — Container, SectionHeader, ButtonLink, StatusTag, PageHero, SectionMarker, CtaBand, Todo.
 - `components/brand.tsx` — `Mark` (SVG rebuilt from the logo) and `Logo` lockup.
 - `components/mode-viewer.tsx` — the hero: one surgical scene in white light / ICG overlay / NIR.
@@ -40,7 +40,7 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 
 **Names.** Text always says `UnivLabs` (never Univlabs/UNIVLABS). `Am-SafeX` exactly. `CogniAxis` in copy ("CogniAxis.AI" only in a logo lockup). `AxisEdge+`, `SurgiVault`, `SurgiBot`, `Dr Mentor`, `SUFI`, `Pay Per Minute`. Indian English spelling: programme, colour, gynaecology, orthopaedics, fibre. Units with a space: `10 mm`, `CO₂`, `4K`.
 
-**Families.** Surgical Vision (Spectra, Lumina, SurgiStart, Components) · Instruments & Devices (hand instruments, Am-SafeX) · CogniAxis (AxisEdge+ hardware, SurgiVault storage, Dr Mentor teaching) · Programmes (Pay Per Minute leasing, SUFI surgeon co-innovation, OBSR service) · Research (SurgiBot, biodegradable ureteral stent with IIT Roorkee).
+**Families.** Surgical Vision (Spectra, Lumina, SurgiStart, SurgiCore) · Instruments & Devices (hand instruments, Am-SafeX) · CogniAxis (AxisEdge+ hardware, SurgiVault storage, Dr Mentor teaching) · Programmes (Pay Per Minute leasing, SUFI surgeon co-innovation, OBSR service) · Research (SurgiBot, biodegradable ureteral stent with IIT Roorkee).
 
 **Claims policy.** Medical device promotion is regulated.
 - Every product has a `status`: `available`, `development` or `research`. Always render it with `StatusTag` (words plus solid/dashed bar, never colour alone).

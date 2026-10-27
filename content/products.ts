@@ -20,7 +20,11 @@ export type Product = {
   descriptor: string;
   headline: string;
   summary: string;
-  highlights: { title: string; body: string }[];
+  /**
+   * `links` jump to items in the range section on the same page
+   * (slugs from content/catalogue.ts).
+   */
+  highlights: { title: string; body: string; links?: { label: string; slug: string }[] }[];
   /** Spec rows. Leave empty until confirmed specs arrive. */
   specs: { label: string; value: string }[];
   /**
@@ -30,7 +34,7 @@ export type Product = {
    */
   image?: { src: string; alt: string; render?: boolean; fit?: "contain" | "cover" };
   /** Extra studio shots, shown as a gallery on the product page. */
-  gallery?: { src: string; alt: string; caption: string }[];
+  gallery?: { src: string; alt: string; caption: string; render?: boolean }[];
   todo?: string;
   /** Who the product suits, in the live site's words. */
   bestFor?: string;
@@ -136,15 +140,17 @@ export const products: Product[] = [
     ],
     source: LIVE_SV,
     image: {
-      src: "/images/products/spectra-tower.jpg",
-      alt: "UnivLabs 4K ICG tower with camera control unit, light source, insufflator and pump stacked on a cart, monitor showing ICG fluorescence",
+      src: "/images/products/spectra-render.jpg",
+      alt: "Render of the UnivLabs Spectra ICG Suite cart, marked 4K Spectra ICG Suite on its side, with a monitor showing an ICG fluorescence overlay",
+      render: true,
       fit: "contain",
     },
     gallery: [
       {
-        src: "/images/products/spectra-tower-studio.jpg",
-        alt: "UnivLabs 4K ICG tower on a grey studio background",
-        caption: "Complete tower",
+        src: "/images/products/spectra-render-front.jpg",
+        alt: "Render of the UnivLabs Spectra ICG Suite from the front, showing the touchscreen and connector panel",
+        caption: "Spectra ICG Suite, front",
+        render: true,
       },
       {
         src: "/images/products/icg-camera.jpg",
@@ -157,7 +163,7 @@ export const products: Product[] = [
         caption: "NIR UL9700 light source",
       },
     ],
-    todo: "Add the approved intended-use statement from the product team.",
+    todo: "Replace the renders with studio photographs of the Spectra ICG Suite, and add the approved intended-use statement from the product team.",
   },
   {
     slug: "lumina",
@@ -270,11 +276,11 @@ export const products: Product[] = [
     todo: "The image is from univlabs.in and appears to be a render; replace it with a studio photograph. The unit is labelled “GynoStart suite”: confirm which name goes on the hardware and the website.",
   },
   {
-    slug: "components",
-    name: "Components",
+    slug: "surgicore",
+    name: "SurgiCore",
     family: "surgical-vision",
     status: "available",
-    descriptor: "Standalone equipment and accessories",
+    descriptor: "Modular surgical equipment and device components",
     headline: "Build the operating room one system at a time.",
     summary:
       "Every part of the UnivLabs tower is also available on its own. Our team confirms compatibility, configuration and regulatory availability before supply.",
@@ -284,18 +290,43 @@ export const products: Product[] = [
       fit: "contain",
     },
     highlights: [
-      { title: "Imaging", body: "4K camera, 4K ICG camera, medical recorder." },
+      {
+        title: "Imaging",
+        body: "4K camera, 4K ICG camera, medical recorder.",
+        links: [
+          { label: "4K camera", slug: "4k-camera" },
+          { label: "4K ICG camera", slug: "icg-camera" },
+          { label: "Medical recorder", slug: "medical-recorder" },
+        ],
+      },
       {
         title: "Illumination and optics",
-        body: "ICG light source, fibre-optic cable, endoscopes in 2.9, 4, 5 and 10 mm.",
+        body: "ICG light source, LED light source, fibre-optic cable, endoscopes in 2.9, 4, 5 and 10 mm.",
+        links: [
+          { label: "ICG light source", slug: "nir-light-source" },
+          { label: "LED light source", slug: "led-light-source" },
+          { label: "Fibre-optic cable", slug: "cables-and-tubing" },
+          { label: "Endoscopes, 2.9 to 10 mm", slug: "endoscopes" },
+        ],
       },
       {
         title: "Insufflation and air",
         body: "CO₂ insufflator and smoke evacuator.",
+        links: [
+          { label: "CO₂ insufflator", slug: "insufflator" },
+          { label: "Smoke evacuator", slug: "smoke-evacuator" },
+        ],
       },
       {
         title: "Fluid management",
-        body: "Medical pump, Universal Medical Pump, hysteroscopy pump, arthroscopy pump, irrigation and suction tubing.",
+        body: "Universal Medical Pump, hysteroscopy pump, arthroscopy pump, Uro Pump, irrigation and suction tubing.",
+        links: [
+          { label: "Universal Medical Pump", slug: "universal-medical-pump" },
+          { label: "Hysteroscopy pump", slug: "hysteroscopy-pump" },
+          { label: "Arthroscopy pump", slug: "arthroscopy-pump" },
+          { label: "Uro Pump", slug: "uro-pump" },
+          { label: "Irrigation and suction tubing", slug: "cables-and-tubing" },
+        ],
       },
     ],
     specs: [],

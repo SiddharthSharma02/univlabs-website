@@ -110,7 +110,7 @@ Masterbrand: **UnivLabs** leads every name on every surface.
 
 | Family | Status | Members |
 | --- | --- | --- |
-| Surgical Vision | Live | Spectra, Lumina, SurgiStart, Components |
+| Surgical Vision | Live | Spectra, Lumina, SurgiStart, SurgiCore |
 | Instruments & Devices | Live | Hand instruments, Am-SafeX |
 | CogniAxis | Live | AxisEdge+ (hardware), SurgiVault (storage), Dr Mentor (teaching) |
 | Programmes | Live | Pay Per Minute (leasing per minute of use), SUFI (surgeons pitch ideas, UnivLabs builds them), OBSR service |
