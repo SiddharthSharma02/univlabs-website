@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, ViewTransition, type CSSProperties } from "react";
 import { CatalogueRange } from "@/components/catalogue";
+import { Rail } from "@/components/rail";
 import { NirLens } from "@/components/nir-lens";
 import { BeforeYouBuy, isSuite, SuiteCompare } from "@/components/suite-sections";
 import {
@@ -178,16 +179,17 @@ async function ProductContent({ params }: Props) {
                 <Eyebrow>Highlights</Eyebrow>
               </div>
             )}
-            <div
-              data-stagger
-              className={`mt-10 grid gap-6 md:grid-cols-2 ${
+            <div className="mt-8 sm:mt-10">
+            <Rail
+              label="Highlights"
+              className={`md:grid md:gap-6 md:grid-cols-2 ${
                 product.highlights.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
               }`}
             >
               {product.highlights.map((h, n) => (
                 <div
                   key={h.title}
-                  className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
+                  className="group rounded-3xl border border-line bg-paper p-6 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] sm:p-8"
                 >
                   <p className="label text-steel">0{n + 1}</p>
                   <span
@@ -227,6 +229,7 @@ async function ProductContent({ params }: Props) {
                   )}
                 </div>
               ))}
+            </Rail>
             </div>
           </Container>
         </section>
@@ -272,12 +275,10 @@ async function ProductContent({ params }: Props) {
               eyebrow={isSpectra ? "The tower" : "The range"}
               title={isSpectra ? "Every part, designed to work together" : "Studio photographs"}
             />
-            <ul
-              data-stagger
-              className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
+            <div className="mt-8 sm:mt-12">
+            <Rail label="Photographs" className="md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {product.gallery.map((g) => (
-                <li
+                <figure
                   key={g.src}
                   className="group overflow-hidden rounded-3xl border border-line bg-white transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
                 >
@@ -286,10 +287,11 @@ async function ProductContent({ params }: Props) {
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="aspect-square"
                   />
-                  <p className="label border-t border-line px-6 py-4 text-navy">{g.caption}</p>
-                </li>
+                  <figcaption className="label border-t border-line px-5 py-4 text-navy sm:px-6">{g.caption}</figcaption>
+                </figure>
               ))}
-            </ul>
+            </Rail>
+            </div>
           </Container>
         </section>
       )}

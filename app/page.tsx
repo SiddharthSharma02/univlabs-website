@@ -4,6 +4,7 @@ import { ViewTransition, type CSSProperties } from "react";
 import { SpecialtyExplorer } from "@/components/specialty-explorer";
 import { NirLens } from "@/components/nir-lens";
 import { ModeViewer } from "@/components/mode-viewer";
+import { Rail } from "@/components/rail";
 import { CountUp } from "@/components/motion";
 import {
   Arrow,
@@ -42,7 +43,7 @@ export default function Home() {
       {/* 1. Hero: the surgeon's view comes first. */}
       <section className="relative overflow-hidden bg-navy text-clinical">
         <HeroGlow />
-        <Container className="relative grid items-center gap-12 pb-12 pt-16 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-16 lg:pt-24">
+        <Container className="relative grid items-center gap-10 pb-10 pt-10 sm:gap-12 sm:pb-12 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-16 lg:pt-24">
           <div>
             <div className="rise" style={i(0)}>
               <SectionMarker />
@@ -73,11 +74,11 @@ export default function Home() {
               instruments and devices in Gurugram, and the same team installs
               and services them.
             </p>
-            <div className="rise mt-10 flex flex-wrap gap-3" style={i(5)}>
-              <ButtonLink href="/contact?topic=demo" arrow>
+            <div className="rise mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:flex sm:flex-wrap" style={i(5)}>
+              <ButtonLink href="/contact?topic=demo" arrow className="max-sm:px-3">
                 Request a demo
               </ButtonLink>
-              <ButtonLink href="/products/spectra" variant="ghost-light">
+              <ButtonLink href="/products/spectra" variant="ghost-light" className="max-sm:px-3">
                 Explore Spectra
               </ButtonLink>
             </div>
@@ -109,7 +110,7 @@ export default function Home() {
 
       {/* 3. What we make: one bento, every family. */}
       <section className="bg-clinical">
-        <Container className="py-20 sm:py-28">
+        <Container className="py-16 sm:py-28">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeader
               eyebrow="What we make"
@@ -125,7 +126,7 @@ export default function Home() {
 
           <div
             data-stagger
-            className="mt-12 grid auto-rows-[minmax(15rem,auto)] gap-4 md:grid-cols-6"
+            className="mt-10 grid gap-4 sm:mt-12 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-6"
           >
             {/* Spectra, the lead product. */}
             <div className="md:col-span-6 lg:col-span-4 lg:row-span-2">
@@ -135,7 +136,7 @@ export default function Home() {
                 className="group relative grid h-full overflow-hidden rounded-3xl bg-navy text-clinical sm:grid-cols-2"
                 data-spotlight
               >
-                <div className="relative flex flex-col p-8 sm:p-10">
+                <div className="relative flex flex-col p-6 sm:p-10">
                   <p data-scramble className="label text-blue-300">
                     Surgical Vision · Lead suite
                   </p>
@@ -155,14 +156,14 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto flex items-center justify-between gap-4 pt-10">
+                  <div className="mt-auto flex items-center justify-between gap-4 pt-8 sm:pt-10">
                     <StatusTag status="available" dark />
                     <span className="flex size-11 items-center justify-center rounded-full bg-blue text-paper transition-transform duration-500 group-hover:rotate-45">
                       <Arrow />
                     </span>
                   </div>
                 </div>
-                <div className="relative min-h-72 overflow-hidden">
+                <div className="relative min-h-60 overflow-hidden sm:min-h-72">
                   <Image
                     src="/images/products/spectra-render.jpg"
                     alt="Render of the UnivLabs Spectra ICG Suite cart, marked 4K Spectra ICG Suite on its side, with a monitor showing an ICG fluorescence overlay"
@@ -177,16 +178,19 @@ export default function Home() {
               </Link>
             </div>
 
-            {(["lumina", "surgistart"] as const).map((slug) => (
-              <div key={slug} className="md:col-span-3 lg:col-span-2">
-                <ProductTile slug={slug} />
-              </div>
-            ))}
-            {(["surgicore", "hand-instruments", "am-safex"] as const).map((slug) => (
-              <div key={slug} className="md:col-span-2">
-                <ProductTile slug={slug} />
-              </div>
-            ))}
+            {/* On phones these five swipe; from md up they join the bento. */}
+            <Rail label="More products" className="md:contents">
+              {(["lumina", "surgistart"] as const).map((slug) => (
+                <div key={slug} className="md:col-span-3 lg:col-span-2">
+                  <ProductTile slug={slug} />
+                </div>
+              ))}
+              {(["surgicore", "hand-instruments", "am-safex"] as const).map((slug) => (
+                <div key={slug} className="md:col-span-2">
+                  <ProductTile slug={slug} />
+                </div>
+              ))}
+            </Rail>
 
             {/* CogniAxis: connects the operating room. */}
             <div className="md:col-span-6 lg:col-span-4">
@@ -195,7 +199,7 @@ export default function Home() {
                 data-tilt
                 className="group grid h-full overflow-hidden rounded-3xl bg-navy text-clinical sm:grid-cols-[1fr_1.1fr]"
               >
-                <div className="flex flex-col p-8">
+                <div className="flex flex-col p-6 sm:p-8">
                   <p data-scramble className="label text-blue-300">CogniAxis · Connected OR</p>
                   <p className="mt-6 font-display text-5xl font-bold tracking-tight text-icg">
                     <CountUp value={facts.cogniaxis.value} />
@@ -214,7 +218,7 @@ export default function Home() {
             <div className="md:col-span-6 lg:col-span-2">
               <Link
                 href="/contact?topic=demo"
-                className="group flex h-full flex-col justify-between rounded-3xl border-2 border-dashed border-line bg-paper p-8 transition-colors duration-300 hover:border-blue"
+                className="group flex h-full flex-col justify-between gap-6 rounded-3xl border-2 border-dashed border-line bg-paper p-6 transition-colors duration-300 hover:border-blue sm:p-8"
               >
                 <p className="label text-steel">Not sure what fits?</p>
                 <div>
@@ -234,7 +238,7 @@ export default function Home() {
       {/* 4. Interactive: the same frame, two ways. */}
       <section className="relative overflow-hidden bg-navy text-clinical">
         <HeroGlow />
-        <Container className="relative grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+        <Container className="relative grid items-center gap-12 py-16 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <div>
             <SectionHeader
               dark
@@ -264,7 +268,7 @@ export default function Home() {
 
       {/* 5. Specialties. */}
       <section className="bg-paper">
-        <Container className="py-20 sm:py-28">
+        <Container className="py-16 sm:py-28">
           <SectionHeader
             eyebrow="By specialty"
             title="Find the system for your department"
@@ -277,16 +281,16 @@ export default function Home() {
 
       {/* 6. Ownership. */}
       <section className="bg-clinical">
-        <Container className="grid gap-12 py-20 sm:py-28 lg:grid-cols-2 lg:items-center">
+        <Container className="grid gap-12 py-16 sm:py-28 lg:grid-cols-2 lg:items-center">
           <SectionHeader
             eyebrow="Ownership"
             title="Buy it, or pay for the minutes you use"
             intro="Hospitals can purchase a UnivLabs tower outright, or lease it under Pay Per Minute and pay for the minutes you operate."
           />
-          <div data-stagger className="grid gap-4 sm:grid-cols-2">
+          <div data-stagger className="grid border-t border-line sm:grid-cols-2 sm:gap-4 sm:border-t-0">
             <Link
               href="/products/surgicore"
-              className="group rounded-3xl border border-line bg-paper p-8 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.25)]"
+              className="group block border-b border-line py-6 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] active:bg-paper sm:rounded-3xl sm:border sm:bg-paper sm:p-8 sm:hover:-translate-y-1 sm:hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.25)]"
             >
               <p className="label text-blue">Purchase</p>
               <p className="mt-3 font-display text-2xl font-bold text-navy">
@@ -302,16 +306,16 @@ export default function Home() {
             <Link
               href="/pay-per-minute"
               data-spotlight
-              className="group overflow-hidden rounded-3xl bg-navy p-8 text-clinical transition-transform duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1"
+              className="group block overflow-hidden border-b border-line py-6 transition-transform duration-500 ease-[var(--ease-out-soft)] sm:rounded-3xl sm:border-0 sm:bg-navy sm:p-8 sm:text-clinical sm:hover:-translate-y-1"
             >
-              <p className="label text-blue-300">Pay Per Minute</p>
-              <p className="mt-3 font-display text-2xl font-bold">
+              <p className="label text-blue sm:text-blue-300">Pay Per Minute</p>
+              <p className="mt-3 font-display text-2xl font-bold text-navy sm:text-clinical">
                 Lease by the minute
               </p>
-              <p className="mt-2 text-[15px] leading-relaxed text-fog">
+              <p className="mt-2 text-[15px] leading-relaxed sm:text-fog">
                 Lease instead of a large upfront purchase. Closed to new registrations.
               </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue-300">
+              <span className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue sm:text-blue-300">
                 How it works <Arrow />
               </span>
             </Link>
@@ -321,8 +325,8 @@ export default function Home() {
 
       {/* 7. Built with surgeons. */}
       <section className="bg-paper">
-        <Container className="grid gap-12 py-20 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div data-reveal="left" className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-mist">
+        <Container className="grid gap-12 py-16 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+          <div data-reveal="left" className="relative order-last aspect-[16/9] overflow-hidden rounded-3xl bg-mist sm:aspect-[4/3] lg:order-none">
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-steel/40 text-center">
               <p className="label text-steel">Photo to commission</p>
               <p className="max-w-xs text-[15px] text-steel">
@@ -350,7 +354,7 @@ export default function Home() {
 
       {/* 8. Quality, regulatory, service. */}
       <section className="border-y border-line bg-clinical">
-        <Container className="py-20 sm:py-24">
+        <Container className="py-16 sm:py-24">
           <SectionHeader
             eyebrow="Quality and service"
             title="Made, certified and serviced by the same team"
@@ -402,7 +406,7 @@ export default function Home() {
       {/* 9. Pipeline, clearly labelled. */}
       <section className="relative overflow-hidden bg-navy text-clinical">
         <HeroGlow />
-        <Container className="relative py-20 sm:py-28">
+        <Container className="relative py-16 sm:py-28">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeader
               dark
@@ -426,8 +430,8 @@ export default function Home() {
 
       {/* 10. Doors. */}
       <section className="bg-paper">
-        <Container className="py-20 sm:py-28">
-          <div data-stagger className="grid gap-6 md:grid-cols-3">
+        <Container className="py-16 sm:py-28">
+          <div data-stagger className="grid border-t border-line md:grid-cols-3 md:gap-6 md:border-t-0">
             {[
               {
                 who: "Hospitals and surgeons",
@@ -451,7 +455,7 @@ export default function Home() {
               <Link
                 key={door.who}
                 href={door.href}
-                className="group rounded-3xl border border-line bg-clinical p-8 transition-[transform,translate,border-color,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:border-navy hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
+                className="group block border-b border-line py-6 transition-[transform,translate,border-color,box-shadow] duration-500 ease-[var(--ease-out-soft)] md:rounded-3xl md:border md:bg-clinical md:p-8 md:hover:-translate-y-1 md:hover:border-navy md:hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]"
               >
                 <Eyebrow tone="steel">{door.who}</Eyebrow>
                 <p className="mt-3 flex items-center justify-between font-display text-2xl font-bold text-navy transition-colors group-hover:text-blue">
@@ -525,7 +529,7 @@ function ConnectedGraphic() {
   ];
   const hub = { x: 50, y: 50 };
   return (
-    <div aria-hidden className="relative min-h-56 overflow-hidden bg-navy">
+    <div aria-hidden className="relative min-h-40 overflow-hidden bg-navy sm:min-h-56">
       <svg viewBox="0 0 100 75" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
         {nodes.map((n, k) => (
           <line

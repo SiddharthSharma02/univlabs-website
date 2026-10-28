@@ -34,6 +34,17 @@ From transitions.dev, motion-primitives and 60fps.
 - **Footer** (footer.design, "Large type"). The brand line runs edge to edge at display size, with the mark's bars drawing in above it. Demo and service actions sit in the footer, so every page ends with a next step.
 - **404** (404s.design). A surgical monitor with no signal. The dashed bars reuse the brand's "not available" sign.
 
+## Phones
+
+Most visitors arrive on a phone. A stack of identical rounded cards, one per screen, reads as a template, so below the `sm` or `md` breakpoint the same content changes form. Desktop layouts are unchanged.
+
+- **Swipe rails** (`Rail`). Rows of product, highlight, gallery and related cards scroll sideways with the next card peeking in. The pager is the mark's bars: the current card is the long solid bar, with a `01 / 05` readout.
+- **Rows, not cards.** The product index, the instrument catalogue, leadership, ownership options and the audience links become divided rows with a thumbnail on a white plate. The instrument range drops from about 7,000 px to under 2,000 px.
+- **Timelines.** The pipeline and numbered steps (`Steps`) run down a rail: solid between live stages, dashed toward anything not yet available, with the status still written in words.
+- **Tap to open.** Specialties are an accordion that shows what UnivLabs supplies for each one as swipeable chips. Footer link groups fold away.
+- **Touch gestures.** Swipe across the hero footage to change imaging mode. The NIR lens already follows a finger. The comparison table keeps its label column pinned while it scrolls.
+- **One floating action.** After the hero, a navy "Request a demo" pill stays in reach of the thumb. It hides over the footer and on the contact and service pages.
+
 ## Brand discipline
 
 - ICG Green appears in three places only: imaging-mode labels and bars, the NIR lens, and one key figure per view (the CogniAxis count).

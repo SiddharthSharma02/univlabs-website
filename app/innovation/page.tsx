@@ -49,14 +49,14 @@ export default function InnovationPage() {
             title="Capture, store and teach, then assist"
             intro="Solid bars are live today. Dashed bars are not yet available. We always say which is which."
           />
-          <ol data-stagger className="mt-10 space-y-6">
+          <ol data-stagger className="mt-8 border-t border-line sm:mt-10 sm:space-y-6 sm:border-t-0">
             {pipeline.map((step) => {
               const live = step.status === "available";
               return (
-                <li key={step.name} className="flex flex-col gap-4 rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6 sm:flex-row sm:items-center sm:gap-8">
+                <li key={step.name} className="flex flex-col gap-3 border-b border-line py-6 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] sm:flex-row sm:items-center sm:gap-8 sm:rounded-3xl sm:border sm:bg-paper sm:p-6 sm:hover:-translate-y-1 sm:hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]">
                   <span
                     aria-hidden
-                    className={`h-3 w-40 shrink-0 rounded-full ${
+                    className={`h-2.5 w-24 shrink-0 rounded-full sm:h-3 sm:w-40 ${
                       live ? "bg-blue" : "border-2 border-dashed border-steel"
                     }`}
                   />

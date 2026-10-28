@@ -429,11 +429,14 @@ function TopicSection({ topic: t, index }: { topic: Topic; index: number }) {
               </p>
               <p className="mt-4 text-lg leading-relaxed text-pretty">{t.body}</p>
             </div>
-            <dl data-stagger className="mt-8 grid gap-3 sm:grid-cols-3">
+            <dl data-stagger className="mt-8 grid border-t border-line sm:grid-cols-3 sm:gap-3 sm:border-t-0">
               {t.terms.map(([term, def]) => (
-                <div key={term} className="rounded-2xl border border-line bg-paper p-4">
-                  <dt className="font-display text-lg font-bold text-navy">{term}</dt>
-                  <dd className="mt-1 text-[14px] leading-snug text-ink">{def}</dd>
+                <div
+                  key={term}
+                  className="flex items-baseline justify-between gap-4 border-b border-line py-3 sm:block sm:rounded-2xl sm:border sm:bg-paper sm:p-4"
+                >
+                  <dt className="shrink-0 font-display text-lg font-bold text-navy">{term}</dt>
+                  <dd className="text-right text-[14px] leading-snug text-ink sm:mt-1 sm:text-left">{def}</dd>
                 </div>
               ))}
             </dl>

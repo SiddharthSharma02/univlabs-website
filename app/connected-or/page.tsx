@@ -6,6 +6,7 @@ import {
   SectionHeader,
   StatusTag,
   Todo,
+  Steps,
 } from "@/components/ui";
 import { facts } from "@/content/site";
 
@@ -56,30 +57,26 @@ export default function ConnectedOrPage() {
             eyebrow="What it does today"
             title="Three jobs, all live"
           />
-          <ol data-stagger className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
+          <Steps
+            className="md:grid-cols-3"
+            pad="md:p-8"
+            steps={[
               ["01", "Record and organise", "Capture surgical cases and keep them organised."],
               ["02", "Stream live", "Share live video with authorised colleagues outside the OR."],
               ["03", "Teach and review", "Review procedures with your team and trainees."],
-            ].map(([n, t, b]) => (
-              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-8">
-                <p className="label text-blue">{n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
-              </li>
-            ))}
-          </ol>
+            ]}
+          />
         </Container>
       </section>
       <section className="bg-paper">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="The platform" title="How the parts fit together" />
-          <div data-stagger className="mt-10 grid gap-6 md:grid-cols-2">
+          <div data-stagger className="mt-8 grid gap-8 sm:mt-10 md:grid-cols-2 md:gap-6">
             {parts.map((p) => (
               <div
                 key={p.id}
                 id={p.id}
-                className="scroll-mt-24 rounded-2xl border border-line border-t-4 border-t-blue bg-paper p-8"
+                className="scroll-mt-24 border-l-4 border-l-blue pl-5 md:rounded-2xl md:border md:border-t-4 md:border-line md:border-t-blue md:bg-paper md:p-8"
               >
                 <p className="label text-steel">{p.role}</p>
                 <h3 className="mt-2 font-display text-xl font-bold text-navy">{p.name}</h3>

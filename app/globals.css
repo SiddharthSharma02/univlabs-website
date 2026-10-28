@@ -45,6 +45,7 @@ html {
 body {
   background: var(--color-clinical);
   color: var(--color-ink);
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {

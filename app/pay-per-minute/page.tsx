@@ -5,6 +5,7 @@ import {
   PageHero,
   SectionHeader,
   Todo,
+  Steps,
 } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -28,19 +29,15 @@ export default function PayPerMinutePage() {
       <section className="bg-clinical">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="How it works" title="Three steps to a working tower" />
-          <ol data-stagger className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
+          <Steps
+            className="md:grid-cols-3"
+            pad="md:p-8"
+            steps={[
               ["01", "Choose the suite", "Select the vision suite and components for your specialty."],
               ["02", "We install it", "UnivLabs installs, commissions and trains your team."],
               ["03", "Pay for use", "You are billed for operating minutes, not for the equipment."],
-            ].map(([n, t, b]) => (
-              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-8">
-                <p className="label text-blue">{n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
-              </li>
-            ))}
-          </ol>
+            ]}
+          />
           <div className="mt-8">
             <Todo>
               Confirm the programme terms: minimum usage, contract length,

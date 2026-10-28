@@ -23,30 +23,32 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow,border-color] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-[0_24px_60px_-20px_rgba(0,26,73,0.25)]"
+      className="group flex items-center gap-4 border-b border-line py-4 transition-[transform,translate,box-shadow,border-color] duration-500 ease-[var(--ease-out-soft)] sm:flex-col sm:items-stretch sm:gap-0 sm:overflow-hidden sm:rounded-3xl sm:border sm:bg-paper sm:py-0 sm:hover:-translate-y-1.5 sm:hover:border-blue/40 sm:hover:shadow-[0_24px_60px_-20px_rgba(0,26,73,0.25)]"
     >
       {product.image ? (
         <ViewTransition name={`product-${product.slug}`} share="morph" default="none">
           <ProductImage
             image={product.image}
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="aspect-[4/3]"
+            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 112px"
+            className="aspect-square w-28 shrink-0 rounded-2xl border border-line sm:aspect-[4/3] sm:w-auto sm:rounded-none sm:border-0"
+            pad="p-2 sm:p-6"
+            labelClassName="max-sm:bottom-1.5 max-sm:left-1.5 max-sm:px-1.5 max-sm:py-0.5 max-sm:text-[9px]"
           />
         </ViewTransition>
       ) : (
-        <div className="relative aspect-[4/3] bg-mist">
+        <div className="relative aspect-square w-28 shrink-0 rounded-2xl bg-mist sm:aspect-[4/3] sm:w-auto sm:rounded-none">
           <div className="absolute inset-3 flex items-center justify-center rounded-xl border-2 border-dashed border-steel/40">
             <p className="label text-steel">Product photo to commission</p>
           </div>
         </div>
       )}
-      <div className="flex flex-1 flex-col border-t border-line p-6">
-        <p className="label text-steel">{product.descriptor}</p>
-        <h3 className="mt-2 flex items-center justify-between font-display text-xl font-bold text-navy transition-colors group-hover:text-blue">
+      <div className="flex min-w-0 flex-1 flex-col sm:border-t sm:border-line sm:p-6">
+        <p className="label order-2 mt-1 text-[11px] text-steel sm:order-none sm:mt-0 sm:text-[13px]">{product.descriptor}</p>
+        <h3 className="flex items-center justify-between gap-3 font-display text-lg font-bold text-navy transition-colors group-hover:text-blue sm:mt-2 sm:text-xl">
           {product.name}
           <Arrow className="size-5 text-blue" />
         </h3>
-        <div className="mt-4">
+        <div className="order-3 mt-3 sm:mt-4">
           <StatusTag status={product.status} />
         </div>
       </div>
@@ -78,7 +80,7 @@ export default function ProductsPage() {
                 intro={family.summary}
               />
               {items.length > 0 ? (
-                <div data-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div data-stagger className="mt-8 grid border-t border-line sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:border-t-0 lg:grid-cols-3">
                   {items.map((p) => (
                     <ProductCard key={p.slug} product={p} />
                   ))}

@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { MotionRoot, motionBootScript } from "@/components/motion";
+import { MobileCta } from "@/components/mobile-cta";
 import { site } from "@/content/site";
 import { ViewTransition } from "react";
 import "./globals.css";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
         </ViewTransition>
         <SiteFooter />
+        <MobileCta />
         <MotionRoot />
       </body>
     </html>

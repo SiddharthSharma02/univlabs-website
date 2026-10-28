@@ -6,6 +6,7 @@ import {
   PageHero,
   SectionHeader,
   Todo,
+  Steps,
 } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -28,20 +29,16 @@ export default function SufiPage() {
       <section className="bg-clinical">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="How it works" title="From idea to device" />
-          <ol data-stagger className="mt-10 grid gap-6 md:grid-cols-4">
-            {[
+          <Steps
+            className="md:grid-cols-4"
+            pad="md:p-6"
+            steps={[
               ["01", "Pitch", "Describe the clinical problem and your idea."],
               ["02", "Assess", "Our engineers and clinical team review feasibility."],
               ["03", "Prototype", "We design, build and test with you."],
               ["04", "Bring to market", "Regulatory, manufacturing and launch by UnivLabs."],
-            ].map(([n, t, b]) => (
-              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
-                <p className="label text-blue">{n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
-              </li>
-            ))}
-          </ol>
+            ]}
+          />
         </Container>
       </section>
       <section className="bg-paper">
