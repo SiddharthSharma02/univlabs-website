@@ -7,19 +7,19 @@ import { Arrow, Container, Eyebrow, StatusTag } from "./ui";
 /**
  * The Spectra tower, taken apart as you scroll. The units slide out of the
  * cart to where they are named, each on a leader line, like an exploded
- * drawing. Every unit is a real studio photograph and every label is the
- * Spectra spec table, word for word. The cart is a render and says so.
+ * drawing. Every unit is a real studio photograph. On desktop each also
+ * carries its line from the Spectra spec table, word for word. The cart is a render and says so.
  *
  * CSS only: the stage is pinned while its track scrolls past, and a
  * named view timeline drives each part. Without scroll timelines, or with
  * reduced motion, the drawing shows already taken apart.
  */
 const PARTS = [
-  { spec: "Camera", item: "icg-camera", src: "/images/products/icg-camera.jpg", alt: "UnivLabs 4K ICG camera control unit with camera head", x: 16, y: 13 },
-  { spec: "Light source", item: "nir-light-source", src: "/images/products/nir-light-source.jpg", alt: "UnivLabs NIR UL9700 light source with fibre-optic cable", x: 84, y: 27 },
-  { spec: "Telescope", item: "endoscopes", src: "/images/products/telescope.jpg", alt: "UnivLabs UHD telescope eyepiece and shaft", x: 16, y: 50 },
-  { spec: "Insufflator", item: "insufflator", src: "/images/products/insufflator.jpg", alt: "UnivLabs Uniflator UL45-S CO₂ insufflator", x: 84, y: 69 },
-  { spec: "Irrigation / suction", item: "universal-medical-pump", src: "/images/products/universal-pump.jpg", alt: "UnivLabs Universal Medical Pump UMP-1000", x: 16, y: 87 },
+  { name: "Camera", spec: "Camera", item: "icg-camera", src: "/images/products/icg-camera.jpg", alt: "UnivLabs 4K ICG camera control unit with camera head", x: 16, y: 13 },
+  { name: "Light source", spec: "Light source", item: "nir-light-source", src: "/images/products/nir-light-source.jpg", alt: "UnivLabs NIR UL9700 light source with fibre-optic cable", x: 84, y: 27 },
+  { name: "Telescope", spec: "Telescope", item: "endoscopes", src: "/images/products/telescope.jpg", alt: "UnivLabs UHD telescope eyepiece and shaft", x: 16, y: 50 },
+  { name: "Insufflator", spec: "Insufflator", item: "insufflator", src: "/images/products/insufflator.jpg", alt: "UnivLabs Uniflator UL45-S CO₂ insufflator", x: 84, y: 69 },
+  { name: "Pump", spec: "Irrigation / suction", item: "universal-medical-pump", src: "/images/products/universal-pump.jpg", alt: "UnivLabs Universal Medical Pump UMP-1000", x: 16, y: 87 },
 ] as const;
 
 /** Where each part moves, as a share of the pinned scroll. */
@@ -137,10 +137,11 @@ export function TowerExplode() {
                           className="object-contain p-1.5"
                         />
                       </span>
-                      <span className="label mt-1.5 block text-[10px] leading-tight text-blue sm:text-[11px]">
-                        {p.spec}
+                      {/* Phones: the name only. Desktop: the spec line too. */}
+                      <span className="label mt-1.5 block text-[11px] leading-tight text-blue">
+                        {p.name}
                       </span>
-                      <span className="mt-0.5 block text-[11px] leading-snug text-navy sm:text-[13px]">
+                      <span className="mt-0.5 hidden text-[13px] leading-snug text-navy lg:block">
                         {value(p.spec)}
                       </span>
                     </Link>
