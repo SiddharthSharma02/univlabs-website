@@ -8,6 +8,12 @@ UnivLabs sells clarity of vision, so the site should behave like a good surgical
 
 ## Motion rules
 
+**No fade-ins.** Fading every card and paragraph in on scroll is the most common sign of a template or AI-built site, and it can hide content from someone scrolling fast. Text is always on the page. Below the fold, motion is linked to the scroll position (CSS scroll-driven animations): it follows the visitor's finger, stops when they stop, and runs backwards when they scroll up. Each effect comes from what UnivLabs makes: light, focus, the mark's bars, an instrument readout, a tower of units. Browsers without scroll timelines and visitors who prefer reduced motion get the finished state.
+
+**One signature moment per page.** On the home and Spectra pages it is the tower coming apart: the stage pins while its track scrolls past, and each unit slides out of the cart on a leader line to its label. The units are the client's studio photographs and the labels are the Spectra spec table, word for word. Jack Roberts builds this "composed, then exploded" moment from AI video; the brand's AI policy rules that out for devices, so it is built from real photographs. Elsewhere, interaction is the motion: the mode viewer, the NIR lens, swipe rails.
+
+From Jack Roberts' web rules: UI transitions 150–300 ms, ease-out on entry; animate transform and opacity (filter only for the focus pull); honour reduced motion; one primary action per screen.
+
 From transitions.dev, motion-primitives and 60fps.
 
 - **Tokens, not one-off values.** `--dur-fast` 160 ms (exits), `--dur-base` 280 ms, `--dur-slow` 480 ms, `--dur-reveal` 750 ms. One easing (`--ease-out-soft`), plus `--ease-spring` for the magnetic pull only. Defined in `app/globals.css`.
@@ -17,9 +23,11 @@ From transitions.dev, motion-primitives and 60fps.
 
 | Effect | Where | Source idea |
 |---|---|---|
-| Headline words rise out of soft focus (`Words`) | Hero and page titles | Motion Primitives "Text Effect" |
-| Mono labels type in like a readout (`data-scramble`, CSS only) | Eyebrows, mode labels | Motion Primitives "Text Scramble" |
-| Blur-and-rise scroll reveal | Section content | Motion Primitives "In View" |
+| A light edge sweeps across the title (`scan-load`, `scan-in`) | Page titles on load; section titles with scroll | The hero's mode wipe |
+| A photo comes into focus as it reaches the reading line (`focus-in`) | Product and catalogue photos | The brand line, "Engineered for clarity" |
+| The mark's bars draw themselves with scroll (`draw-bar`) | Status and highlight bars | Graphic device |
+| Mono labels read out like an instrument display (`data-scramble`) | Eyebrows, mode labels | Motion Primitives "Text Scramble" |
+| The Spectra tower comes apart into its units (`TowerExplode`) | Home, Spectra page | Jack Roberts' composed-to-exploded hero |
 | Cards lean a few degrees toward the pointer (`data-tilt`) | Product bento | transitions.dev "3D tilt" |
 | Primary buttons pulled toward the pointer (`data-magnetic`) | Blue buttons | Common magnetic-button pattern |
 | Product photo morphs from card to product hero | Products → product page | React `<ViewTransition>` shared element |

@@ -80,7 +80,7 @@ body {
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -182,55 +182,105 @@ body {
   }
 }
 
-/* Staggered entrance for above-the-fold content: pure CSS, no JS wait. */
+/* Above the fold: a short, crisp entrance on load. Nothing below the
+   fold waits on a timer; see "Scroll-linked motion" below. */
 .rise {
-  animation: var(--animate-rise);
-  animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+  animation: rise 0.5s var(--ease-out-soft) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 40ms);
 }
 
 /*
-  Scroll reveal. `html.motion` is set by an inline script before paint,
-  so without JavaScript nothing is ever hidden.
-*/
-html.motion [data-reveal]:not(.is-revealed),
-html.motion [data-stagger]:not(.is-revealed) > * {
-  opacity: 0;
-  transform: translateY(18px);
-  filter: blur(6px);
-}
-html.motion [data-reveal="fade"]:not(.is-revealed) {
-  transform: none;
-}
-html.motion [data-reveal="scale"]:not(.is-revealed) {
-  transform: scale(0.96);
-}
-html.motion [data-reveal="left"]:not(.is-revealed) {
-  transform: translateX(-32px);
-}
-html.motion [data-reveal],
-html.motion [data-stagger] > * {
-  transition:
-    opacity var(--dur-reveal) var(--ease-out-soft),
-    transform var(--dur-reveal) var(--ease-out-soft),
-    filter var(--dur-reveal) var(--ease-out-soft);
-  transition-delay: calc(var(--i, 0) * 70ms);
-}
-html.motion [data-stagger] > :nth-child(2) { --i: 1; }
-html.motion [data-stagger] > :nth-child(3) { --i: 2; }
-html.motion [data-stagger] > :nth-child(4) { --i: 3; }
-html.motion [data-stagger] > :nth-child(5) { --i: 4; }
-html.motion [data-stagger] > :nth-child(6) { --i: 5; }
-html.motion [data-stagger] > :nth-child(7) { --i: 6; }
-html.motion [data-stagger] > :nth-child(n + 8) { --i: 7; }
+  Scroll-linked motion. The site does not fade cards or paragraphs in:
+  text is always on the page. Motion is tied to the scroll position, so it
+  follows the visitor's finger, stops when they stop and runs backwards
+  when they scroll up. Each effect comes from what UnivLabs makes:
 
-/* Bars that draw themselves in when revealed. */
-html.motion [data-reveal]:not(.is-revealed) .draw-bar,
-html.motion [data-stagger]:not(.is-revealed) .draw-bar {
-  transform: scaleX(0);
-}
+  - .scan-in    a section title is lit by a sweeping light edge, the same
+                wipe the hero uses to switch imaging modes
+  - .focus-in   a photo comes into focus as it reaches the reading line
+  - .draw-bar   the mark's bars draw themselves
+  - [data-scramble] mono labels read out like an instrument display
+
+  Browsers without scroll timelines, and visitors who prefer reduced
+  motion, get the finished state.
+*/
 .draw-bar {
   transform-origin: left center;
-  transition: transform 1.1s var(--ease-out-soft) 0.25s;
+}
+.scan-in {
+  position: relative;
+}
+
+@keyframes scan-text {
+  from {
+    clip-path: inset(-12% 100% -12% 0);
+  }
+  to {
+    clip-path: inset(-12% -2% -12% 0);
+  }
+}
+@keyframes scan-edge {
+  from {
+    left: 0%;
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes focus-pull {
+  from {
+    filter: blur(7px) saturate(0.6);
+    transform: scale(1.07);
+  }
+  to {
+    filter: none;
+    transform: none;
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scan-in {
+      animation: scan-text linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 38%;
+    }
+    .scan-in::after {
+      content: "";
+      position: absolute;
+      top: -12%;
+      bottom: -12%;
+      width: 2px;
+      translate: -100% 0;
+      border-radius: 2px;
+      background: var(--scan, var(--color-blue));
+      box-shadow: 0 0 18px 3px color-mix(in srgb, var(--scan, var(--color-blue)) 55%, transparent);
+      pointer-events: none;
+      animation: scan-edge linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 38%;
+    }
+    .focus-in {
+      animation: focus-pull linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+    .draw-bar {
+      animation: draw linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 45%;
+    }
+  }
 }
 
 .march {
@@ -265,8 +315,9 @@ html.motion [data-stagger]:not(.is-revealed) .draw-bar {
   opacity: 1;
 }
 
-/* Mono labels type in left to right, like a readout. CSS only, so the
-   text in the DOM never changes. */
+/* Mono labels read out left to right, like an instrument display. Above
+   the fold on load; further down, in step with the scroll. CSS only, so
+   the text in the DOM never changes. */
 @keyframes readout {
   from {
     clip-path: inset(0 100% 0 0);
@@ -275,19 +326,22 @@ html.motion [data-stagger]:not(.is-revealed) .draw-bar {
     clip-path: inset(0 0 0 0);
   }
 }
-html.motion [data-scramble]:not(.is-revealed):not(.rise) {
-  clip-path: inset(0 100% 0 0);
-}
-html.motion [data-scramble].is-revealed:not(.rise) {
-  animation: readout 0.6s steps(16, end) both;
-}
 html.motion .rise[data-scramble] {
   animation:
-    var(--animate-rise),
+    rise 0.5s var(--ease-out-soft) both,
     readout 0.6s steps(16, end) both;
   animation-delay:
-    calc(var(--i, 0) * 90ms + 60ms),
-    calc(var(--i, 0) * 90ms + 200ms);
+    calc(var(--i, 0) * 70ms + 40ms),
+    calc(var(--i, 0) * 70ms + 160ms);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-scramble]:not(.rise) {
+      animation: readout steps(16, end) both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 30%;
+    }
+  }
 }
 
 /* Cards lean a few degrees toward the pointer. */
@@ -318,23 +372,26 @@ html.motion [data-magnetic] {
   transform: translate(3px, -3px);
 }
 
-/* Headline words arrive one by one, out of a soft focus. */
-@keyframes word-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.35em);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
+/* Page titles are lit on load by the same sweeping light edge. */
 .word {
-  display: inline-block;
-  animation: word-in 0.8s var(--ease-out-soft) both;
-  animation-delay: calc(var(--w, 0) * 70ms + var(--d, 120ms));
+  display: inline;
+}
+.scan-load {
+  position: relative;
+  animation: scan-text 0.9s var(--ease-out-soft) 0.15s both;
+}
+.scan-load::after {
+  content: "";
+  position: absolute;
+  top: -8%;
+  bottom: -8%;
+  width: 3px;
+  translate: -100% 0;
+  border-radius: 3px;
+  background: var(--scan, var(--color-blue-300));
+  box-shadow: 0 0 24px 4px color-mix(in srgb, var(--scan, var(--color-blue-300)) 60%, transparent);
+  pointer-events: none;
+  animation: scan-edge 0.9s var(--ease-out-soft) 0.15s both;
 }
 
 /* Page transitions (React <ViewTransition>, see layout). The header stays
@@ -404,5 +461,118 @@ html.motion [data-magnetic] {
   }
   .march {
     animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   The Spectra tower, taken apart (components/tower-explode.tsx).
+   Finished state first: the drawing already apart, no pinning.
+------------------------------------------------------------------- */
+.tower-stage {
+  height: 30rem;
+  container-type: size;
+}
+@media (min-width: 64rem) {
+  .tower-stage {
+    height: 38rem;
+  }
+}
+.tower-part {
+  translate: -50% -50%;
+}
+.tower-cart {
+  --cart-end: 0.6;
+  transform: scale(var(--cart-end));
+}
+@media (min-width: 64rem) {
+  .tower-cart {
+    --cart-end: 0.74;
+  }
+}
+.tower-hint {
+  display: none;
+}
+
+@keyframes tower-part {
+  from {
+    transform: translate(calc((50 - var(--x)) * 1cqw), calc((50 - var(--y)) * 1cqh)) scale(0.35);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes tower-cart {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(var(--cart-end));
+  }
+}
+/* Each leader line appears as its unit lands. */
+@keyframes tower-line {
+  from,
+  60% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tower-track {
+      height: 300svh;
+      view-timeline: --tower block;
+    }
+    .tower-pin {
+      position: sticky;
+      top: 4rem;
+      height: calc(100svh - 4rem);
+    }
+    .tower-pin > * {
+      display: flex;
+      flex-direction: column;
+    }
+    .tower-stage {
+      height: auto;
+      flex: 1;
+      min-height: 0;
+    }
+    .tower-hint {
+      display: inline;
+    }
+    .tower-part {
+      animation: tower-part linear both;
+      animation-timeline: --tower;
+    }
+    .tower-line {
+      animation: tower-line linear both;
+      animation-timeline: --tower;
+    }
+    .tower-fill {
+      transform-origin: left center;
+      animation: draw linear both;
+      animation-timeline: --tower;
+    }
+    .tower-cart {
+      animation: tower-cart linear both;
+      animation-timeline: --tower;
+      animation-range: contain 6% contain 40%;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) and (min-width: 64rem) {
+    .tower-pin > * {
+      display: grid;
+    }
+    .tower-stage {
+      height: min(40rem, calc(100svh - 10rem));
+    }
   }
 }

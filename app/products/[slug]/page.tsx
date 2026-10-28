@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense, ViewTransition, type CSSProperties } from "react";
 import { CatalogueRange } from "@/components/catalogue";
 import { Rail } from "@/components/rail";
+import { TowerExplode } from "@/components/tower-explode";
 import { NirLens } from "@/components/nir-lens";
 import { BeforeYouBuy, isSuite, SuiteCompare } from "@/components/suite-sections";
 import {
@@ -105,7 +106,7 @@ async function ProductContent({ params }: Props) {
                 </Link>
               )}
             </nav>
-            <h1 className="mt-4 font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="scan-load mt-4 w-fit font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
               <Words text={product.name} delay={180} />
             </h1>
             <p data-scramble className="rise label mt-3 text-blue-300" style={i(2)}>
@@ -268,7 +269,9 @@ async function ProductContent({ params }: Props) {
         </section>
       )}
 
-      {product.gallery && product.gallery.length > 0 && (
+      {isSpectra && <TowerExplode />}
+
+      {!isSpectra && product.gallery && product.gallery.length > 0 && (
         <section className="bg-paper">
           <Container className="py-16 sm:py-24">
             <SectionHeader

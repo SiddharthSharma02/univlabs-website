@@ -82,7 +82,7 @@ async function ItemContent({ params }: Props) {
               <span aria-hidden> / </span>
               <span className="text-blue-300">{item.group}</span>
             </nav>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="scan-load mt-4 w-fit font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
               <Words text={item.name} delay={180} />
             </h1>
             <p data-scramble className="rise label mt-3 text-blue-300" style={i(2)}>

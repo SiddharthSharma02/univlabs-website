@@ -82,8 +82,8 @@ export function SectionHeader({
     <div className="max-w-3xl" data-reveal>
       {eyebrow && <Eyebrow tone={dark ? "light" : "blue"}>{eyebrow}</Eyebrow>}
       <h2
-        className={`mt-3 font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl ${
-          dark ? "text-clinical" : "text-navy"
+        className={`scan-in mt-3 w-fit font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl ${
+          dark ? "text-clinical [--scan:var(--color-blue-300)]" : "text-navy"
         }`}
       >
         {title}
@@ -208,7 +208,7 @@ export function PageHero({
           <div className="rise" style={{ "--i": 1 } as CSSProperties}>
             <Eyebrow tone="light">{eyebrow}</Eyebrow>
           </div>
-          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="scan-load mt-4 w-fit font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             <Words text={title} delay={200} />
           </h1>
           {intro && (
@@ -399,7 +399,7 @@ export function ProductImage({
         fill
         sizes={sizes}
         priority={priority}
-        className={`transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.04] ${
+        className={`${priority ? "" : "focus-in"} transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.04] ${
           contain ? `object-contain ${pad}` : "object-cover"
         }`}
       />

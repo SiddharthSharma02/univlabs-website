@@ -25,7 +25,7 @@ export default function NotFound() {
           <p data-scramble className="rise label mt-8 text-blue-300" style={{ "--i": 1 } as CSSProperties}>
             404 · No signal
           </p>
-          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-6xl">
+          <h1 className="scan-load mt-4 w-fit font-display text-4xl font-bold tracking-tight text-balance sm:text-6xl">
             <Words text="Nothing in the field of view" delay={200} />
           </h1>
           <p className="rise mt-6 max-w-xl text-lg text-fog" style={{ "--i": 4 } as CSSProperties}>

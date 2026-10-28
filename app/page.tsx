@@ -5,6 +5,7 @@ import { SpecialtyExplorer } from "@/components/specialty-explorer";
 import { NirLens } from "@/components/nir-lens";
 import { ModeViewer } from "@/components/mode-viewer";
 import { Rail } from "@/components/rail";
+import { TowerExplode } from "@/components/tower-explode";
 import { CountUp } from "@/components/motion";
 import {
   Arrow,
@@ -51,7 +52,7 @@ export default function Home() {
             <p data-scramble className="rise label mt-8 text-blue-300" style={i(1)}>
               Spectra · 4K 4-chip ICG
             </p>
-            <h1 className="mt-4 font-display text-5xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl">
+            <h1 className="scan-load mt-4 w-fit font-display text-5xl font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl">
               <span className="block">
                 <Words text="See what" delay={260} />
               </span>
@@ -169,7 +170,7 @@ export default function Home() {
                     alt="Render of the UnivLabs Spectra ICG Suite cart, marked 4K Spectra ICG Suite on its side, with a monitor showing an ICG fluorescence overlay"
                     fill
                     sizes="(min-width: 1024px) 400px, 100vw"
-                    className="object-cover object-center transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
+                    className="focus-in object-cover object-center transition-[scale] duration-1000 ease-[var(--ease-out-soft)] group-hover:scale-105"
                   />
                   <span className="label absolute bottom-4 right-4 rounded-full bg-navy/80 px-3 py-1.5 text-clinical">
                     Render
@@ -265,6 +266,9 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* The signature moment: the tower comes apart as you scroll. */}
+      <TowerExplode />
 
       {/* 5. Specialties. */}
       <section className="bg-paper">

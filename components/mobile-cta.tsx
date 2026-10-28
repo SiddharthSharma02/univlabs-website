@@ -8,7 +8,8 @@ import { Arrow } from "./ui";
 /**
  * Phones only: once the hero has scrolled away, a demo request stays one
  * tap from the thumb. It steps aside over the footer, which carries the
- * same actions, and on pages that are already the next step.
+ * same actions, over sections with their own action at the bottom
+ * (data-hide-cta), and on pages that are already the next step.
  */
 export function MobileCta() {
   const pathname = usePathname();
@@ -24,12 +25,18 @@ export function MobileCta() {
       pastHero = window.scrollY > window.innerHeight * 0.8;
       sync();
     };
-    const footer = document.querySelector("footer");
-    const io = new IntersectionObserver(([e]) => {
-      atFooter = e.isIntersecting;
+    // Step aside over the footer and over sections that carry their own
+    // action at the bottom of the screen (marked data-hide-cta).
+    const covering = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) covering.add(e.target);
+        else covering.delete(e.target);
+      }
+      atFooter = covering.size > 0;
       sync();
     });
-    if (footer) io.observe(footer);
+    document.querySelectorAll("footer, [data-hide-cta]").forEach((el) => io.observe(el));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
