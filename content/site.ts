@@ -20,8 +20,27 @@ export const site = {
     // General enquiries inbox published on univlabs.in (structured data).
     // TODO: confirm whether sales and demo requests should go elsewhere.
     salesEmail: "info@univlabs.in",
+    // Registered address, as on the ISO 13485 certificate (MTIC/MD/1129).
+    address: {
+      street: "Plot 31, Sector 33, near Infocity II",
+      locality: "Gurugram",
+      region: "Haryana",
+      postcode: "122003",
+      country: "India",
+    },
+    // Google Maps listing for the headquarters (place ID from UnivLabs).
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=UnivLabs+Technologies+Gurugram&query_place_id=ChIJd_d30vMXDTkR3uvCs8R04L0",
   },
 } as const;
+
+/** The address on one line, for the footer. */
+export const addressLine = [
+  site.contact.address.street,
+  site.contact.address.locality,
+  `${site.contact.address.region} ${site.contact.address.postcode}`,
+  site.contact.address.country,
+].join(", ");
 
 export type Fact = {
   value: string;
@@ -202,7 +221,8 @@ export const leadership = [
   {
     name: "Prof. Dr Anil Mandhani",
     role: "Co-founder and CTO, Urology",
-    bio: "MBBS, MS, MCh. 30+ years in urology. Chairman, Urology, Fortis.",
+    bio: "MBBS, MS, MCh. 30+ years in urology. Chairman, Urology, Fortis. The idea behind Am-SafeX was his.",
+    photo: "/images/people/anil-mandhani.jpg",
   },
   {
     name: "Suresh Alla",

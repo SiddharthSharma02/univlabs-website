@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { nav, site } from "@/content/site";
+import { addressLine, nav, site } from "@/content/site";
 import { Logo } from "./brand";
 import { ButtonLink, Container } from "./ui";
 
@@ -11,7 +11,16 @@ export function SiteFooter() {
           <div data-reveal>
             <Logo reversed />
             <p className="mt-6 max-w-sm">{site.descriptor}</p>
-            <p className="label mt-6 text-fog">
+            <a
+              href={site.contact.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 block max-w-sm text-[15px] leading-relaxed text-fog underline-offset-4 transition-colors hover:text-clinical hover:underline"
+            >
+              <address className="not-italic">{addressLine}</address>
+              <span className="sr-only"> (opens Google Maps in a new tab)</span>
+            </a>
+            <p className="label mt-4 text-fog">
               R&amp;D · {site.rdSites.join(" · ")}
             </p>
             <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">

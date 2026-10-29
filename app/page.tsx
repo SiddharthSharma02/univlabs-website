@@ -330,19 +330,29 @@ export default function Home() {
       {/* 7. Built with surgeons. */}
       <section className="bg-paper">
         <Container className="grid gap-12 py-16 sm:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div data-reveal="left" className="relative order-last aspect-[16/9] overflow-hidden rounded-3xl bg-mist sm:aspect-[4/3] lg:order-none">
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-steel/40 text-center">
-              <p className="label text-steel">Photo to commission</p>
-              <p className="max-w-xs text-[15px] text-steel">
-                A urologist and a UnivLabs engineer reviewing an Am-SafeX prototype.
-              </p>
+          <figure className="order-last mx-auto w-full max-w-sm lg:order-none">
+            <div className="relative aspect-[400/460] overflow-hidden rounded-3xl bg-[#fafafa] ring-1 ring-line">
+              <Image
+                src="/images/people/anil-mandhani.jpg"
+                alt="Prof. Dr Anil Mandhani in a white coat, arms folded"
+                fill
+                sizes="(min-width: 1024px) 384px, 90vw"
+                className="focus-in object-cover"
+              />
             </div>
-          </div>
+            <figcaption className="mt-4 flex items-start gap-3">
+              <span aria-hidden className="mt-1.5 h-1.5 w-6 shrink-0 rounded-full bg-blue" />
+              <span>
+                <span className="block font-display font-bold text-navy">Prof. Dr Anil Mandhani</span>
+                <span className="label mt-1 block text-steel">Urologist and co-founder · Am-SafeX</span>
+              </span>
+            </figcaption>
+          </figure>
           <div>
             <SectionHeader
               eyebrow="Built with surgeons"
               title="Ideas from the operating room become products"
-              intro="Through SUFI, surgeons bring us a clinical problem and our engineers build the device. Am-SafeX, our patented catheter, began exactly this way."
+              intro="Through SUFI, surgeons bring us a clinical problem and our engineers build the device. Am-SafeX, our patented catheter, began as an idea from urologist and co-founder Prof. Dr Anil Mandhani."
             />
             <div data-reveal className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/sufi" arrow>
