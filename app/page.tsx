@@ -317,7 +317,7 @@ export default function Home() {
                 Lease by the minute
               </p>
               <p className="mt-2 text-[15px] leading-relaxed sm:text-fog">
-                Lease instead of a large upfront purchase. Closed to new registrations.
+                Start with an advance, then pay in line with the minutes you operate.
               </p>
               <span className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue sm:text-blue-300">
                 How it works <Arrow />

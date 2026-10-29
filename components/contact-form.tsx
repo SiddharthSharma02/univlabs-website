@@ -11,7 +11,7 @@ export const topics = [
   { id: "brochure", label: "Request a brochure or quotation" },
   { id: "service", label: "Service and support" },
   { id: "cogniaxis", label: "CogniAxis and the connected OR" },
-  { id: "ppm", label: "Pay Per Minute waiting list" },
+  { id: "ppm", label: "Pay Per Minute: request a meeting" },
   { id: "sufi", label: "SUFI: pitch an idea" },
   { id: "partner", label: "Become a partner" },
   { id: "regulatory", label: "Regulatory documents" },
@@ -29,7 +29,7 @@ const intros: Record<(typeof topics)[number]["id"], string> = {
   brochure: "Tell us what you need, and we will send details and a quotation.",
   service: "Tell us the product and the problem, and our service team will respond.",
   cogniaxis: "Tell us about your operating rooms, and our CogniAxis team will get in touch.",
-  ppm: "Pay Per Minute is closed to new registrations. Leave your details and we will contact you when it reopens.",
+  ppm: "Tell us about your hospital. Our team will walk you through the equipment, suitability, commercials and next steps. No payment now, and no obligation to proceed.",
   sufi: "Tell us about the clinical problem you want to solve. Our engineers will get back to you.",
   partner: "Tell us about your company, markets and specialties.",
   regulatory: "Tell us which documents you need and for which market.",
@@ -103,6 +103,12 @@ export function ContactForm() {
       `Email: ${data.get("email")}`,
       `Phone: ${data.get("phone")}`,
       `Product: ${products.find((p) => p.slug === data.get("product"))?.name ?? "Not specified"}`,
+      ...(data.get("topic") === "ppm"
+        ? [
+            `Laparoscopic cases a month (approx.): ${data.get("cases") || "Not given"}`,
+            `Preferred meeting time (IST): ${data.get("meeting") || "Not given"}`,
+          ]
+        : []),
       "",
       String(data.get("message") ?? ""),
     ];
@@ -169,6 +175,18 @@ export function ContactForm() {
           ))}
         </select>
       </label>
+      {values.topic === "ppm" && (
+        <>
+          <label>
+            <span className="label text-navy">Laparoscopic cases a month</span>
+            <input name="cases" inputMode="numeric" placeholder="Approximate" className={field} />
+          </label>
+          <label>
+            <span className="label text-navy">Preferred meeting time (IST)</span>
+            <input name="meeting" type="datetime-local" className={field} />
+          </label>
+        </>
+      )}
       <label className="sm:col-span-2">
         <span className="label text-navy">Message</span>
         <textarea

@@ -73,7 +73,7 @@ Search the code for `TODO` and `[` placeholders. Main gaps:
 - Am-SafeX intended use, sizes, patent number and regulatory status.
 - What SUFI stands for, and how the programme works.
 - Certificates by market: ISO 13485 is on `/quality` (MTIC InterCert, MTIC/MD/1129, valid to 24 June 2027; PDF in `public/documents/`). Still needed: CDSCO licences, and whether CE is held.
-- Pay Per Minute terms and reopening date; the operating-economics calculator.
+- Pay Per Minute: `/pay-per-minute` follows univlabs.in (advance, usage-linked billing, path to ownership; Spectra and Lumina; meeting first, then a private plan by access code). Plan figures are private by design; sales to confirm whether any minimum (advance, minutes or cases a month) may be published.
 - Sales/demo email (currently info@univlabs.in, the general inbox published on univlabs.in). The address in `content/site.ts` is the registered one from the ISO certificate, with the Google Maps place ID UnivLabs supplied.
 - Contact form backend (currently opens a pre-filled email).
 - Product and people photography (three shoot days planned).
