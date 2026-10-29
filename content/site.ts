@@ -71,8 +71,7 @@ export const facts = {
   iso: {
     value: "ISO 13485",
     label: "Certified medical device manufacturing",
-    source: "univlabs.in",
-    verify: "Attach certificate, scope and expiry.",
+    source: "MTIC InterCert, to 2027",
   },
   founded: {
     value: "2015",

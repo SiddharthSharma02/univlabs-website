@@ -54,6 +54,8 @@ async function ItemContent({ params }: Props) {
   const { slug, item: itemSlug } = await params;
   const item = catalogueItem(slug, itemSlug);
   const parent = productBySlug(slug);
+  // Product names keep their capitals (SurgiCore); plain names read in lower case.
+  const familyName = /[A-Z]/.test(parent?.name.slice(1) ?? "") ? parent?.name : parent?.name.toLowerCase();
   if (!item || !parent) notFound();
 
   const siblings = catalogueFor(item.parent).filter((c) => c.slug !== item.slug);
@@ -102,7 +104,7 @@ async function ItemContent({ params }: Props) {
                 Request a quotation
               </ButtonLink>
               <ButtonLink href={`/products/${parent.slug}`} variant="ghost-light">
-                All {parent.name.toLowerCase()}
+                All {familyName}
               </ButtonLink>
             </div>
           </div>
@@ -254,7 +256,7 @@ async function ItemContent({ params }: Props) {
         <section className="bg-clinical">
           <Container className="py-16 sm:py-24">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <SectionHeader eyebrow={parent.name} title={`More ${parent.name.toLowerCase()}`} />
+              <SectionHeader eyebrow={parent.name} title={`More ${familyName}`} />
               <Link
                 data-reveal
                 href={`/products/${parent.slug}`}
@@ -264,7 +266,7 @@ async function ItemContent({ params }: Props) {
               </Link>
             </div>
             <div className="mt-8 sm:mt-10">
-            <Rail label={`More ${parent.name.toLowerCase()}`} className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4">
+            <Rail label={`More ${familyName}`} className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4">
               {related.map((r) => (
                 <div key={r.slug}>
                   <Link
@@ -292,7 +294,7 @@ async function ItemContent({ params }: Props) {
         title="Need sizes or a quotation?"
         body={`Tell us the specialty and what you need. Our team will confirm the configuration of the ${item.name} and send a quotation.`}
         primary={{ href: quoteHref, label: "Request a quotation" }}
-        secondary={{ href: `/products/${parent.slug}`, label: `All ${parent.name.toLowerCase()}` }}
+        secondary={{ href: `/products/${parent.slug}`, label: `All ${familyName}` }}
       />
     </>
   );

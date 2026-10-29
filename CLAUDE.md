@@ -72,7 +72,7 @@ Search the code for `TODO` and `[` placeholders. Main gaps:
 - Suite specs now mirror univlabs.in/surgical-vision (brochure PDFs linked there). Still needed: intended-use statements, a Lumina studio photo (current image is a render), studio photos of SurgiStart (current image is a render from univlabs.in; the unit is labelled "GynoStart suite", so confirm the product name).
 - Am-SafeX intended use, sizes, patent number and regulatory status.
 - What SUFI stands for, and how the programme works.
-- Certificates by market (ISO 13485, CDSCO, CE?) with scope and expiry.
+- Certificates by market: ISO 13485 is on `/quality` (MTIC InterCert, MTIC/MD/1129, valid to 24 June 2027; PDF in `public/documents/`). Still needed: CDSCO licences, and whether CE is held.
 - Pay Per Minute terms and reopening date; the operating-economics calculator.
 - Sales/demo email (currently info@univlabs.in, the general inbox published on univlabs.in), full address.
 - Contact form backend (currently opens a pre-filled email).
