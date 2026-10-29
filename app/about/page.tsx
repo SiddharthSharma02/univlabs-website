@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { Container, CtaBand, PageHero, SectionHeader } from "@/components/ui";
 import { facts, leadership, site } from "@/content/site";
@@ -57,15 +58,21 @@ export default function AboutPage() {
             title="Clinicians, engineers and operators"
             intro={`${facts.team.value} people across surgical vision, devices, connected data and regulatory.`}
           />
-          <ul data-stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-stagger className="mt-8 grid border-t border-line sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:border-t-0 lg:grid-cols-3">
             {leadership.map((person) => (
-              <li key={person.name} className="flex gap-5 rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
+              <li key={person.name} className="flex gap-4 border-b border-line py-5 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] sm:gap-5 sm:rounded-3xl sm:border sm:bg-paper sm:p-6 sm:hover:-translate-y-1 sm:hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)]">
+                {"photo" in person ? (
+                  <span className="relative size-12 shrink-0 overflow-hidden rounded-full bg-white ring-1 ring-line sm:size-14">
+                    <Image src={person.photo} alt={person.name} fill sizes="128px" className="origin-[50%_14%] scale-[2.1] object-cover object-top" />
+                  </span>
+                ) : (
                 <span
                   aria-hidden
-                  className="flex size-14 shrink-0 items-center justify-center rounded-full bg-navy font-display font-bold text-clinical"
+                  className="flex size-12 shrink-0 sm:size-14 items-center justify-center rounded-full bg-navy font-display font-bold text-clinical"
                 >
                   {initials(person.name)}
                 </span>
+                )}
                 <div>
                   <p className="font-display text-lg font-bold text-navy">{person.name}</p>
                   <p className="label mt-1 text-blue">{person.role}</p>

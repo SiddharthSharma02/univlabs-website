@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -6,6 +7,7 @@ import {
   PageHero,
   SectionHeader,
   Todo,
+  Steps,
 } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -28,20 +30,16 @@ export default function SufiPage() {
       <section className="bg-clinical">
         <Container className="py-16 sm:py-20">
           <SectionHeader eyebrow="How it works" title="From idea to device" />
-          <ol data-stagger className="mt-10 grid gap-6 md:grid-cols-4">
-            {[
+          <Steps
+            className="md:grid-cols-4"
+            pad="md:p-6"
+            steps={[
               ["01", "Pitch", "Describe the clinical problem and your idea."],
               ["02", "Assess", "Our engineers and clinical team review feasibility."],
               ["03", "Prototype", "We design, build and test with you."],
               ["04", "Bring to market", "Regulatory, manufacturing and launch by UnivLabs."],
-            ].map(([n, t, b]) => (
-              <li key={n} className="rounded-3xl border border-line bg-paper transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] p-6">
-                <p className="label text-blue">{n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold text-navy">{t}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed">{b}</p>
-              </li>
-            ))}
-          </ol>
+            ]}
+          />
         </Container>
       </section>
       <section className="bg-paper">
@@ -49,16 +47,27 @@ export default function SufiPage() {
           <SectionHeader
             eyebrow="Proof"
             title="Am-SafeX started as a urologist’s problem"
-            intro="Our patented Am-SafeX catheter was developed with practising urologists, starting from a problem they raised in the operating room. It is the model for every SUFI project."
+            intro="Our patented Am-SafeX catheter began as an idea from urologist and UnivLabs co-founder Prof. Dr Anil Mandhani, and was developed with practising urologists. It is the model for every SUFI project."
           />
-          <div data-reveal="scale" className="rounded-3xl border border-line bg-clinical p-8">
+          <div data-reveal="scale" className="flex flex-col gap-6 rounded-3xl border border-line bg-clinical p-6 sm:flex-row sm:items-center sm:p-8">
+            <div className="relative aspect-[400/460] w-32 shrink-0 overflow-hidden rounded-2xl bg-[#fafafa] ring-1 ring-line sm:w-40">
+              <Image
+                src="/images/people/anil-mandhani.jpg"
+                alt="Prof. Dr Anil Mandhani"
+                fill
+                sizes="160px"
+                className="object-cover"
+              />
+            </div>
+            <div>
             <p className="font-display text-xl font-semibold leading-snug text-navy">
-              “[Approved quote from the surgeon behind Am-SafeX.]”
+              “[Approved quote from Prof. Dr Anil Mandhani on Am-SafeX.]”
             </p>
-            <p className="label mt-4 text-steel">[Name, role, hospital]</p>
+            <p className="label mt-4 text-steel">Prof. Dr Anil Mandhani · Urologist and co-founder, UnivLabs</p>
             <Link href="/products/am-safex" className="mt-6 inline-block text-[15px] font-semibold text-blue hover:underline">
               Meet Am-SafeX
             </Link>
+            </div>
           </div>
         </Container>
       </section>

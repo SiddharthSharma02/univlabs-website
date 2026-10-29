@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/contact-form";
-import { Container, PageHero } from "@/components/ui";
+import { Arrow, Container, PageHero } from "@/components/ui";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -37,9 +37,25 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="label text-steel">Headquarters</p>
-              <p className="mt-2 text-navy">{site.legalName}</p>
-              <p className="text-navy">{site.city}</p>
-              <p className="label mt-3 text-steel">[Full address to confirm]</p>
+              <address className="mt-2 not-italic leading-relaxed text-navy">
+                {site.legalName}
+                <br />
+                {site.contact.address.street}
+                <br />
+                {site.contact.address.locality}, {site.contact.address.region}{" "}
+                {site.contact.address.postcode}
+                <br />
+                {site.contact.address.country}
+              </address>
+              <a
+                href={site.contact.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-3 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue"
+              >
+                Open in Google Maps <Arrow />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </div>
             <div>
               <p className="label text-steel">R&amp;D</p>

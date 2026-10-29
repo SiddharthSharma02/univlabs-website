@@ -35,11 +35,11 @@ export function SuiteCompare({ current }: { current: string }) {
           intro="Spectra adds NIR/ICG imaging; Lumina focuses on native 4K white light; SurgiStart offers a compact mobile format with HD and 4K configurations."
         />
         <div data-reveal className="mt-10 overflow-x-auto rounded-3xl border border-line">
-          <table className="w-full min-w-[44rem] border-collapse text-left">
+          <table className="w-full min-w-[40rem] border-separate border-spacing-0 text-left sm:min-w-[44rem]">
             <caption className="sr-only">Comparison of UnivLabs surgical vision suites</caption>
             <thead>
               <tr>
-                <td className="w-40 border-b border-line bg-clinical" />
+                <td className="sticky left-0 z-10 w-28 border-b border-r border-line bg-clinical sm:static sm:w-40 sm:border-r-0" />
                 {suites.map((p) => {
                   const on = p.slug === current;
                   return (
@@ -69,7 +69,7 @@ export function SuiteCompare({ current }: { current: string }) {
             <tbody>
               {ROWS.filter((r) => suites.some((p) => value(p, r.from))).map((r) => (
                 <tr key={r.label} className="group/row">
-                  <th scope="row" className="label border-b border-line bg-clinical px-5 py-4 font-normal text-steel">
+                  <th scope="row" className="label sticky left-0 z-10 w-28 border-b border-r border-line bg-clinical px-3 py-4 text-[11px] font-normal text-steel sm:static sm:w-40 sm:border-r-0 sm:px-5 sm:text-[13px]">
                     {r.label}
                   </th>
                   {suites.map((p) => {
@@ -78,7 +78,7 @@ export function SuiteCompare({ current }: { current: string }) {
                     return (
                       <td
                         key={p.slug}
-                        className={`border-b border-line px-5 py-4 font-mono text-[14px] transition-colors ${
+                        className={`border-b border-line px-4 py-4 font-mono text-[13px] transition-colors sm:px-5 sm:text-[14px] ${
                           on ? "bg-navy/[0.04] text-navy" : "text-ink group-hover/row:bg-clinical"
                         }`}
                       >
@@ -91,7 +91,10 @@ export function SuiteCompare({ current }: { current: string }) {
             </tbody>
           </table>
         </div>
-        <p className="label mt-3 text-steel">Source · univlabs.in, 2026. The signed quotation governs.</p>
+        <p className="label mt-3 text-steel">
+          <span className="sm:hidden">Swipe the table to compare · </span>
+          Source · univlabs.in, 2026. The signed quotation governs.
+        </p>
       </Container>
     </section>
   );

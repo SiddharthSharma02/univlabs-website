@@ -82,8 +82,8 @@ export function SectionHeader({
     <div className="max-w-3xl" data-reveal>
       {eyebrow && <Eyebrow tone={dark ? "light" : "blue"}>{eyebrow}</Eyebrow>}
       <h2
-        className={`mt-3 font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl ${
-          dark ? "text-clinical" : "text-navy"
+        className={`scan-in mt-3 w-fit font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl ${
+          dark ? "text-clinical [--scan:var(--color-blue-300)]" : "text-navy"
         }`}
       >
         {title}
@@ -208,7 +208,7 @@ export function PageHero({
           <div className="rise" style={{ "--i": 1 } as CSSProperties}>
             <Eyebrow tone="light">{eyebrow}</Eyebrow>
           </div>
-          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="scan-load mt-4 w-fit font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             <Words text={title} delay={200} />
           </h1>
           {intro && (
@@ -377,11 +377,16 @@ export function ProductImage({
   sizes,
   priority = false,
   className = "",
+  pad = "p-6",
+  labelClassName = "",
 }: {
   image: NonNullable<Product["image"]>;
   sizes: string;
   priority?: boolean;
   className?: string;
+  /** Padding around a contained studio shot; smaller for thumbnails. */
+  pad?: string;
+  labelClassName?: string;
 }) {
   const contain = image.fit === "contain";
   return (
@@ -394,12 +399,12 @@ export function ProductImage({
         fill
         sizes={sizes}
         priority={priority}
-        className={`transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.04] ${
-          contain ? "object-contain p-6" : "object-cover"
+        className={`${priority ? "" : "focus-in"} transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.04] ${
+          contain ? `object-contain ${pad}` : "object-cover"
         }`}
       />
       {image.render && (
-        <span className="label absolute bottom-3 left-3 rounded-full bg-navy/80 px-2.5 py-1 text-[11px] text-clinical">
+        <span className={`label absolute bottom-3 left-3 rounded-full bg-navy/80 px-2.5 py-1 text-[11px] text-clinical ${labelClassName}`}>
           Render
         </span>
       )}
@@ -452,7 +457,7 @@ export function FlowDiagram({
   return (
     <ol
       data-stagger
-      className={`grid gap-4 lg:gap-0 ${
+      className={`grid lg:gap-0 ${
         steps.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
       }`}
     >
@@ -461,17 +466,43 @@ export function FlowDiagram({
         const nextLive = steps[i + 1]?.status === "available";
         const last = i === steps.length - 1;
         return (
-          <li key={step.name} className="relative flex flex-col lg:flex-row lg:items-stretch">
+          <li key={step.name} className="relative flex flex-col pl-9 lg:flex-row lg:items-stretch lg:pl-0">
+            {/* Phones: a timeline. A node per stage, and a rail to the
+                next one: solid between live stages, dashed otherwise. */}
+            <span
+              aria-hidden
+              className={`absolute left-0 top-1 size-4 rounded-full lg:hidden ${
+                live
+                  ? dark
+                    ? "bg-blue-300 shadow-[0_0_0_5px_rgba(111,163,255,0.18)]"
+                    : "bg-blue shadow-[0_0_0_5px_rgba(8,102,244,0.12)]"
+                  : `border-2 border-dashed ${dark ? "border-fog/70" : "border-steel/70"}`
+              }`}
+            />
+            {!last && (
+              <span
+                aria-hidden
+                className={`absolute bottom-0 left-[7px] top-7 w-0.5 lg:hidden ${
+                  live && nextLive
+                    ? dark
+                      ? "bg-blue-300/50"
+                      : "bg-blue/40"
+                    : `w-0 border-l-2 border-dashed ${dark ? "border-fog/40" : "border-steel/40"}`
+                }`}
+              />
+            )}
             <div
               data-spotlight={dark || undefined}
-              className={`relative flex-1 overflow-hidden rounded-2xl border p-6 ${
+              className={`relative flex-1 overflow-hidden pb-10 lg:rounded-2xl lg:border lg:p-6 ${
+                last ? "max-lg:pb-0" : ""
+              } ${
                 dark
                   ? live
-                    ? "border-navy-600 bg-navy-700"
-                    : "border-dashed border-navy-600 bg-navy"
+                    ? "lg:border-navy-600 lg:bg-navy-700"
+                    : "lg:border-dashed lg:border-navy-600 lg:bg-navy"
                   : live
-                    ? "border-line bg-paper"
-                    : "border-dashed border-steel/50 bg-clinical"
+                    ? "lg:border-line lg:bg-paper"
+                    : "lg:border-dashed lg:border-steel/50 lg:bg-clinical"
               }`}
             >
               <p className={`label ${dark ? "text-fog" : "text-steel"}`}>
@@ -500,7 +531,9 @@ export function FlowDiagram({
               </div>
             </div>
             {!last && (
-              <Connector live={live && nextLive} dark={dark} />
+              <div className="hidden lg:flex">
+                <Connector live={live && nextLive} dark={dark} />
+              </div>
             )}
           </li>
         );
@@ -540,5 +573,44 @@ function Connector({ live, dark }: { live: boolean; dark: boolean }) {
         />
       )}
     </div>
+  );
+}
+
+/**
+ * Numbered steps. Phones: a timeline of numbered nodes on a rail. From
+ * `md` up: one card per step, laid out by `className`.
+ */
+export function Steps({
+  steps,
+  className = "",
+  pad = "md:p-8",
+}: {
+  steps: string[][];
+  className?: string;
+  pad?: string;
+}) {
+  return (
+    <ol data-stagger className={`mt-8 sm:mt-10 md:grid md:gap-6 ${className}`}>
+      {steps.map(([n, title, body], i) => (
+        <li
+          key={n}
+          className={`relative flex gap-4 max-md:pb-8 max-md:last:pb-0 transition-[transform,translate,box-shadow] duration-500 ease-[var(--ease-out-soft)] md:block md:rounded-3xl md:border md:border-line md:bg-paper md:hover:-translate-y-1 md:hover:shadow-[0_20px_50px_-20px_rgba(0,26,73,0.2)] ${pad}`}
+        >
+          {i < steps.length - 1 && (
+            <span
+              aria-hidden
+              className="absolute bottom-1 left-[17px] top-11 w-0.5 rounded-full bg-blue/25 md:hidden"
+            />
+          )}
+          <span className="label flex size-9 shrink-0 items-center justify-center rounded-full bg-blue text-[12px] tracking-normal text-paper md:size-auto md:justify-start md:bg-transparent md:text-[13px] md:tracking-[0.12em] md:text-blue">
+            {n}
+          </span>
+          <div className="pt-1 md:pt-0">
+            <h3 className="font-display text-lg font-bold text-navy md:mt-3">{title}</h3>
+            <p className="mt-1 text-[15px] leading-relaxed md:mt-2">{body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   );
 }

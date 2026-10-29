@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NOTE } from "./nir-lens";
 
 /**
@@ -52,9 +52,33 @@ export function ModeViewer({ interval = 4200 }: { interval?: number }) {
 
   const running = !paused && !still;
 
+  // Touch: swipe left or right across the frame to change mode.
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+  const step = (dir: 1 | -1) => {
+    setActive((i) => (i + dir + modes.length) % modes.length);
+    setPaused(true);
+  };
+
   return (
     <figure className="w-full">
-      <div className="relative aspect-square overflow-hidden rounded-3xl bg-navy-700 shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600">
+      <div
+        className="relative aspect-square touch-pan-y overflow-hidden rounded-3xl bg-navy-700 shadow-[0_40px_120px_-40px_rgba(8,102,244,0.55)] ring-1 ring-navy-600"
+        onPointerDown={(e) => {
+          if (e.pointerType === "touch") swipe.current = { x: e.clientX, y: e.clientY };
+        }}
+        onPointerUp={(e) => {
+          const start = swipe.current;
+          swipe.current = null;
+          if (!start) return;
+          const dx = e.clientX - start.x;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(e.clientY - start.y)) {
+            step(dx < 0 ? 1 : -1);
+          }
+        }}
+        onPointerCancel={() => {
+          swipe.current = null;
+        }}
+      >
         {modes.map((mode, i) => {
           const isActive = i === active;
           return (
@@ -91,6 +115,12 @@ export function ModeViewer({ interval = 4200 }: { interval?: number }) {
         <p className="label absolute left-4 top-4 z-[4] rounded-full bg-navy/70 px-3 py-1.5 text-clinical backdrop-blur">
           Real footage ·{" "}
           <span className={active === 0 ? "" : "text-icg"}>{modes[active].label}</span>
+        </p>
+        <p
+          aria-hidden
+          className="label absolute bottom-4 left-1/2 z-[4] -translate-x-1/2 whitespace-nowrap rounded-full bg-navy/70 px-3 py-1.5 text-[11px] text-clinical backdrop-blur [@media(hover:hover)]:hidden"
+        >
+          Swipe to change view
         </p>
       </div>
       <figcaption className="mt-4">

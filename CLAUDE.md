@@ -23,9 +23,11 @@ The full brand book is in `brand/brand-book.md`. The presentation version lives 
 - `components/ui.tsx` — Container, SectionHeader, ButtonLink, StatusTag, PageHero, SectionMarker, CtaBand, Todo.
 - `components/brand.tsx` — `Mark` (SVG rebuilt from the logo) and `Logo` lockup.
 - `components/mode-viewer.tsx` — the hero: one surgical scene in white light / ICG overlay / NIR.
-- `components/motion.tsx` — the motion system: `MotionRoot` (scroll reveal + card spotlight), `ScrollProgress`, `CountUp`. Add `data-reveal` (or `="fade" | "scale" | "left"`) to fade an element in on scroll, `data-stagger` to a list or grid to reveal its children one by one, `data-spotlight` to a dark card. Above-the-fold text uses the CSS `rise` class with `--i` for order. Nothing is hidden without JavaScript or with reduced motion.
+- Motion: no fade-ins. Text is never hidden waiting for an animation. Below the fold, motion is scroll-linked CSS in `app/globals.css`: `scan-in` (a light edge sweeps across a section title; `SectionHeader` adds it), `focus-in` (a photo comes into focus; `ProductImage` adds it), `draw-bar`, and `data-scramble` readouts. Page titles use `scan-load`. Above-the-fold text uses the `rise` class with `--i` for order. `components/tower-explode.tsx` is the signature moment: the Spectra tower comes apart as you scroll (home and Spectra page). `data-reveal` / `data-stagger` no longer hide anything and are kept only as markers. Read "Motion rules" in `brand/web-direction.md` before adding motion.
+- `components/motion.tsx` — `MotionRoot` (card spotlight, tilt, magnetic buttons), `ScrollProgress`, `CountUp`. Add `data-spotlight` to a dark card.
 - `components/desktop-nav.tsx` — desktop nav with a sliding hover pill and the Products mega menu. `components/specialty-explorer.tsx` — the home page specialty hover list.
 - Also in `components/motion.tsx`: `data-scramble` (mono labels type in on reveal, CSS only; never change text in the DOM, streamed content may not be hydrated yet), `data-tilt` (cards lean toward the pointer), `data-magnetic` (primary buttons). `Words` in `ui.tsx` splits a headline into rising words. Page changes use React `<ViewTransition>` (layout), and product images morph between card and hero via `name="product-<slug>"`; a name must appear once per page.
+- Phones (below `sm`/`md`): `components/rail.tsx` (`Rail`) turns a row of cards into a swipe rail with a bar pager, and joins a parent grid from `md` up via `className="md:contents"`. `Steps` in `ui.tsx` is a timeline on phones and cards from `md`. `components/mobile-cta.tsx` is the floating "Request a demo" bar. Lists of products and catalogue items are thumbnail rows on phones, cards from `sm`. See "Phones" in `brand/web-direction.md`.
 - `brand/web-direction.md` — how the brand plays out on screen: motion tokens and rules, layout patterns, what was not adopted.
 - `components/nir-lens.tsx` — white light, with a 160 px-radius NIR lens that follows the cursor (touch: tap or drag; keyboard: Enter, then arrow keys).
 - `public/images/products/` — studio shots from the client's product library. Renders are flagged `render: true` and always labelled on the page.
@@ -70,9 +72,9 @@ Search the code for `TODO` and `[` placeholders. Main gaps:
 - Suite specs now mirror univlabs.in/surgical-vision (brochure PDFs linked there). Still needed: intended-use statements, a Lumina studio photo (current image is a render), studio photos of SurgiStart (current image is a render from univlabs.in; the unit is labelled "GynoStart suite", so confirm the product name).
 - Am-SafeX intended use, sizes, patent number and regulatory status.
 - What SUFI stands for, and how the programme works.
-- Certificates by market (ISO 13485, CDSCO, CE?) with scope and expiry.
-- Pay Per Minute terms and reopening date; the operating-economics calculator.
-- Sales/demo email (currently info@univlabs.in, the general inbox published on univlabs.in), full address.
+- Certificates by market: ISO 13485 is on `/quality` (MTIC InterCert, MTIC/MD/1129, valid to 24 June 2027; PDF in `public/documents/`). Still needed: CDSCO licences, and whether CE is held.
+- Pay Per Minute: `/pay-per-minute` follows univlabs.in (advance, usage-linked billing, path to ownership; Spectra and Lumina; meeting first, then a private plan by access code). Plan figures are private by design; sales to confirm whether any minimum (advance, minutes or cases a month) may be published.
+- Sales/demo email (currently info@univlabs.in, the general inbox published on univlabs.in). The address in `content/site.ts` is the registered one from the ISO certificate, with the Google Maps place ID UnivLabs supplied.
 - Contact form backend (currently opens a pre-filled email).
 - Product and people photography (three shoot days planned).
 - Refresh the patent count (16 filed / 4 granted, from a 2025 article).

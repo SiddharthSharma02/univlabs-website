@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Rail } from "@/components/rail";
 import { notFound } from "next/navigation";
 import { Suspense, type CSSProperties } from "react";
 import { ItemImage } from "@/components/catalogue";
@@ -53,6 +54,8 @@ async function ItemContent({ params }: Props) {
   const { slug, item: itemSlug } = await params;
   const item = catalogueItem(slug, itemSlug);
   const parent = productBySlug(slug);
+  // Product names keep their capitals (SurgiCore); plain names read in lower case.
+  const familyName = /[A-Z]/.test(parent?.name.slice(1) ?? "") ? parent?.name : parent?.name.toLowerCase();
   if (!item || !parent) notFound();
 
   const siblings = catalogueFor(item.parent).filter((c) => c.slug !== item.slug);
@@ -81,7 +84,7 @@ async function ItemContent({ params }: Props) {
               <span aria-hidden> / </span>
               <span className="text-blue-300">{item.group}</span>
             </nav>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="scan-load mt-4 w-fit font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
               <Words text={item.name} delay={180} />
             </h1>
             <p data-scramble className="rise label mt-3 text-blue-300" style={i(2)}>
@@ -101,7 +104,7 @@ async function ItemContent({ params }: Props) {
                 Request a quotation
               </ButtonLink>
               <ButtonLink href={`/products/${parent.slug}`} variant="ghost-light">
-                All {parent.name.toLowerCase()}
+                All {familyName}
               </ButtonLink>
             </div>
           </div>
@@ -139,11 +142,11 @@ async function ItemContent({ params }: Props) {
                 }
               />
             </div>
-            <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul data-stagger className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-3">
               {item.variants.map((v, n) => (
                 <li
                   key={`${v.name}-${v.size ?? n}`}
-                  className="group overflow-hidden rounded-3xl border border-line bg-paper"
+                  className="group overflow-hidden rounded-2xl border border-line bg-paper sm:rounded-3xl"
                 >
                   {v.image ? (
                     <div className="relative aspect-[4/3] bg-white">
@@ -151,20 +154,20 @@ async function ItemContent({ params }: Props) {
                         src={v.image}
                         alt={`UnivLabs ${item.name}: ${v.name}${v.size ? `, ${v.size}` : ""}`}
                         fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-contain p-6 transition-[scale] duration-700 ease-[var(--ease-out-soft)] group-hover:scale-105"
+                        sizes="(min-width: 1024px) 33vw, 50vw"
+                        className="object-contain p-3 transition-[scale] sm:p-6 duration-700 ease-[var(--ease-out-soft)] group-hover:scale-105"
                       />
                     </div>
                   ) : (
                     <div className="relative aspect-[4/3] bg-mist">
-                      <div className="absolute inset-4 flex items-center justify-center rounded-2xl border-2 border-dashed border-steel/40">
-                        <p className="label text-steel">Photo to commission</p>
+                      <div className="absolute inset-2 flex items-center justify-center rounded-xl border-2 border-dashed border-steel/40 text-center sm:inset-4 sm:rounded-2xl">
+                        <p className="label px-2 text-[10px] text-steel sm:text-[13px]">Photo to commission</p>
                       </div>
                     </div>
                   )}
-                  <div className="flex items-baseline justify-between gap-4 border-t border-line px-5 py-4">
-                    <p className="font-display font-bold text-navy">{v.name}</p>
-                    {v.size && <p className="font-mono text-[14px] text-ink">{v.size}</p>}
+                  <div className="flex flex-col gap-1 border-t border-line px-3 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:px-5 sm:py-4">
+                    <p className="font-display text-[15px] font-bold leading-snug text-navy sm:text-base">{v.name}</p>
+                    {v.size && <p className="font-mono text-[12px] text-ink sm:text-[14px]">{v.size}</p>}
                   </div>
                 </li>
               ))}
@@ -194,9 +197,10 @@ async function ItemContent({ params }: Props) {
             <div data-reveal>
               <Eyebrow>Photographs</Eyebrow>
             </div>
-            <ul data-stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-8">
+            <Rail label="Photographs" className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
               {item.gallery.map((g) => (
-                <li key={g.src} className="group overflow-hidden rounded-3xl border border-line bg-white">
+                <figure key={g.src} className="group overflow-hidden rounded-3xl border border-line bg-white">
                   <div className="relative aspect-square">
                     <Image
                       src={g.src}
@@ -208,10 +212,11 @@ async function ItemContent({ params }: Props) {
                       }`}
                     />
                   </div>
-                  <p className="label border-t border-line px-5 py-4 text-navy">{g.caption}</p>
-                </li>
+                  <figcaption className="label border-t border-line px-5 py-4 text-navy">{g.caption}</figcaption>
+                </figure>
               ))}
-            </ul>
+            </Rail>
+            </div>
           </Container>
         </section>
       )}
@@ -251,7 +256,7 @@ async function ItemContent({ params }: Props) {
         <section className="bg-clinical">
           <Container className="py-16 sm:py-24">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <SectionHeader eyebrow={parent.name} title={`More ${parent.name.toLowerCase()}`} />
+              <SectionHeader eyebrow={parent.name} title={`More ${familyName}`} />
               <Link
                 data-reveal
                 href={`/products/${parent.slug}`}
@@ -260,9 +265,10 @@ async function ItemContent({ params }: Props) {
                 See the full range <Arrow />
               </Link>
             </div>
-            <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 sm:mt-10">
+            <Rail label={`More ${familyName}`} className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4">
               {related.map((r) => (
-                <li key={r.slug}>
+                <div key={r.slug}>
                   <Link
                     href={`/products/${r.parent}/${r.slug}`}
                     data-tilt
@@ -276,9 +282,10 @@ async function ItemContent({ params }: Props) {
                       </p>
                     </div>
                   </Link>
-                </li>
+                </div>
               ))}
-            </ul>
+            </Rail>
+            </div>
           </Container>
         </section>
       )}
@@ -287,7 +294,7 @@ async function ItemContent({ params }: Props) {
         title="Need sizes or a quotation?"
         body={`Tell us the specialty and what you need. Our team will confirm the configuration of the ${item.name} and send a quotation.`}
         primary={{ href: quoteHref, label: "Request a quotation" }}
-        secondary={{ href: `/products/${parent.slug}`, label: `All ${parent.name.toLowerCase()}` }}
+        secondary={{ href: `/products/${parent.slug}`, label: `All ${familyName}` }}
       />
     </>
   );

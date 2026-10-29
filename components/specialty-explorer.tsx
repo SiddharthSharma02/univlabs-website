@@ -9,15 +9,17 @@ import { Arrow } from "./ui";
 
 /**
  * Specialties as a list you point at. Hovering or focusing a row shows
- * what UnivLabs supplies for it in the panel alongside. On small screens
- * the panel is hidden and each row shows its summary inline.
+ * what UnivLabs supplies for it in the panel alongside. On phones and
+ * tablets it is an accordion instead: tap a specialty to open it.
  */
 export function SpecialtyExplorer() {
   const [active, setActive] = useState(0);
   const s = specialties[active];
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+    <>
+    <SpecialtyAccordion />
+    <div className="hidden gap-10 lg:grid lg:grid-cols-[1.1fr_1fr] lg:gap-16">
       <ul className="border-t border-line">
         {specialties.map((sp, n) => {
           const on = n === active;
@@ -43,9 +45,6 @@ export function SpecialtyExplorer() {
                     }`}
                   >
                     {sp.name}
-                  </span>
-                  <span className="mt-2 block text-[15px] leading-relaxed lg:hidden">
-                    {sp.summary}
                   </span>
                 </span>
                 <span
@@ -118,5 +117,102 @@ export function SpecialtyExplorer() {
         </div>
       </div>
     </div>
+    </>
+  );
+}
+
+/** Phones and tablets: one specialty open at a time. */
+function SpecialtyAccordion() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <ul className="border-t border-line lg:hidden">
+      {specialties.map((sp, n) => {
+        const on = open === n;
+        const panel = `specialty-panel-${sp.id}`;
+        return (
+          <li key={sp.id} className="relative border-b border-line">
+            <span
+              aria-hidden
+              className={`absolute -left-px top-0 h-full w-1 origin-top rounded-full bg-blue transition-transform duration-500 ease-[var(--ease-out-soft)] ${
+                on ? "scale-y-100" : "scale-y-0"
+              }`}
+            />
+            <h3>
+              <button
+                type="button"
+                aria-expanded={on}
+                aria-controls={panel}
+                onClick={() => setOpen(on ? null : n)}
+                className="flex w-full items-center gap-4 py-5 pl-4 text-left outline-none focus-visible:bg-clinical"
+              >
+                <span className="label w-6 text-steel">0{n + 1}</span>
+                <span className="flex-1 font-display text-2xl font-bold tracking-tight text-navy">
+                  {sp.name}
+                </span>
+                <span
+                  aria-hidden
+                  className={`relative flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
+                    on ? "border-blue bg-blue text-paper" : "border-line text-navy"
+                  }`}
+                >
+                  <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
+                  <span
+                    className={`absolute h-3.5 w-0.5 rounded-full bg-current transition-transform duration-300 ${
+                      on ? "scale-y-0" : ""
+                    }`}
+                  />
+                </span>
+              </button>
+            </h3>
+            <div
+              id={panel}
+              className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-out-soft)] ${
+                on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              }`}
+            >
+              <div className="overflow-hidden" inert={!on}>
+                <div className="pb-6 pl-4">
+                  <p className="text-[15px] leading-relaxed">{sp.summary}</p>
+                  <p className="label mt-5 text-steel">What we supply</p>
+                  <ul className="-mx-4 mt-3 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    {sp.products.map((slug) => {
+                      const p = productBySlug(slug);
+                      if (!p) return null;
+                      return (
+                        <li key={slug} className="shrink-0 snap-start">
+                          <Link
+                            href={`/products/${p.slug}`}
+                            className="flex items-center gap-2.5 rounded-full border border-line bg-paper py-1.5 pl-1.5 pr-4 text-[15px] font-semibold text-navy active:border-blue"
+                          >
+                            <span className="relative size-8 shrink-0 overflow-hidden rounded-full bg-white">
+                              {p.image && (
+                                <Image
+                                  src={p.image.src}
+                                  alt=""
+                                  fill
+                                  sizes="32px"
+                                  className="object-contain p-0.5"
+                                />
+                              )}
+                            </span>
+                            {p.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <Link
+                    href={`/specialties#${sp.id}`}
+                    className="group mt-5 inline-flex items-center gap-1.5 text-[15px] font-semibold text-blue"
+                  >
+                    {sp.name} in detail <Arrow />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

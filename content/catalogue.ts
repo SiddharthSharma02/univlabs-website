@@ -524,12 +524,21 @@ export const catalogue: CatalogueItem[] = [
     parent: "surgicore",
     group: "Documentation",
     name: "Medical recorder",
-    descriptor: "4K recording",
+    descriptor: "4K and HD recording",
     summary: "Medical-grade video and image recording for approved surgical documentation.",
     status: "available",
+    image: {
+      src: img("recorder/4k-ul-rc200.jpg"),
+      alt: "UnivLabs 4K Video Recorder UL-RC200, with a touchscreen panel and two USB ports",
+      fit: "contain",
+    },
+    variants: [
+      { name: "4K Video Recorder UL-RC200", image: img("recorder/4k-ul-rc200.jpg") },
+      { name: "Medical Imaging Workstation (HD)", image: img("recorder/hd-workstation.jpg") },
+    ],
     specialties: ["general-surgery", "urology", "gynaecology", "orthopaedics"],
     source: LIVE,
-    todo: "Need a product photo of the medical recorder (the supplied folder is empty).",
+    todo: "Confirm the HD unit's model number, and the specifications and approved intended use of both recorders.",
   },
   {
     slug: "cables-and-tubing",
